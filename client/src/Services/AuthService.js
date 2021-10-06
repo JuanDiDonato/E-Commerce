@@ -2,7 +2,8 @@ import axios from 'axios';
 // eslint-disable-next-line 
 export default {
   login : async(user)=>{
-       const {data}= await  axios.post('/login',user,{validateStatus:false})
+       const data = await axios.post('/login',user,{validateStatus:false})
+   
         return data
     },
     register : async(user) =>{
@@ -15,7 +16,6 @@ export default {
     },
     isAuthenticated : async()=>{
         const {data} = await axios.get('/authenticated',{validateStatus:false})
-        console.log(data);
         return data
     }
 

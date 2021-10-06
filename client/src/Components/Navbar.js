@@ -2,18 +2,15 @@
 import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
 import AuthService from '../Services/AuthService';
-//import { AuthContext } from '../Context/AuthContext';
+import { AuthContext } from '../Context/AuthContext';
 
 const Navbar = props =>{
-   // const {isAuthenticated,user,setIsAuthenticated,setUser} = useContext(AuthContext);
-   const  isAuthenticated = false
-   const user = null 
-   const setIsAuthenticated =false
-   
+    const {isAuthenticated,user,setIsAuthenticated,setUser} = useContext(AuthContext);
+
     const onClickLogoutHandler = ()=>{
         AuthService.logout().then(data=>{
             if(data.success){
-               // setUser(data.user);
+               setUser(data.user);
                 setIsAuthenticated(false);
             }
         });
