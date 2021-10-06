@@ -1,6 +1,4 @@
 //Passport
-//Usa estrategias de logeo para loguear usuarios ==> Yo defino las estrategias 
-//Las estrategias define que va a authenticar => (es como el JWTRequired de Python)
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const JwtStrategy = require('passport-jwt').Strategy
@@ -18,17 +16,14 @@ const CookiExtractor = req => {
 
 
 passport.use(new LocalStrategy({
-    usernameField : 'username',
+    usernameField : 'email',
     passwordField : 'password',
     //Done: cuando termina de authenticar, que continue.
 
-},async (username, password, done) =>{
-    const row = await pool.query('SELECT * FROM users WHERE username = ?', username)
+},async (email, password, done) =>{
+    const row = await pool.query('SELECT * FROM users WHERE email = ?', email)
     if(row.length === 0){
         let message = '[-] User not found!'
-        //done recibe 3 parametros, el primero retorna un error si decidimos enviarlo
-        //el segundo recibe un usuario (en este caso no encontro ninguno, por eso es false)
-        //el tercero es un parametro (en este caso un mensaje)
         return done(null,false,message)
     }else{
         const user = row[0]
@@ -48,11 +43,7 @@ passport.use(new LocalStrategy({
 passport.use(new JwtStrategy({
     jwtFromRequest: CookiExtractor,
     secretOrKey: 'm1ch1'
-    //payload representa los parametros dentro del token, en este caso el userid que defini en usercontroller.
 },(payload, done) => {
-    //consulto en la base de datos si el id_user que esta en el token coincide con algun id_user de la base de datos
-    //con la funcion flecha defino:
-    //si hay un error que lo retorne, y si hay un usario, que lo retorne.
     pool.query('SELECT * FROM users WHERE id_user = ?', [payload.sub],(error,user) => {
         if(error)
             return done(error,false)

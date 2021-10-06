@@ -9,13 +9,13 @@ const CookieParser = require('cookie-parser')
 
 //Server setting
 app.set('port', 5000)
-app.use(express.json()) //Especifico que voy a permitir JSON's
-app.use(CookieParser()) //Especifico que voy a permitir cookies
+app.use(express.json()) 
+app.use(CookieParser()) 
 //Morgan
 app.use(morgan('dev'))
 
 //Routes
-app.use(require('./routes/tasks'),require('./routes/user'))
+app.use(require('./routes/AdminRoutes'),require('./routes/ClientRoutes'))
 
 
 //Start Server
