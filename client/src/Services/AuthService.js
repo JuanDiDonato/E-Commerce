@@ -1,44 +1,22 @@
-// eslint-disable-next-line 
 import axios from 'axios';
-
-    export const login = async( user)=>{
-
-       const result = await  axios.post('login',user)
-
-        return result
-
+// eslint-disable-next-line 
+export default {
+  login : async(user)=>{
+       const {data}= await  axios.post('/login',user,{validateStatus:false})
+        return data
+    },
+    register : async(user) =>{
+    const {data}= await  axios.post('/register',user,{validateStatus:false})
+    return data
+    },
+     logout : async()=>{
+        const {data}= await axios.get('/logout',{validateStatus:false})
+        return data        
+    },
+    isAuthenticated : async()=>{
+        const {data} = await axios.get('/authenticated',{validateStatus:false})
+        console.log(data);
+        return data
     }
 
-
-    export const register = async(user) =>{
-
-        return fetch('/user/register',{
-            method : "post",
-            body : JSON.stringify(user),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
-        }).then(res => res.json())
-          .then(data => data);
-    }
-
-    export const logout = async()=>{
-        return fetch('/user/logout')
-                .then(res => res.json())
-                .then(data => data);
-                
-    }
-
-
-    export const isAuthenticated = ()=>{
-        return fetch('/user/authenticated')
-                .then(res=>{
-                    if(res.status !== 401)
-                        return res.json().then(data => data);
-                    else{
-                        return { isAuthenticated : false, user : {_id : "",data: "",role : "",name:"",surname:"",photo:""}};
-                    }
-   
-                });
-    }
-
+}

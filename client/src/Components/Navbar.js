@@ -1,15 +1,19 @@
+//eslint-disable-next-line
 import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
 import AuthService from '../Services/AuthService';
-import { AuthContext } from '../Context/AuthContext';
+//import { AuthContext } from '../Context/AuthContext';
 
 const Navbar = props =>{
-    const {isAuthenticated,user,setIsAuthenticated,setUser} = useContext(AuthContext);
-    
+   // const {isAuthenticated,user,setIsAuthenticated,setUser} = useContext(AuthContext);
+   const  isAuthenticated = false
+   const user = null 
+   const setIsAuthenticated =false
+   
     const onClickLogoutHandler = ()=>{
         AuthService.logout().then(data=>{
             if(data.success){
-                setUser(data.user);
+               // setUser(data.user);
                 setIsAuthenticated(false);
             }
         });
@@ -52,7 +56,7 @@ const Navbar = props =>{
         <nav className="navbar navbar-expand-lg navbar-dark bg-warning">
             <div className="container">
            
-                <div className="navbar-brand fuente">Gomeriaapp Movil</div>
+                <div className="navbar-brand fuente">E-commerce</div>
             
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
       aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">

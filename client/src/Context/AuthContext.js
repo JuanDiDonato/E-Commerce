@@ -1,5 +1,6 @@
 import React, {createContext,useState,useEffect} from 'react';
-import {isAuthenticated } from '../Services/AuthService';
+// eslint-disable-next-line
+import AuthService  from '../Services/AuthService';
 
 export const AuthContext = createContext();
 // eslint-disable-next-line 
@@ -9,12 +10,8 @@ export default ({ children })=>{
     const [isLoaded,setIsLoaded] = useState(false);
 
     useEffect(()=>{
-        
-        isAuthenticated().then(data =>{
-            setUser(data.user);
-            setIsAuthenticated(data.isAuthenticated);
-            setIsLoaded(true);
-        });
+        setIsAuthenticated(false)
+       setIsLoaded(true)
     },[]);
 
     return (
