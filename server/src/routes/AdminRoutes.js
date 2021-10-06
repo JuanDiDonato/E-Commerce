@@ -1,11 +1,14 @@
 const {Router} = require('express')
 const router = Router()
-const {create, products, product_id, edit, delete_product,register_admin}  = require('../controllers/AdminControllers')
+const {create, logout, products, product_id, edit, delete_product,register_admin}  = require('../controllers/AdminControllers')
 const passport = require('passport')
 
 //Routes
 //register admin
 router.post('/registerAdmin', passport.authenticate('jwt',{session:false}),register_admin )
+
+//Cerrar session
+router.get('/logout',passport.authenticate('jwt',{session:false}) ,logout)
 
 //create
 router.post('/create', passport.authenticate('jwt',{session:false}),create )

@@ -2,6 +2,11 @@ const pool = require('../database/connection')
 const ctrl = {}
 const {EncryptPassword} = require('../helpers/bcrypt')
 const jwt = require('jsonwebtoken')
+//Mercado Pago
+const mercadopago = require('mercadopago')
+mercadopago.configure({
+    access_token : 'APP_USR-1184855549944129-100623-0385ad712ecffe9ceb52da98028499c1-836956813'
+})
 
 //Crear token de acceso
 ctrl.SignToken = Id_user => {
@@ -13,15 +18,15 @@ ctrl.SignToken = Id_user => {
 
 //Authenticated
 ctrl.authenticated = (req,res) => {
-    const { id_user, email, role } = req.user[0];
-    res.status(200).json({ isAuthenticated: true, user: { id_user, email, role }});
+    const { id_user, email, id_role } = req.user[0];
+    res.status(200).json({ isAuthenticated: true, user: { id_user, email, id_role }});
 }
 
 
 //Registrar usuario
 ctrl.register = async (req, res) => {
     const {email, password} = req.body
-    const id_rol= '1'
+    const id_role= '1'
     if(email == null || email =='' || password == null || password == ''){
         res.status(403).json({message:{'message':'Complete todos los campos', 'error' : true}})
     }else{
@@ -30,7 +35,7 @@ ctrl.register = async (req, res) => {
             res.status(403).json({message:{'message':'Este usuario ya existe', 'error' : true}})
         }else{
             const HashPassword = await EncryptPassword(password)
-            await pool.query('INSERT INTO users SET ?', {email,'password': HashPassword, id_rol})
+            await pool.query('INSERT INTO users SET ?', {email,'password': HashPassword, id_role})
             res.status(200).json({message:{'message':'Usuario creado exitosamente', 'error' : false}})
         }
     }
@@ -46,14 +51,50 @@ ctrl.login = async (req, res) => {
     }
 }
 
+//Cerrar session
+ctrl.logout = (req, res) => {
+    res.clearCookie('access_token');
+    res.json({user:{name:'', surname:'', username:'', password:'', coin:''},error:false});
+
+};
+
+//MercadoPago
+ctrl.mercadopago = (req, res) => {
+    const {name, price, quantity} = req.body
+    let preferences = {items:
+        [{title:name, 
+        unit_price : price, 
+        quantity : quantity}],
+    'back_urls':{
+        'success': 'http://localhost:3000/endpage', //la ruta al que quiero redirigir
+        'failure': 'http://localhost:3000/error', //la ruta al que quiero redirigir
+    }, 'auto_return': 'approved', //para que se redirija solo
+        'binary_mode' : true}
+
+    mercadopago.preferences.create(preferences).then(function(response){
+        const url = response.body.init_point
+        res.status(200).json({url, error:false}) //Retorna un link, que lleva al pago.
+    }).catch(function(error){
+        console.log('[-] '+error);
+        res.status(401).json({error: true})
+    })
+}
+
 //Obtener productos
 ctrl.products = async (req, res) => {
     const result = await pool.query('SELECT * FROM products')
     res.status(200).json(result)
 }
 
+//Obtener productos por id
+ctrl.product_id = async (req, res) => {
+    const {id_product} = req.params
+    const result = await pool.query('SELECT * FROM products WHERE id_product = ?', id_product)
+    res.json(result[0])
+}
+
 //Ver carrito
-ctrl.add = async (req, res) => {
+ctrl.get_cart = async (req, res) => {
     const {id_user} = req.user[0]
     const result = await pool.query('SELECT * FROM cart WHERE id_user = ?', id_user)
     res.status(200).json(result)

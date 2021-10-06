@@ -9,8 +9,8 @@ const Navbar = props =>{
 
     const onClickLogoutHandler = ()=>{
         AuthService.logout().then(data=>{
-            if(data.success){
-               setUser(data.user);
+            if(data.error === false){
+                setUser(data.user);
                 setIsAuthenticated(false);
             }
         });
@@ -36,10 +36,8 @@ const Navbar = props =>{
     const authenticatedNavBar = ()=>{
         return(
             <>
-
-
                 {
-                    user.role === "mod" || user.role === "central" ? 
+                    user.role === 2 ? 
                     <Link to="/" className="nodecoracion">
                     <div className="nav-item nav-link" ><i className="fa fa-home" aria-hidden="true"></i> Inicio</div>
                 </Link>  : null
