@@ -18,7 +18,6 @@ const CookiExtractor = req => {
 passport.use(new LocalStrategy({
     usernameField : 'email',
     passwordField : 'password',
-    //Done: cuando termina de authenticar, que continue.
 
 },async (email, password, done) =>{
     const row = await pool.query('SELECT * FROM users WHERE email = ?', email)

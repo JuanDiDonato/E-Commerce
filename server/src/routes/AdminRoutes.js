@@ -1,9 +1,12 @@
 const {Router} = require('express')
 const router = Router()
-const {create, products, product_id, edit, delete_product}  = require('../controllers/AdminControllers')
+const {create, products, product_id, edit, delete_product,register_admin}  = require('../controllers/AdminControllers')
 const passport = require('passport')
 
 //Routes
+//register admin
+router.post('/registerAdmin', passport.authenticate('jwt',{session:false}),register_admin )
+
 //create
 router.post('/create', passport.authenticate('jwt',{session:false}),create )
 

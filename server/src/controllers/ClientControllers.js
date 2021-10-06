@@ -13,6 +13,7 @@ ctrl.SignToken = Id_user => {
 //Registrar usuario
 ctrl.register = async (req, res) => {
     const {email, password} = req.body
+    const id_rol= '1'
     if(email == null || email =='' || password == null || password == ''){
         res.json({'[-]' : 'Complete todos los campos.'})
     }else{
@@ -21,11 +22,10 @@ ctrl.register = async (req, res) => {
             res.json({'[-]' : 'Este usuario ya existe.'})
         }else{
             const HashPassword = await EncryptPassword(password)
-            await pool.query('INSERT INTO users SET ?', {email,'password': HashPassword})
+            await pool.query('INSERT INTO users SET ?', {email,'password': HashPassword, id_rol})
             res.json({'[+]':'Usuario creado exitosamente.'})
         }
     }
-
 }
 //Loguear usuario
 ctrl.login = async (req, res) => {

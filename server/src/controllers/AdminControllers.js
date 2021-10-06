@@ -1,5 +1,26 @@
 const pool = require('../database/connection')
+const {EncryptPassword} = require('../helpers/bcrypt')
 const ctrl = {}
+
+
+
+//Crear usuario admin
+ctrl.register_admin = async (req, res) => {
+    const {email, password} = req.body
+    const id_rol= '2'
+    if(email == null || email =='' || password == null || password == ''){
+        res.json({'[-]' : 'Complete todos los campos.'})
+    }else{
+        const VerifyUser = await pool.query('SELECT * FROM users WHERE email = ?', email)
+        if(VerifyUser.length >= 1){
+            res.json({'[-]' : 'Este usuario ya existe.'})
+        }else{
+            const HashPassword = await EncryptPassword(password)
+            await pool.query('INSERT INTO users SET ?', {email,'password': HashPassword, id_rol})
+            res.json({'[+]':'Administrador creado exitosamente.'})
+        }
+    }
+}
 
 //Crear producto
 ctrl.create = async (req, res) => {
