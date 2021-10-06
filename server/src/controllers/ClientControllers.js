@@ -11,11 +11,11 @@ ctrl.SignToken = Id_user => {
     },'m1ch1', {expiresIn: '1h'})
 }
 
-//Authenticated
-router.get('/authenticated', passport.authenticate('jwt', { session: false }), (req, res) => {
+ctrl.authenticated = (req,res) => {
     const { id_user, email, role } = req.user[0];
     res.status(200).json({ isAuthenticated: true, user: { id_user, email, role }});
-});
+}
+
 
 //Registrar usuario
 ctrl.register = async (req, res) => {
