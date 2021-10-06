@@ -24,16 +24,14 @@ ctrl.register_admin = async (req, res) => {
     }else{
         res.json({'message':'Unauthorized'})
     }
-    
-    
 }
 
 //Crear producto
 ctrl.create = async (req, res) => {
     const {id_rol} = req.user[0]
     if(id_rol === 2){
-        const {categories, description, price, stock} = req.body
-        await pool.query('INSERT INTO products SET ?', {categories,description, price, stock})
+        const {categories, description, price, stock, photo} = req.body
+        await pool.query('INSERT INTO products SET ?', {categories,description, price, stock, photo})
         res.json('Añadido exitosamente.')
     }else{
         res.json({'message':'Unauthorized'})
@@ -53,24 +51,40 @@ ctrl.products = async (req, res) => {
 }
 //Obtener producto por id
 ctrl.product_id = async (req, res) => {
+    const {id_rol} = req.user[0]
+    if(id_rol === 2){
+        const {id} = req.params
+        const result = await pool.query('SELECT * FROM products WHERE id_product = ?', id)
+        res.json(result[0])
+    }else{
+        res.json({'message':'Unauthorized'})
+    }
     
-    const {id} = req.params
-    const result = await pool.query('SELECT * FROM products WHERE id_product = ?', id)
-    res.json(result[0])
 }
 //Editar producto por id
 ctrl.edit = async (req, res) => {
-    const {categories, description, price, stock} = req.body
-    const {id} = req.params 
-    const obj = { categories, description, price, stock}
-    await pool.query('UPDATE products SET ? WHERE id_product = ? ', [obj,id]) 
-    res.json('Actualizado satifactoriamente.')
+    const {id_rol} = req.user[0]
+    if(id_rol === 2){
+        const {categories, description, price, stock} = req.body
+        const {id} = req.params 
+        const obj = { categories, description, price, stock}
+        await pool.query('UPDATE products SET ? WHERE id_product = ? ', [obj,id]) 
+        res.json('Actualizado satifactoriamente.')
+    }else{
+        res.json({'message':'Unauthorized'})
+    }
 }
+
 //Borrar producto por id
 ctrl.delete_product = async (req, res) => {
-    const {id} = req.params
-    await pool.query('DELETE FROM products WHERE id_product = ?', id)
-    res.json('Producto eliminado satifactoriamente.')
+    if(id_rol === 2){
+        const {id} = req.params
+        await pool.query('DELETE FROM products WHERE id_product = ?', id)
+        res.json('Producto eliminado satifactoriamente.')
+    }else{
+        res.json({'message':'Unauthorized'})
+    }
+
 }
 
 module.exports=ctrl

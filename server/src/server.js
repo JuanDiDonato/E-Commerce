@@ -15,8 +15,8 @@ app.use(CookieParser())
 app.use(morgan('dev'))
 
 //Routes
-app.use(require('./routes/AdminRoutes'),require('./routes/ClientRoutes'))
-
+app.use('/client',require('./routes/ClientRoutes'));
+app.use('/admin',require('./routes/AdminRoutes'));
 
 //Start Server
 app.listen(app.get('port'),()=>{
