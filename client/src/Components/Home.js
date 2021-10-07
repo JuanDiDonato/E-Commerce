@@ -4,7 +4,7 @@ import AuthService from '../Services/AuthService';
 import ProductService from '../Services/ProductService';
 
 
-export default function Home() {
+export default function Home(props) {
 
      const [clientData, setClientData] = useState([])
      const [products, setProducts] = useState([])
@@ -19,8 +19,13 @@ export default function Home() {
                setClientData(data.user); 
           }})
           ProductService.products().then(data => {
-               setProducts(data.data)
+               setProducts(data)
           })
+          ProductService.getcart().then(data => {
+               console.log(data);
+               setCart(data)
+          })
+          
      //eslint-disable-next-line
      },[])
      
@@ -38,19 +43,41 @@ export default function Home() {
                ProductService.add(id_product,quantity).then(data => {
                     console.log(data);
                })
+               ProductService.getcart().then(data => {
+                    console.log(data);
+                    setCart(data)
+               })
           }
 
-          const get_cart = () => {
-               ProductService.getcart().then(data => {
-                    const products = data.data
-                    
-                    products.map(product=> {
-                         ProductService.product_id(product.id_product).then(data => {
-                             setCart(cart => [...cart, data.data])
-                        })
-                   })
+          
+
+          const chekout = () => {
+               const product_data = []
+               cart.forEach(element => {
+                    product_data.push({'title' : element.title, 'unit_price':element.unit_price, 'quantity':element.quantity})
+                    if(product_data.length === cart.length){
+                         ProductService.mercadopago(product_data).then(data => {
+                              console.log(data);
+                              window.location.href = data.url;
+                         })
+                    }
+               });
+          }
+
+          const delete_product = (id_product,index) =>{
+               ProductService.delete_cart(id_product).then(data => {
+                    console.log(data);
                })
-               
+               ProductService.getcart().then(data => {
+                    console.log(data);
+                    if(data.length > 0){
+                         setCart(data)
+                    }else{
+                         setCart([])
+                    }
+                    
+                    
+               })
           }
 
           return(
@@ -59,22 +86,24 @@ export default function Home() {
                     <h1>CLIENTE</h1>
                     <div>
                          <div> 
-                              <button type="button" onClick={() => get_cart()}>
-                                   Ver changuito
-                              </button>
+                             
                               {cart.length === 0 ?
                               <div>
                                    <h3>no hay productos</h3>
                               </div> : 
                               <div>
                                    {cart.map(product=> {
+                                        const index = cart.indexOf(product)
                                         return(
                                              <div key={product.id_product}>
-                                                  <li>{product.title}</li>
-                                                  <button type="button">borrar</button>
+                                                       <li>{product.title}</li>
+                                                       <li>${product.unit_price}</li>
+                                                       <li>{product.quantity}</li>
+                                                       <button type="button" onClick={() => delete_product(product.id_product, index)}>borrar</button>
                                              </div>
                                         )
                                    })}
+                                   <button type="button" className="btn btn-primary m-1 p-1" onClick={chekout}>pagar</button>
                               </div>}
                          </div>
                          {products.map(product => {

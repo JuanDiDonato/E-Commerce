@@ -60,11 +60,8 @@ ctrl.logout = (req, res) => {
 
 //MercadoPago
 ctrl.mercadopago = (req, res) => {
-    const {name, price, quantity} = req.body
-    let preferences = {items:
-        [{title:name, 
-        unit_price : price, 
-        quantity : quantity}],
+    const {product_data} = req.body
+    let preferences = {items: product_data,   
     'back_urls':{
         'success': 'http://localhost:3000/endpage', //la ruta al que quiero redirigir
         'failure': 'http://localhost:3000/error', //la ruta al que quiero redirigir
@@ -73,6 +70,7 @@ ctrl.mercadopago = (req, res) => {
 
     mercadopago.preferences.create(preferences).then(function(response){
         const url = response.body.init_point
+        console.log(url);
         res.status(200).json({url, error:false}) //Retorna un link, que lleva al pago.
     }).catch(function(error){
         console.log('[-] '+error);
@@ -96,7 +94,7 @@ ctrl.product_id = async (req, res) => {
 //Ver carrito
 ctrl.get_cart = async (req, res) => {
     const {id_user} = req.user[0]
-    const result = await pool.query('SELECT * FROM cart WHERE id_user = ?', id_user)
+    const result = await pool.query('SELECT products.id_product, products.title, products.price AS unit_price, products.photo, cart.quantity FROM products INNER JOIN cart ON cart.id_product = products.id_product WHERE cart.id_user  = ?', id_user)
     res.status(200).json(result)
 }
 
