@@ -4,6 +4,7 @@ import Message from '../Components/Message';
 
 const Register = props=>{
     const [user,setUser] = useState({email: "", password : ""});
+    //eslint-disable-next-line
     const [message,setMessage] = useState(null);
     let timerID = useRef(null);
 
