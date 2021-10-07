@@ -18,12 +18,14 @@ import 'popper.js';
 import 'bootstrap/dist/js/bootstrap';
 
 
-//general components
+//General components
 import Navbar from './Components/Navbar';
 import Home from  './Components/Home';
 import Login from './Components/Login';
 import Register from './Components/Register';
 
+//Client components
+import Cart from './Components/Client/Cart'
 function App() {
   return (
     <Router>
@@ -31,6 +33,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <UnPrivateRoute exact path="/login" component={Login} />
         <UnPrivateRoute exact path="/register" component={Register} />
+        <PrivateRoute exact path="/cart" id_role={[1]} component={Cart}/>
     </Router>
     )
 }

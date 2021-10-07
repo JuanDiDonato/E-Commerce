@@ -36,13 +36,14 @@ const Navbar = props =>{
     const authenticatedNavBar = ()=>{
         return(
             <>
-                {
-                    user.role === 2 ? 
+                
                     <Link to="/" className="nodecoracion">
                     <div className="nav-item nav-link" ><i className="fa fa-home" aria-hidden="true"></i> Inicio</div>
-                </Link>  : null
-                }  
+                    </Link>  
+                
+                <Link to='/cart' className="nav-item nav-link" type="button"><i className="fa fa-shopping-cart mr-1" aria-hidden="true"></i></Link>
                 <div className="nav-item nav-link" type="button" onClick={onClickLogoutHandler}><i className="fa fa-sign-out" aria-hidden="true"></i> Cerrar sesión </div>
+                
             </>
         )
     }
