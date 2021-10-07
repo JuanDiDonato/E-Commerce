@@ -91,6 +91,17 @@ ctrl.product_id = async (req, res) => {
     res.json(result[0])
 }
 
+//Obtener categorias
+ctrl.categories = async (req,res) => {
+    const categories = await pool.query('SELECT * FROM categories')
+    if(categories.length > 0){
+        res.status(200).json({categories, error:false})
+    }else{
+        res.status(403).json({message: 'No se encontraron categorias', error: true})
+    }
+    
+}
+
 //Ver carrito
 ctrl.get_cart = async (req, res) => {
     const {id_user} = req.user[0]

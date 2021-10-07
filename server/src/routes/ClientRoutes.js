@@ -1,14 +1,13 @@
 const {Router} = require('express')
 const router = Router()
-const {register, login, logout, products, product_id, authenticated, get_cart, add_cart, delete_cart, mercadopago}  = require('../controllers/ClientControllers')
+const {register, login, logout, products, product_id, categories, authenticated, get_cart, add_cart, delete_cart, mercadopago}  = require('../controllers/ClientControllers')
 const passport = require('passport')
 require('../passport')
 
 //Registrar cliente
 router.post('/register', register)
 
-//Obtener productos
-router.get('/products', products)
+
 
 //Loguear cliente
 router.post('/login',passport.authenticate('local',{session:false}) ,login)
@@ -17,7 +16,13 @@ router.post('/login',passport.authenticate('local',{session:false}) ,login)
 router.get('/logout',passport.authenticate('jwt',{session:false}) ,logout)
 
 //Mercado Pago
-router.post('/mercadopago' , mercadopago)
+router.post('/mercadopago', passport.authenticate('jwt',{session:false}) , mercadopago)
+
+//Obtener categorias
+router.get('/categories', categories)
+
+//Obtener productos
+router.get('/products', products)
 
 //Obtener productos por id
 router.get('/product/:id_product',passport.authenticate('jwt',{session:false}), product_id )
