@@ -20,7 +20,7 @@ import 'bootstrap/dist/js/bootstrap';
 
 //General components
 import Navbar from './Components/Navbar';
-import Home from  './Components/Home';
+import Index from  './Components/Index';
 import Login from './Components/Login';
 import Register from './Components/Register';
 
@@ -30,7 +30,7 @@ function App() {
   return (
     <Router>
         <Navbar/>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={Index} />
         <UnPrivateRoute exact path="/login" component={Login} />
         <UnPrivateRoute exact path="/register" component={Register} />
         <PrivateRoute exact path="/cart" id_role={[1]} component={Cart}/>
