@@ -26,6 +26,10 @@ import Register from './Components/Register';
 
 //Client components
 import Cart from './Components/Client/Cart'
+import Product from './Components/Client/Product'
+
+
+
 function App() {
   return (
     <Router>
@@ -34,6 +38,7 @@ function App() {
         <UnPrivateRoute exact path="/login" component={Login} />
         <UnPrivateRoute exact path="/register" component={Register} />
         <PrivateRoute exact path="/cart" id_role={[1]} component={Cart}/>
+        <PrivateRoute exact path="/product/:id_product" id_role={[1]} component={Product}/>
     </Router>
     )
 }

@@ -4,21 +4,12 @@ import { AuthContext } from '../Context/AuthContext';
 
 import Homes from  './Client/Home';
 import Dashboard from './Admin/Dashboard';
-import ProductService from '../Services/ProductService';
+
 
 export default function Index() {
 
      //eslint-disable-next-line
      const {user} = useContext(AuthContext)
-     //eslint-disable-next-line
-     const [products, setProducts] = useState([])
-     useEffect(() => {
-          ProductService.products().then(data => {
-               setProducts(data)
-          })
-          
-     //eslint-disable-next-line
-     },[])
       //eslint-disable-next-line
      const [cart, setCart] = useState([])
 

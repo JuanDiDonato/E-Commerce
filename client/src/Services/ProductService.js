@@ -8,7 +8,7 @@ export default {
      },
      //Get produc by id
      product_id : async (id_product) =>{
-          const data = await axios.get('/client/product/'+id_product ,{validateStatus:false})
+          const {data} = await axios.get('/client/product/'+id_product ,{validateStatus:false})
           return data
      },
      //Add product to cart
