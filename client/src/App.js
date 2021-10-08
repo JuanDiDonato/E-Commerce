@@ -28,6 +28,11 @@ import Register from './Components/Register';
 import Cart from './Components/Client/Cart'
 import Product from './Components/Client/Product'
 
+//Admin components
+import RegisterAdmin from './Components/Admin/RegisterAdmin'
+import CreatePost from './Components/Admin/CreatePost'
+import ListProducts from './Components/Admin/ListProducts';
+
 
 
 function App() {
@@ -38,7 +43,11 @@ function App() {
         <UnPrivateRoute exact path="/login" component={Login} />
         <UnPrivateRoute exact path="/register" component={Register} />
         <PrivateRoute exact path="/cart" id_role={[1]} component={Cart}/>
-        <PrivateRoute exact path="/product/:id_product" id_role={[1]} component={Product}/>
+        <PrivateRoute exact path="/product/:id_product" id_role={[1,2]} component={Product}/>
+
+        <PrivateRoute exact path="/registeradmin" id_role={[2]} component={RegisterAdmin}/>
+        <PrivateRoute exact path="/post" id_role={[2]} component={CreatePost}/>
+        <PrivateRoute exact path="/list" id_role={[2]} component={ListProducts}/>
     </Router>
     )
 }

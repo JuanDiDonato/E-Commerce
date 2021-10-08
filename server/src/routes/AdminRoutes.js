@@ -7,9 +7,6 @@ const passport = require('passport')
 //register admin
 router.post('/registerAdmin', passport.authenticate('jwt',{session:false}),register_admin )
 
-//Cerrar session
-router.get('/logout',passport.authenticate('jwt',{session:false}) ,logout)
-
 //create
 router.post('/create', passport.authenticate('jwt',{session:false}),create )
 

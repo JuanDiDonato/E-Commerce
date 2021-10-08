@@ -55,7 +55,7 @@ export default function Cart() {
                                    <li>{product.title}</li>
                                    <li>{product.unit_price}</li>
                                    <li>{product.quantity}</li>
-                                   <li>{product.photo}</li>
+                                   <img src={product.photo} alt="" />
                                    <div>
                                         <button className="btn btn-primary m-1 p-1" onClick={() =>delete_product(product.id_product)}>Remover</button>
                                    </div>
@@ -65,7 +65,8 @@ export default function Cart() {
                     <div>
                          <h4>¿Esta todo correcto?</h4>
                          <div>
-                              <button className="btn btn-primary m-1 p-1" onClick={() =>chekout()}>Proceder al pago</button>
+                              {cart.length > 0 ? <button className="btn btn-primary m-1 p-1" onClick={() =>chekout()}>Proceder al pago</button> : null}
+                              
                          </div>
                     </div>
                </div>

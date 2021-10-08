@@ -20,7 +20,12 @@ export default function Product(props) {
           //eslint-disable-next-line
      }, [])
 
-    
+     const add_to_cart = () => {
+          const quantity =document.getElementById('quantity').value
+          ProductService.add(id_product,quantity).then(data => {
+               console.log(data);
+          })
+     }
 
 
 
@@ -36,11 +41,11 @@ export default function Product(props) {
                               </div>
                               <div className="col-md-5">
                                    <h1 className="mx-auto mt-3 mb-3">{product.title}</h1>
-                            
                                    <div className="card-body">
                                         <h4 className="card-title">$ {product.price}</h4>
                                         <p className="card-text">{product.description}</p>
-                              <button className="btn btn-primary btn-block"><i class="fa fa-cart-plus fa-3x" aria-hidden="true"></i> <h5>Añadir al Carrito</h5></button>
+                                        <input type="number" defaultValue="1" id="quantity"/>
+                                        <button className="btn btn-primary btn-block" onClick={() => add_to_cart(product.id_product)}><i className="fa fa-cart-plus fa-3x" aria-hidden="true"></i> <h5>Añadir al Carrito</h5></button>
                                    </div>
                               </div>
                          </div>

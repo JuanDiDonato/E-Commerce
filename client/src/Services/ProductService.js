@@ -30,6 +30,11 @@ export default {
      mercadopago : async (product_data) => {
           const {data} = await axios.post('/client/mercadopago', {product_data}, {validateStatus:false})
           return data
+     },
+     //Get categories
+     categories : async () => {
+          const {data : {categories}} = await axios.get('/client/categories' , {validateStatus:false})
+          return categories
      }
 
     
