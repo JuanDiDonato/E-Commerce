@@ -21,6 +21,19 @@ export default {
           const {data : {categories}} = await axios.get('/admin/categories' , {validateStatus:false})
           return categories
      },
+     new_category : async (category) => {
+          console.log(category);
+          const {data} = await axios.post('/admin/category', {category},{validateStatus:false})
+          return data
+     },
+     edit_category : async (category,oldCategory) => {
+          const {data} = await axios.put('/admin/category/'+oldCategory, {category},{validateStatus:false})
+          return data
+     },
+     delete_category : async (category) => {
+          const {data} = await axios.delete('/admin/category/'+category,{validateStatus:false})
+          return data
+     },
      product_id : async (id_product) =>{
           const {data} = await axios.get('/admin/product/'+id_product ,{validateStatus:false})
           return data

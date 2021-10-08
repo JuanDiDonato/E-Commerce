@@ -1,6 +1,6 @@
 const {Router} = require('express')
 const router = Router()
-const {create, categories, products, product_id, edit, delete_product,register_admin}  = require('../controllers/AdminControllers')
+const {create, categories, category, edit_category, delete_category,products, product_id, edit, delete_product,register_admin}  = require('../controllers/AdminControllers')
 const passport = require('passport')
 
 //Routes
@@ -10,8 +10,17 @@ router.post('/registerAdmin', passport.authenticate('jwt',{session:false}),regis
 //create
 router.post('/create', passport.authenticate('jwt',{session:false}),create )
 
-//Obtener categorias
+//get category
 router.get('/categories',passport.authenticate('jwt',{session:false})  ,categories)
+
+//create category
+router.post('/category', passport.authenticate('jwt',{session:false}), category)
+
+//edit category
+router.put('/category/:category', passport.authenticate('jwt',{session:false}), edit_category)
+
+//delete category
+router.delete('/category/:category', passport.authenticate('jwt',{session:false}), delete_category)
 
 //get_all_products
 router.get('/products', passport.authenticate('jwt',{session:false}), products )

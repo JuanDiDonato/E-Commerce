@@ -18,6 +18,7 @@ export default function Dashboard() {
                     <div className="card col-md-4 p-1 "><Link to='/registeradmin'>Crear nuevo administrador</Link></div>
                     <div className="card col-md-4 p-1  "><Link to='/post'>Crear nueva publicacion</Link></div>
                     <div className="card col-md-4 p-1  "><Link to='/list'>Productos publicados</Link></div>
+                    <div className="card col-md-4 p-1  "><Link to='/categories'>Categorias</Link></div>
                </div>
           </div>
      )

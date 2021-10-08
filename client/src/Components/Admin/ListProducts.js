@@ -37,7 +37,7 @@ export default function ListProducts(props) {
                <div>
                     <h2>Productos publicados</h2>
                </div>
-               <div className="container col-md-10 mx-auto mt-5">
+              <div className="container col-md-10 mx-auto mt-5">
                     <table className="table">
                          <thead>
                               <tr className="text-center">
@@ -62,7 +62,7 @@ export default function ListProducts(props) {
                                         <th scope="row"><i style={{cursor:'pointer'}} onClick={() => edit_product(product.id_product)} className="fa fa-pencil"></i></th>
                                         <th scope="row"><i style={{cursor:'pointer'}} onClick={() => delete_product(product.id_product)} className="fa fa-trash"></i></th>
                                    </tr>
-                                   )
+                                   ) 
                               })}
                               
                          </tbody>

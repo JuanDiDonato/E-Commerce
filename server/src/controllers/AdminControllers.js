@@ -44,6 +44,52 @@ ctrl.categories = async (req,res) => {
     
 }
 
+//Crear categorias
+ctrl.category = async (req, res) => {
+    const {category} = req.body
+    if(category === null ||category === ''){
+        res.status(403).json({message:'Complete el nombre de la categoria', error: true})
+    }else{
+        const results = await pool.query('SELECT * FROM categories WHERE category = ?', category)
+        if(results.length > 0){
+            res.status(403).json({message:'Esta categoria ya existe', error :true})
+        }else{
+            await pool.query('INSERT INTO categories SET ?', {'category' : category})
+            res.status(200).json({message:'Categoria creada satifactoriamente', error: false})
+        }
+    }
+}
+
+//Editar categoria
+ctrl.edit_category = async (req, res) => {
+    const {category} = req.body
+    const oldCategory = req.params 
+    if(category === null ||category === ''){
+        res.status(403).json({message:'Complete el nombre de la categoria', error: true})
+    }else{
+        const results = await pool.query('SELECT * FROM categories WHERE category = ?', category)
+        if(results.length > 0){
+            res.status(403).json({message:'Esta categoria ya existe', error :true})
+        }else{
+            await pool.query('UPDATE categories SET category = ? WHERE categories.category = ? ', [category, oldCategory.category])
+            res.status(200).json({message:'Categoria creada satifactoriamente', error: false})
+        }
+    }
+}
+
+//Borrar categoria
+ctrl.delete_category = async (req, res) => {
+    const {category} = req.params
+    const results = await pool.query('SELECT * FROM categories WHERE category = ?', category)
+    console.log(results);
+    if(results.length > 0){
+        await pool.query('DELETE FROM categories WHERE category = ?', category)
+        res.status(200).json({message:'Categoria borrada satifactoriamente', error :false})
+    }else{
+        res.status(200).json({message:'La categoria solicitada no existe', error: true})
+    }
+}
+
 //Crear producto
 ctrl.create = async (req, res) => {
     const {id_role} = req.user[0]
@@ -82,8 +128,6 @@ ctrl.product_id = async (req, res) => {
 //Editar producto por id
 ctrl.edit = async (req, res) => {
     const {id_role} = req.user[0]
-    console.log(id_role);
-    console.log(req.body);
     if(id_role === 2){
         const {title,categories, description, price, stock} = req.body
         const {id_product} = req.params 
@@ -99,8 +143,8 @@ ctrl.edit = async (req, res) => {
 ctrl.delete_product = async (req, res) => {
     const {id_role} = req.user[0]
     if(id_role === 2){
-        const {id} = req.params
-        await pool.query('DELETE FROM products WHERE id_product = ?', id)
+        const {id_product} = req.params
+        await pool.query('DELETE FROM products WHERE id_product = ?', id_product)
         res.json('Producto eliminado satifactoriamente.')
     }else{
         res.json({'message':'Unauthorized'})

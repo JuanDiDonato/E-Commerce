@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 //Mercado Pago
 const mercadopago = require('mercadopago')
 mercadopago.configure({
-    access_token : 'APP_USR-1184855549944129-100623-0385ad712ecffe9ceb52da98028499c1-836956813'
+    access_token : process.env.ACCESS_TOKEN_MP
 })
 
 //Crear token de acceso
