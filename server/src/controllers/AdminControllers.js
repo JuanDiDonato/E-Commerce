@@ -33,12 +33,23 @@ ctrl.logout = (req, res) => {
 
 };
 
+//Obtener categorias
+ctrl.categories = async (req,res) => {
+    const categories = await pool.query('SELECT * FROM categories')
+    if(categories.length > 0){
+        res.status(200).json({categories, error:false})
+    }else{
+        res.status(403).json({message: 'No se encontraron categorias', error: true})
+    }
+    
+}
+
 //Crear producto
 ctrl.create = async (req, res) => {
     const {id_role} = req.user[0]
     if(id_role === 2){
-        const {categories, description, price, stock, photo} = req.body
-        await pool.query('INSERT INTO products SET ?', {categories,description, price, stock, photo})
+        const {title, categories, description, price, stock, photo} = req.body
+        await pool.query('INSERT INTO products SET ?', {title,categories,description, price, stock, photo})
         res.json('Añadido exitosamente.')
     }else{
         res.json({'message':'Unauthorized'})

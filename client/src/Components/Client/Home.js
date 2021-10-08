@@ -26,10 +26,7 @@ export default function Home(props) {
      
 
      const SearchByCategory = (products,category) => {
-          console.log(category);
-          console.log(products);
           const FilterByCategory = products.filter((product) => product.categories.toLowerCase().includes(category.toLowerCase()))
-          console.log(category);
           if(category.length > 0){
               setResults(FilterByCategory)
           }else{

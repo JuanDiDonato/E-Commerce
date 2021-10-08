@@ -16,6 +16,10 @@ export default {
      delete: async (id_product) => {
           const {data} = await axios.delete('/admin/delete/'+id_product, {validateStatus:false})
           return data
-     } 
+     },
+     categories : async () => {
+          const {data : {categories}} = await axios.get('/admin/categories' , {validateStatus:false})
+          return categories
+     }
 
 }

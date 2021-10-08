@@ -64,7 +64,7 @@ ctrl.mercadopago = (req, res) => {
     let preferences = {items: product_data,   
     'back_urls':{
         'success': 'http://localhost:3000/endpage', //la ruta al que quiero redirigir
-        'failure': 'http://localhost:3000/error', //la ruta al que quiero redirigir
+        'failure': 'http://localhost:3000/cart', //la ruta al que quiero redirigir
     }, 'auto_return': 'approved', //para que se redirija solo
         'binary_mode' : true}
 
