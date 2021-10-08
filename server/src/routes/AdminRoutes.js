@@ -17,12 +17,12 @@ router.get('/categories',passport.authenticate('jwt',{session:false})  ,categori
 router.get('/products', passport.authenticate('jwt',{session:false}), products )
 
 //get_id
-router.get('/product/:id',passport.authenticate('jwt',{session:false}), product_id )
+router.get('/product/:id_product',passport.authenticate('jwt',{session:false}), product_id )
 
 //edit
-router.put('/edit/:id',passport.authenticate('jwt',{session:false}), edit )
+router.put('/edit/:id_product',passport.authenticate('jwt',{session:false}), edit )
 
 //delete
-router.delete('/delete/:id',passport.authenticate('jwt',{session:false}), delete_product )
+router.delete('/delete/:id_product',passport.authenticate('jwt',{session:false}), delete_product )
 
 module.exports=router

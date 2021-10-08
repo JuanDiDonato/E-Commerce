@@ -71,8 +71,8 @@ ctrl.products = async (req, res) => {
 ctrl.product_id = async (req, res) => {
     const {id_role} = req.user[0]
     if(id_role === 2){
-        const {id} = req.params
-        const result = await pool.query('SELECT * FROM products WHERE id_product = ?', id)
+        const {id_product} = req.params
+        const result = await pool.query('SELECT * FROM products WHERE id_product = ?', id_product)
         res.json(result[0])
     }else{
         res.json({'message':'Unauthorized'})
@@ -82,11 +82,13 @@ ctrl.product_id = async (req, res) => {
 //Editar producto por id
 ctrl.edit = async (req, res) => {
     const {id_role} = req.user[0]
+    console.log(id_role);
+    console.log(req.body);
     if(id_role === 2){
-        const {categories, description, price, stock} = req.body
-        const {id} = req.params 
-        const obj = { categories, description, price, stock}
-        await pool.query('UPDATE products SET ? WHERE id_product = ? ', [obj,id]) 
+        const {title,categories, description, price, stock} = req.body
+        const {id_product} = req.params 
+        const obj = { title, categories, description, price, stock}
+        await pool.query('UPDATE products SET ? WHERE id_product = ? ', [obj,id_product]) 
         res.json('Actualizado satifactoriamente.')
     }else{
         res.json({'message':'Unauthorized'})

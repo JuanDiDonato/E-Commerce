@@ -32,6 +32,7 @@ import Product from './Components/Client/Product'
 import RegisterAdmin from './Components/Admin/RegisterAdmin'
 import CreatePost from './Components/Admin/CreatePost'
 import ListProducts from './Components/Admin/ListProducts';
+import EditProduct from './Components/Admin/EditProduct'
 
 
 
@@ -48,6 +49,7 @@ function App() {
         <PrivateRoute exact path="/registeradmin" id_role={[2]} component={RegisterAdmin}/>
         <PrivateRoute exact path="/post" id_role={[2]} component={CreatePost}/>
         <PrivateRoute exact path="/list" id_role={[2]} component={ListProducts}/>
+        <PrivateRoute exact path="/edit/:id_product" id_role={[2]} component={EditProduct}/>
     </Router>
     )
 }

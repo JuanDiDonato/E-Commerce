@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom';
 import AdminServices from '../../Services/AdminServices'
 
 export default function ListProducts(props) {
-
+     let history = useHistory();
+     //eslint-disable-next-line
      const [products, setProducts] = useState([])
 
      useEffect(() => {
@@ -24,6 +26,10 @@ export default function ListProducts(props) {
 
      const view = (id_product) => {
           props.history.push("/product/" + id_product);
+     }
+
+     const edit_product = (id_product) => {
+          history.push('/edit/'+id_product)
      }
 
      return (
@@ -53,7 +59,7 @@ export default function ListProducts(props) {
                                         <th scope="row">{product.categories}</th>
                                         <th scope="row">${product.price}</th>
                                         <th scope="row"><i style={{cursor:'pointer'}} onClick={() => view(product.id_product)} className="fa fa-plus"></i></th>
-                                        <th scope="row"><i style={{cursor:'pointer'}} className="fa fa-pencil"></i></th>
+                                        <th scope="row"><i style={{cursor:'pointer'}} onClick={() => edit_product(product.id_product)} className="fa fa-pencil"></i></th>
                                         <th scope="row"><i style={{cursor:'pointer'}} onClick={() => delete_product(product.id_product)} className="fa fa-trash"></i></th>
                                    </tr>
                                    )

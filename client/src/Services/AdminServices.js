@@ -20,6 +20,15 @@ export default {
      categories : async () => {
           const {data : {categories}} = await axios.get('/admin/categories' , {validateStatus:false})
           return categories
+     },
+     product_id : async (id_product) =>{
+          const {data} = await axios.get('/admin/product/'+id_product ,{validateStatus:false})
+          return data
+     },
+     edit : async (post,id_product) => {
+          const {data} = await axios.put('/admin/edit/'+id_product,post,{validateStatus:false})
+          return data
      }
+
 
 }
