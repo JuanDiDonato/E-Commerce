@@ -1,6 +1,6 @@
 const {Router} = require('express')
 const router = Router()
-const {register, login, logout, products, product_id, categories, authenticated, get_cart, add_cart, delete_cart, mercadopago}  = require('../controllers/ClientControllers')
+const {register, login, logout, products, product_id, categories, authenticated, get_cart, add_cart, delete_cart, clear, mercadopago}  = require('../controllers/ClientControllers')
 const passport = require('passport')
 require('../passport')
 
@@ -35,6 +35,9 @@ router.post('/add/:id_product', passport.authenticate('jwt',{session:false}),add
 
 //Sacar al carrito
 router.delete('/add/:id_product', passport.authenticate('jwt',{session:false}),delete_cart)
+
+//Vaciar carrito
+router.delete('/clear',  passport.authenticate('jwt',{session:false}), clear)
 
 //Authenticated
 router.get('/authenticated', passport.authenticate('jwt', { session: false }), authenticated )

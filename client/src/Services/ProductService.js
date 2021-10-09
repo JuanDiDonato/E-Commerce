@@ -35,6 +35,10 @@ export default {
      categories : async () => {
           const {data : {categories}} = await axios.get('/client/categories' , {validateStatus:false})
           return categories
+     },
+     clear_cart : async () => {
+          const {data} = await axios.delete('/client/clear' ,{validateStatus:false})
+          return data
      }
 
     

@@ -136,5 +136,13 @@ ctrl.delete_cart = async (req, res) => {
     }
 }
 
+//Limpiar carrito
+ctrl.clear = async (req, res) => {
+    const {id_user} = req.user[0]
+    console.log(id_user);
+    await pool.query('DELETE FROM cart WHERE cart.id_user = ?', id_user)
+    res.status(200).json({error : false})
+}
+
 
 module.exports=ctrl

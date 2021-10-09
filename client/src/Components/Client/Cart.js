@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import ProductService from '../../Services/ProductService';
 
+
 export default function Cart() {
 
      const [cart, setCart] = useState([])
 
      useEffect(() => {
           ProductService.getcart().then(data => {
-               console.log(data);
                if(data.length > 0){
                     setCart(data)
                }else{
@@ -15,6 +15,7 @@ export default function Cart() {
                }
           })
      }, [])
+
 
      const delete_product = (id_product) =>{
           ProductService.delete_cart(id_product).then(data => {
@@ -41,6 +42,7 @@ export default function Cart() {
                     })
                }
           });
+
      }
 
      
