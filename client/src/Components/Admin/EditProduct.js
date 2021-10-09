@@ -15,6 +15,7 @@ export default function CreatePost(props) {
           AdminServices.categories().then(data => {
                setCategories(data)
           })
+          // eslint-disable-next-line
      }, [])
 
      const edit_post = e => {

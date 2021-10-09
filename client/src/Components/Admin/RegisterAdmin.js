@@ -5,6 +5,7 @@ import Message from '../../Components/Message';
 export default function RegisterAdmin(props) {
 
      const [user,setUser] = useState({email: "", password : ""});
+     // eslint-disable-next-line
      const [message,setMessage] = useState(null);
 
      useEffect(() => {

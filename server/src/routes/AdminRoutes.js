@@ -11,7 +11,7 @@ router.post('/registerAdmin', passport.authenticate('jwt',{session:false}),regis
 router.post('/create', passport.authenticate('jwt',{session:false}),create )
 
 //get category
-router.get('/categories',passport.authenticate('jwt',{session:false})  ,categories)
+router.get('/categories' ,categories)
 
 //create category
 router.post('/category', passport.authenticate('jwt',{session:false}), category)

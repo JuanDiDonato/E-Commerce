@@ -36,12 +36,7 @@ ctrl.logout = (req, res) => {
 //Obtener categorias
 ctrl.categories = async (req,res) => {
     const categories = await pool.query('SELECT * FROM categories')
-    if(categories.length > 0){
-        res.status(200).json({categories, error:false})
-    }else{
-        res.status(403).json({message: 'No se encontraron categorias', error: true})
-    }
-    
+    res.status(200).json({categories})
 }
 
 //Crear categorias
@@ -106,8 +101,8 @@ ctrl.create = async (req, res) => {
 ctrl.products = async (req, res) => {
     const {id_role} = req.user[0]
     if(id_role === 2){
-        const result = await pool.query('SELECT * FROM products')
-        res.json(result)
+        const products = await pool.query('SELECT * FROM products')
+        res.json({products})
     }else{
         res.json({'message':'Unauthorized'})
     }

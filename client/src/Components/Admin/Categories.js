@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import AdminServices from '../../Services/AdminServices';
+import { AdminContext } from '../../Context/AdminContext'
 
 export default function Categories() {
 
-     const [categories, setCategories] = useState([])
+     const {categories, setCategories} = useContext(AdminContext)
      const [editMode, setEditMode] = useState(false)
      const [oldCategory, setOldCategory] = useState()
-
-     useEffect(() => {
-          AdminServices.categories().then(data => {
-               setCategories(data)
-          })
-          // eslint-disable-next-line
-     }, [])
 
      const create_category = () => {
           const category = document.getElementById('category').value
@@ -28,7 +22,7 @@ export default function Categories() {
 
      const delete_category = (category) =>{
           AdminServices.delete_category(category).then(data => {
-               AdminServices.categories().then(data => {;
+               AdminServices.categories().then(data => {
                     setCategories(data)
                })
           })
@@ -62,10 +56,12 @@ export default function Categories() {
                     <button className="btn btn-primary btn-block mt-2 mb-5" onClick={() => create_category()}>Añadir categoria</button>}
                     
                </div>
+               {categories.length > 0 ?
                <div>
                     <div  className="text-center mb-3">
                          <h3>Lista de categorias</h3>
                     </div>
+                    
                     <div >
                          <table className="table">
                               <thead>
@@ -88,8 +84,8 @@ export default function Categories() {
 
                               </tbody>
                          </table>
-                    </div>
-               </div>
+                    </div> 
+               </div>: null}
           </div>
      )
 }

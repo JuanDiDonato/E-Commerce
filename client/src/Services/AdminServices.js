@@ -10,15 +10,15 @@ export default {
           return data
      },
      products : async () => {
-          const {data} = await axios.get('/admin/products', {validateStatus:false})
-          return data
+          const {data : {products}} = await axios.get('/admin/products', {validateStatus:false})
+          return products
      },
      delete: async (id_product) => {
           const {data} = await axios.delete('/admin/delete/'+id_product, {validateStatus:false})
           return data
      },
      categories : async () => {
-          const {data : {categories}} = await axios.get('/admin/categories' , {validateStatus:false})
+          const {data :{categories}} = await axios.get('/admin/categories' , {validateStatus:false})
           return categories
      },
      new_category : async (category) => {
