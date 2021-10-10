@@ -12,7 +12,7 @@ export default function Cart() {
      const [cart, setCart] = useState([])
      const [change, setChange] = useState(false)
 
-
+     console.log(user);
      useEffect(() => {
           ProductService.getcart().then(data => {
                if(data.length > 0){

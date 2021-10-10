@@ -9,7 +9,6 @@ import { ProductContext } from '../Context/ProductContext';
 const Navbar = () =>{
     const {isAuthenticated,setIsAuthenticated,setUser,user} = useContext(AuthContext);
     const { itemsToBuy } = useContext(ProductContext)
-    console.log(itemsToBuy);
     const onClickLogoutHandler = ()=>{
         AuthService.logout().then(data=>{
             if(data.error === false){
@@ -46,7 +45,6 @@ const Navbar = () =>{
                 {user.id_role === 1 ?
                 <div className='sidebar-social'>
                     <Link to='/cart' className="nav-item nav-link" type="button">{itemsToBuy}<i className="fa fa-shopping-cart mr-1" aria-hidden="true"></i></Link>
-                    <span id="cart_menu_num" data-action="cart-can" class="badge rounded-circle">5</span>
                 </div>
                     
                 : null}

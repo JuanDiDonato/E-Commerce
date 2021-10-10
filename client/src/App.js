@@ -35,6 +35,7 @@ import CreatePost from './Components/Admin/CreatePost'
 import ListProducts from './Components/Admin/ListProducts';
 import EditProduct from './Components/Admin/EditProduct'
 import Categories from './Components/Admin/Categories'
+import Orders from './Components/Admin/Orders'
 
 
 
@@ -59,6 +60,7 @@ function App() {
         <PrivateRoute exact path="/list" id_role={[2]} component={ListProducts}/>
         <PrivateRoute exact path="/edit/:id_product" id_role={[2]} component={EditProduct}/>
         <PrivateRoute exact path="/categories" id_role={[2]} component={Categories}/>
+        <PrivateRoute exact path="/orders" id_role={[2]} component={Orders}/>
     </Router>
     )
 }

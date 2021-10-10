@@ -41,6 +41,10 @@ export default {
      edit : async (post,id_product) => {
           const {data} = await axios.put('/admin/edit/'+id_product,post,{validateStatus:false})
           return data
+     },
+     get_orders : async () => {
+          const {data : {orders}} = await axios.get('/admin/order' ,{validateStatus:false})
+          return orders
      }
 
 

@@ -19,7 +19,7 @@ ctrl.SignToken = Id_user => {
 //Authenticated
 ctrl.authenticated = (req,res) => {
     const { id_user, email, id_role, address } = req.user[0];
-    res.status(200).json({ isAuthenticated: true, user: { id_user, email, id_role, address }});
+    res.status(200).json({ isAuthenticated: true, user: { id_user, email, id_role, address}});
 }
 
 
@@ -155,6 +155,14 @@ ctrl.clear = async (req, res) => {
     const {id_user} = req.user[0]
     console.log(id_user);
     await pool.query('DELETE FROM cart WHERE cart.id_user = ?', id_user)
+    res.status(200).json({error : false})
+}
+
+//Agregar order
+ctrl.order = async (req, res) => {
+    const {id_user} = req.user[0]
+    const {id_product, address, quantity} = req.body
+    await pool.query('INSERT INTO orders SET ?', {id_user, address,id_product,quantity})
     res.status(200).json({error : false})
 }
 

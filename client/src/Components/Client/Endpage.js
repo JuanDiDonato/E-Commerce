@@ -13,9 +13,23 @@ export default function Endpage(props) {
           ProductService.getcart().then(data => {
                setCart(data)
           })
+          
      }, [])
- 
+
+     const push_order = () => {
+          cart.forEach(product => {
+               console.log(product);
+               let id_product = product.id_product
+               let quantity = product.quantity
+               ProductService.add_order(id_product, user.address, quantity ).then(data => {
+                    console.log(data);
+               })
+          });
+     }
+     
+
      const Back = () => {
+          push_order()
           setCart([])
           ProductService.clear_cart().then(data => {
                console.log(data);
@@ -33,6 +47,7 @@ export default function Endpage(props) {
                               return(
                                    <div key={product.id_product} className="border mx-auto p-3">
                                         <li>{product.title}</li>
+                                        <li>{product.quantity}</li>
                                         <img src={product.photo} alt={product.title} />
                                    </div>
                               )

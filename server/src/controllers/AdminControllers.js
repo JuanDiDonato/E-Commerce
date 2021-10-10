@@ -147,4 +147,22 @@ ctrl.delete_product = async (req, res) => {
 
 }
 
+//Borrar una orden
+ctrl.delete_order = async (req, res) => {
+    const {id_order} = req.body
+    if(id_order === '' || id_order === null){
+        res.status(403).json({error : true})
+    }else{
+        await pool.query('DELETE FROM orders WHERE id_order = ?', id_order)
+        res.status(200).json({error : false})
+    }
+}
+
+//Obtener ordenes
+ctrl.get_orders = async (req, res) => {
+    const orders = await pool.query('SELECT * FROM orders')
+    res.status(200).json({orders})
+}
+
+
 module.exports=ctrl

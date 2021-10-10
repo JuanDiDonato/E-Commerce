@@ -36,10 +36,20 @@ export default {
           const {data : {categories}} = await axios.get('/client/categories' , {validateStatus:false})
           return categories
      },
+     //Clear cart
      clear_cart : async () => {
           const {data} = await axios.delete('/client/clear' ,{validateStatus:false})
           return data
-     }
+     },
+     //add order
+     add_order : async (id_product, address, quantity) => {
+          console.log(id_product);
+          console.log(address);
+          const {data} = await axios.post('/client/order', {id_product, address, quantity},{validateStatus:false})
+          return data
+     },
+     
+
 
     
 
