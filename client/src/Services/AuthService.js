@@ -19,6 +19,12 @@ export default {
     isAuthenticated : async()=>{
         const {data} = await axios.get('/client/authenticated',{validateStatus:false})
         return data
+    },
+
+    address : async(address) => {
+        console.log(address);
+        const {data} = await axios.post('/client/address', {address},{validateStatus:false})
+        return data
     }
 
 }

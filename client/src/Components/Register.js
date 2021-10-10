@@ -50,12 +50,12 @@ const Register = props=>{
                     <div className="card-body">        
                         <form onSubmit={onSubmit}>
                                 <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input type="email" name="email" onChange={onChange} value={user.email} className="form-control" placeholder="Ingresá tu Email"/>
+                                    <label htmlFor="email">Email</label>
+                                    <input type="email" name="email" onChange={onChange} value={user.email} className="form-control" placeholder="Ingresá tu Email"/>
                                 </div>
                                 <div className="form-group">
-                            <label htmlFor="password"className="mt-4 " > Contraseña</label>
-                            <input type="password" name="password" onChange={onChange} value={user.password} className="form-control mb-5" placeholder="Ingresa tu Contraseña"/>
+                                    <label htmlFor="password"className="mt-4 " > Contraseña</label>
+                                    <input type="password" name="password" onChange={onChange} value={user.password} className="form-control mb-5" placeholder="Ingresa tu Contraseña"/>
                                 </div>
                                 <div className="form-group">
                             <button className="btn col-12 btn-warning btn-block" type="submit">Registrar</button>

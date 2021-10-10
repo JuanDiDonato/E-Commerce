@@ -1,10 +1,15 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import ProductService from '../../Services/ProductService';
-
+import AuthService from '../../Services/AuthService'
+import {AuthContext} from '../../Context/AuthContext';
 
 export default function Cart() {
 
+     const {user, setUser} = useContext(AuthContext) 
      const [cart, setCart] = useState([])
+     const [change, setChange] = useState(false)
+
+     console.log(user);
 
      useEffect(() => {
           ProductService.getcart().then(data => {
@@ -44,11 +49,24 @@ export default function Cart() {
           });
 
      }
+     const changed = () => {
+          setChange(true)
+     }
 
-     
+     const change_address = () => {
+          const address = document.getElementById('address').value
+          AuthService.address(address).then(data => {
+               alert(data.message)
+               AuthService.isAuthenticated().then(data => {
+                    setUser(data.user)
+               })
+          })
+          document.getElementById('address').value = ''
+          setChange(false)
+     }
 
      return (
-          <div>
+          <div className="container mx-auto mt-5">
                <h3>Mi Changuito</h3>
                <div>
                     {cart.map(product => {
@@ -64,6 +82,29 @@ export default function Cart() {
                               </div>
                          )
                     })}
+                    <div>
+                         {user.address === '' ? 
+                              <div>
+                                   <h3>Si desea adquirir estos productos,por favor ingrese la direccion del envio</h3>
+                                   <input type="text"  id="address" placeholder="Su direccion de envio"/>
+                                   <button type="button" onClick={() => change_address()} className="btn btn-primary">Agregar direccion</button>
+                              </div>
+                              :
+                              <div>
+                                   <h3>La direccion de envio actual es : {user.address}</h3>
+                                   <div>
+                                        
+                                        
+                                        {change ? 
+                                             <div>
+                                                  <input type="text"  id="address" placeholder="Su direccion de envio"/> 
+                                                  <button type="button" onClick={() => change_address()} className="btn btn-primary">Actualizar direccion</button>
+                                             </div>
+                                             : <button type="button" onClick={() => changed()} className="btn btn-primary">Cambiar direccion</button>}
+                                   </div>
+                                   
+                              </div>}
+                    </div>
                     <div>
                          <h4>¿Esta todo correcto?</h4>
                          <div>

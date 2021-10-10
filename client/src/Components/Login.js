@@ -19,7 +19,6 @@ const Login = props => {
     const onSubmit = e =>{
         e.preventDefault();
         AuthService.login(user).then(data=>{
-        console.log(data.data);
             const {isAuthenticated,user,message} = data.data;
             if(isAuthenticated){
                 authContext.setUser(user);

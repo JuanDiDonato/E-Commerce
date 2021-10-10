@@ -18,8 +18,8 @@ ctrl.SignToken = Id_user => {
 
 //Authenticated
 ctrl.authenticated = (req,res) => {
-    const { id_user, email, id_role } = req.user[0];
-    res.status(200).json({ isAuthenticated: true, user: { id_user, email, id_role }});
+    const { id_user, email, id_role, address } = req.user[0];
+    res.status(200).json({ isAuthenticated: true, user: { id_user, email, id_role, address }});
 }
 
 
@@ -38,6 +38,20 @@ ctrl.register = async (req, res) => {
             await pool.query('INSERT INTO users SET ?', {email,'password': HashPassword, id_role})
             res.status(200).json({message:{'message':'Usuario creado exitosamente', 'error' : false}})
         }
+    }
+}
+
+//Registrar Domicilio
+ctrl.address = async (req, res) => {
+    const {address} = req.body
+    console.log(req.body);
+    const {id_user} = req.user[0]
+    if(address === '' || address === null){
+        res.status(403).json({'message' : 'Ingrese una direccion.', error : true})
+    }else{
+        await pool.query('UPDATE users SET address = ? WHERE users.id_user = ?', [address, id_user])
+        res.status(200).json({'message' : 'Direccion actualizada', error : false})
+
     }
 }
 
