@@ -3,10 +3,13 @@ import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
 import AuthService from '../Services/AuthService';
 import { AuthContext } from '../Context/AuthContext';
+import { ProductContext } from '../Context/ProductContext';
+
 
 const Navbar = () =>{
     const {isAuthenticated,setIsAuthenticated,setUser,user} = useContext(AuthContext);
-
+    const { itemsToBuy } = useContext(ProductContext)
+    console.log(itemsToBuy);
     const onClickLogoutHandler = ()=>{
         AuthService.logout().then(data=>{
             if(data.error === false){
@@ -36,11 +39,16 @@ const Navbar = () =>{
     const authenticatedNavBar = ()=>{
         return(
             <>
+
                 <Link to="/" className="nodecoracion">
                     <div className="nav-item nav-link" ><i className="fa fa-home" aria-hidden="true"></i> Inicio</div>
                 </Link>  
                 {user.id_role === 1 ?
-                    <Link to='/cart' className="nav-item nav-link" type="button"><i className="fa fa-shopping-cart mr-1" aria-hidden="true"></i></Link>
+                <div className='sidebar-social'>
+                    <Link to='/cart' className="nav-item nav-link" type="button">{itemsToBuy}<i className="fa fa-shopping-cart mr-1" aria-hidden="true"></i></Link>
+                    <span id="cart_menu_num" data-action="cart-can" class="badge rounded-circle">5</span>
+                </div>
+                    
                 : null}
                 
 

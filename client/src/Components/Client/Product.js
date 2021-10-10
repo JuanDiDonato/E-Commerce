@@ -1,12 +1,14 @@
 
 //eslint-disable-next-line
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import ProductService from '../../Services/ProductService';
+import { ProductContext } from '../../Context/ProductContext';
 
 export default function Product(props) {
      const { match: { params } } = props;
      const id_product = params.id_product
 
+     const {itemsToBuy,setItemsToBuy} = useContext(ProductContext)
      const [product, setProduct] = useState({ id_product: "", title: "", categories: "", price: "", description: "", photo: "" })
 
      useEffect(() => {
@@ -24,6 +26,10 @@ export default function Product(props) {
           const quantity =document.getElementById('quantity').value
           ProductService.add(id_product,quantity).then(data => {
                console.log(data);
+               if(data.error === false){
+                    setItemsToBuy(itemsToBuy + 1)
+               }
+               
           })
      }
 

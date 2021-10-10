@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-
+import ProductProvider from './Context/ProductContext';
 //import hocs
 //eslint-disable-next-line
 import PrivateRoute from './hocs/PrivateRoute';
@@ -41,12 +41,17 @@ import Categories from './Components/Admin/Categories'
 function App() {
   return (
     <Router>
-        <Navbar/>
+        <ProductProvider>
+          <Navbar/>
+          <PrivateRoute exact path="/product/:id_product" id_role={[1,2]} component={Product}/>
+          <PrivateRoute exact path="/cart" id_role={[1]} component={Cart}/>
+        </ProductProvider>
+        
         <Route exact path="/" component={Index} />
         <UnPrivateRoute exact path="/login" component={Login} />
         <UnPrivateRoute exact path="/register" component={Register} />
-        <PrivateRoute exact path="/cart" id_role={[1]} component={Cart}/>
-        <PrivateRoute exact path="/product/:id_product" id_role={[1,2]} component={Product}/>
+        
+        
         <PrivateRoute exact path="/endpage" id_role={[1]} component={Endpage}/>
 
         <PrivateRoute exact path="/registeradmin" id_role={[2]} component={RegisterAdmin}/>

@@ -2,23 +2,27 @@ import React, {useState, useEffect, useContext} from 'react'
 import ProductService from '../../Services/ProductService';
 import AuthService from '../../Services/AuthService'
 import {AuthContext} from '../../Context/AuthContext';
+import { ProductContext } from '../../Context/ProductContext';
+
 
 export default function Cart() {
 
+     const {setItemsToBuy} = useContext(ProductContext)
      const {user, setUser} = useContext(AuthContext) 
      const [cart, setCart] = useState([])
      const [change, setChange] = useState(false)
 
-     console.log(user);
 
      useEffect(() => {
           ProductService.getcart().then(data => {
                if(data.length > 0){
                     setCart(data)
+                    setItemsToBuy(data.length)
                }else{
                     setCart([])
                }
           })
+          // eslint-disable-next-line
      }, [])
 
 
@@ -30,6 +34,7 @@ export default function Cart() {
                console.log(data);
                if(data.length > 0){
                     setCart(data)
+                    setItemsToBuy(data.length)
                }else{
                     setCart([])
                }
