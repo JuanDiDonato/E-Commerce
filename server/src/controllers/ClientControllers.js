@@ -167,5 +167,22 @@ ctrl.order = async (req, res) => {
     res.status(200).json({error : false})
 }
 
+ctrl.history = async (req, res) => {
+    const {id_user} = req.user[0]
+    const history = await pool.query('SELECT * FROM history_shopping WHERE id_user = ?', id_user)
+    res.status(200).json({history})
+}
+
+ctrl.save_history= async (req, res) => {
+    const {id_user} = req.user[0]
+    const {id_product, quantity} = req.body
+    if(id_product === null ||id_product === '' || quantity === null || quantity === ''){
+        res.status(403).json({error : true})
+    }else{
+        await pool.query('INSERT INTO history_shopping SET ?', {id_user,id_product,quantity})
+        res.status(200).json({error: false})
+    }
+
+}
 
 module.exports=ctrl

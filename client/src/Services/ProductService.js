@@ -43,9 +43,17 @@ export default {
      },
      //add order
      add_order : async (id_product, address, quantity) => {
-          console.log(id_product);
-          console.log(address);
           const {data} = await axios.post('/client/order', {id_product, address, quantity},{validateStatus:false})
+          return data
+     },
+     //get history
+     history : async() => {
+          const {data : {history}} = await axios.get('/client/history',{validateStatus:false})
+          return history
+     },
+     //save in history
+     save_in_history : async(id_product, quantity) => {
+          const {data} = await axios.post('/client/history', {id_product, quantity},{validateStatus:false})
           return data
      },
      

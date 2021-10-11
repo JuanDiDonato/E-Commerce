@@ -36,6 +36,7 @@ export default function Cart() {
 
                } else {
                     setCart([])
+                    setTotal(0)
                }
           })
           // eslint-disable-next-line
@@ -60,6 +61,7 @@ export default function Cart() {
                             });
                     } else {
                          setCart([])
+                         setTotal(0)
                     }
                })
                setMessage(data)

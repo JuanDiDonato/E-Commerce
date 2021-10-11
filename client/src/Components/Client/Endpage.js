@@ -24,6 +24,9 @@ export default function Endpage(props) {
                ProductService.add_order(id_product, user.address, quantity ).then(data => {
                     console.log(data);
                })
+               ProductService.save_in_history(id_product, quantity).then(data => {
+                    console.log(data);
+               })
           });
      }
      
