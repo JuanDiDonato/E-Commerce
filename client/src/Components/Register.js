@@ -58,7 +58,7 @@ const Register = props=>{
                                     <input type="password" name="password" onChange={onChange} value={user.password} className="form-control mb-5" placeholder="Ingresa tu Contraseña"/>
                                 </div>
                                 <div className="form-group">
-                            <button className="btn col-12 btn-warning btn-block" type="submit">Registrar</button>
+                            <button className="btn col-12 btn-outline-warning btn-block" type="submit"><h5>Registrar</h5></button>
                                 </div>
                         </form>
                         </div>

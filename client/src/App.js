@@ -15,7 +15,6 @@ import './assets/css/font-awesome.min.css'
 //import of JS
 import 'jquery';
 import 'popper.js';
-import 'bootstrap/dist/js/bootstrap';
 
 
 //General components

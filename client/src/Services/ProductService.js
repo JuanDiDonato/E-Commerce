@@ -23,8 +23,8 @@ export default {
      },
      //Delete of cart
      delete_cart : async (id_product) =>{
-          const {data} = await axios.delete('/client/add/'+id_product , {validateStatus:false})
-          return data
+          const {data : {messages}} = await axios.delete('/client/add/'+id_product , {validateStatus:false})
+          return messages
      },
      //Mercado pago
      mercadopago : async (product_data) => {

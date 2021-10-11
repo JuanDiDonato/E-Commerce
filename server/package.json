@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development nodemon src/server.js",
-    "start" : "cross-env NODE_ENV=production node src/server.js"
+    "start": "cross-env NODE_ENV=production node src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +21,7 @@
     "mercadopago": "^1.5.8",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.12",
+    "nodemon": "^2.0.13",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
