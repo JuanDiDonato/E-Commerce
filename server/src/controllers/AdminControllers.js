@@ -6,10 +6,10 @@ const ctrl = {}
 
 //Crear usuario admin
 ctrl.register_admin = async (req, res) => {
-    const {email, password} = req.body
+    const {email,fullname ,password} = req.body
     const {id_role} = req.user[0]
     if(id_role === 2){
-        if(email == null || email =='' || password == null || password == ''){
+        if(email == null || email =='' || password == null || password == '' ||fullname == '' || fullname==null){
             res.status(403).json({message:{'message':'Complete todos los campos', 'error' : true}})
         }else{
             const VerifyUser = await pool.query('SELECT * FROM users WHERE email = ?', email)
@@ -17,7 +17,7 @@ ctrl.register_admin = async (req, res) => {
                 res.status(403).json({message:{'message':'Este usuario ya existe', 'error' : true}})
             }else{
                 const HashPassword = await EncryptPassword(password)
-                await pool.query('INSERT INTO users SET ?', {email,'password': HashPassword, id_role})
+                await pool.query('INSERT INTO users SET ?', {email, fullname,'password': HashPassword, id_role})
                 res.status(200).json({message:{'message':'Usuario creado exitosamente', 'error' : false}})
             }
         }

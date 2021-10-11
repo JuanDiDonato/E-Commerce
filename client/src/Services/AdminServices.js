@@ -45,6 +45,10 @@ export default {
      get_orders : async () => {
           const {data : {orders}} = await axios.get('/admin/order' ,{validateStatus:false})
           return orders
+     },
+     end_order : async (id_order) => {
+          const {data} = await axios.post('/admin/order/delete', {id_order},{validateStatus:false})
+          return data
      }
 
 

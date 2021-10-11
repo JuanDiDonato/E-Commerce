@@ -13,6 +13,17 @@ export default function Orders() {
           })
      }, [])
 
+     const end_order = (id_order) => {
+          AdminServices.end_order(id_order).then(data => {
+               if(data.error === false){
+                    AdminServices.get_orders().then(data => {
+                         setOrders(data)
+                    })
+               }
+          })
+          
+     }
+
      return (
           <div className="container col-md-10 mx-auto mt-5">
                <div>
@@ -38,11 +49,11 @@ export default function Orders() {
                                              return (
                                                   <tr className="text-center" key={order.id_order}>
                                                        <th scope="col">{order.id_order}</th>
-                                                       <th scope="col" className="text-primary">{order.id_user}</th>
+                                                       <th scope="col" className="text-primary">{order.fullname}</th>
                                                        <th scope="col" className="text-primary">{order.address}</th>
-                                                       <th scope="col" className="text-danger">{order.id_product}</th>
-                                                       <th scope="col" className="text-danger">{order.quantity} Unidad/es</th>
-                                                       <th scope="col" className="text-danger">Finalizar Pedido</th>
+                                                       <th scope="col" className="text-primary">{order.id_product}</th>
+                                                       <th scope="col" className="text-primary">{order.quantity} Unidad/es</th>
+                                                       <th scope="col" className="text-danger" style={{cursor:'pointer'}} onClick={() => end_order(order.id_order)}>Finalizar Pedido</th>
                                                   </tr>
                                              )
                                         })

@@ -4,7 +4,7 @@ import Message from '../../Components/Message';
 
 export default function RegisterAdmin(props) {
 
-     const [user,setUser] = useState({email: "", password : ""});
+     const [user,setUser] = useState({email: "", fullname: "",password : ""});
      // eslint-disable-next-line
      const [message,setMessage] = useState(null);
 
@@ -21,7 +21,7 @@ export default function RegisterAdmin(props) {
      }
 
      const resetForm = () => {
-          setUser({ email: "", password: "" });
+          setUser({ email: "", fullname : "",password: "" });
      }
 
      const onSubmit = e => {
@@ -52,6 +52,10 @@ export default function RegisterAdmin(props) {
                                         <div className="form-group">
                                              <label htmlFor="email">Email</label>
                                              <input type="email" name="email" onChange={onChange} value={user.email} className="form-control" placeholder="Ingresá tu Email" />
+                                        </div>
+                                        <div className="form-group">
+                                             <label htmlFor="text">Nombre completo</label>
+                                             <input type="text" name="fullname" onChange={onChange} value={user.fullname} className="form-control" placeholder="Ingresá tu Email" />
                                         </div>
                                         <div className="form-group">
                                              <label htmlFor="password" className="mt-4 " > Contraseña</label>

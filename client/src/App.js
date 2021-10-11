@@ -27,6 +27,7 @@ import Register from './Components/Register';
 import Cart from './Components/Client/Cart'
 import Product from './Components/Client/Product'
 import Endpage from './Components/Client/Endpage'
+import Shopping from './Components/Client/Shopping';
 
 //Admin components
 import RegisterAdmin from './Components/Admin/RegisterAdmin'
@@ -53,7 +54,7 @@ function App() {
         
         
         <PrivateRoute exact path="/endpage" id_role={[1]} component={Endpage}/>
-
+        <PrivateRoute exact path="/buys" id_role={[1]} component={Shopping}/>
         <PrivateRoute exact path="/registeradmin" id_role={[2]} component={RegisterAdmin}/>
         <PrivateRoute exact path="/post" id_role={[2]} component={CreatePost}/>
         <PrivateRoute exact path="/list" id_role={[2]} component={ListProducts}/>

@@ -18,16 +18,16 @@ ctrl.SignToken = Id_user => {
 
 //Authenticated
 ctrl.authenticated = (req,res) => {
-    const { id_user, email, id_role, address } = req.user[0];
-    res.status(200).json({ isAuthenticated: true, user: { id_user, email, id_role, address}});
+    const { id_user, email, id_role, address, fullname } = req.user[0];
+    res.status(200).json({ isAuthenticated: true, user: { id_user, email, id_role, address, fullname}});
 }
 
 
 //Registrar usuario
 ctrl.register = async (req, res) => {
-    const {email, password} = req.body
+    const {email, fullname,password} = req.body
     const id_role= '1'
-    if(email == null || email =='' || password == null || password == ''){
+    if(email === null || email ==='' || password === null || password === '' || fullname === '' ||fullname === null){
         res.status(403).json({message:{'message':'Complete todos los campos', 'error' : true}})
     }else{
         const VerifyUser = await pool.query('SELECT * FROM users WHERE email = ?', email)
@@ -35,7 +35,7 @@ ctrl.register = async (req, res) => {
             res.status(403).json({message:{'message':'Este usuario ya existe', 'error' : true}})
         }else{
             const HashPassword = await EncryptPassword(password)
-            await pool.query('INSERT INTO users SET ?', {email,'password': HashPassword, id_role})
+            await pool.query('INSERT INTO users SET ?', {fullname,email,'password': HashPassword, id_role})
             res.status(200).json({message:{'message':'Usuario creado exitosamente', 'error' : false}})
         }
     }
@@ -58,10 +58,10 @@ ctrl.address = async (req, res) => {
 //Loguear usuario
 ctrl.login = async (req, res) => {
     if(req.isAuthenticated()){
-        const {email, id_user, id_role} = req.user
+        const {fullname,email, id_user, id_role, address} = req.user
         token = ctrl.SignToken(id_user)
         res.cookie('access_token', token, {httpOnly : true, sameSite : true})
-        res.status(200).json({isAuthenticated : true, user: {email,id_user,id_role}})
+        res.status(200).json({isAuthenticated : true, user: {fullname, email,id_user,id_role, address}})
     }
 }
 
@@ -160,9 +160,10 @@ ctrl.clear = async (req, res) => {
 
 //Agregar order
 ctrl.order = async (req, res) => {
-    const {id_user} = req.user[0]
+    const {id_user, fullname} = req.user[0]
+    console.log(req.user);
     const {id_product, address, quantity} = req.body
-    await pool.query('INSERT INTO orders SET ?', {id_user, address,id_product,quantity})
+    await pool.query('INSERT INTO orders SET ?', {id_user, fullname,address,id_product,quantity})
     res.status(200).json({error : false})
 }
 

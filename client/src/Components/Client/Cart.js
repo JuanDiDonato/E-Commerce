@@ -58,8 +58,6 @@ export default function Cart() {
                                    setTotal(new Intl.NumberFormat().format(a))
                               }
                             });
-
-
                     } else {
                          setCart([])
                     }

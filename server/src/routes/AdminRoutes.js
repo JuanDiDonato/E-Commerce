@@ -35,7 +35,7 @@ router.put('/edit/:id_product',passport.authenticate('jwt',{session:false}), edi
 router.delete('/delete/:id_product',passport.authenticate('jwt',{session:false}), delete_product )
 
 //Borrar una order
-router.delete('/order',  passport.authenticate('jwt',{session:false}), delete_order)
+router.post('/order/delete',  passport.authenticate('jwt',{session:false}), delete_order)
 
 //Obterner ordenes
 router.get('/order', passport.authenticate('jwt',{session:false}), get_orders)
