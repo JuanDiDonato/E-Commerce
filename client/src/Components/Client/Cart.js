@@ -16,11 +16,11 @@ export default function Cart() {
      const [total, setTotal] = useState(0);
      let count = 0
      let a =0
-     console.log(user);
      useEffect(() => {
           ProductService.getcart().then(data => {
                if (data.length > 0) {
                     setCart(data)
+                    console.log(data);
                     setItemsToBuy(data.length)
 
                     data.forEach(element => {

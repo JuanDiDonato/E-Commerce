@@ -88,9 +88,10 @@ ctrl.delete_category = async (req, res) => {
 //Crear producto
 ctrl.create = async (req, res) => {
     const {id_role} = req.user[0]
+    const disable = 0
     if(id_role === 2){
         const {title, categories, description, price, stock, photo} = req.body
-        await pool.query('INSERT INTO products SET ?', {title,categories,description, price, stock, photo})
+        await pool.query('INSERT INTO products SET ?', {title,categories,description, price, stock, photo,disable})
         res.json('Añadido exitosamente.')
     }else{
         res.json({'message':'Unauthorized'})
@@ -120,6 +121,20 @@ ctrl.product_id = async (req, res) => {
     }
     
 }
+
+//Deshabilitar un producto
+ctrl.disable = async (req, res) => {
+    const {id_role} = req.user[0]
+    const {disable} = req.body
+    console.log(disable);
+    if(id_role === 2){
+        const {id_product} = req.params 
+        await pool.query('UPDATE products SET disable = ? WHERE id_product = ? ', [disable,id_product]) 
+        res.json('Actualizado satifactoriamente.')
+    }else{
+        res.json({'message':'Unauthorized'})
+    }
+}
 //Editar producto por id
 ctrl.edit = async (req, res) => {
     const {id_role} = req.user[0]
@@ -133,6 +148,7 @@ ctrl.edit = async (req, res) => {
         res.json({'message':'Unauthorized'})
     }
 }
+
 
 //Borrar producto por id
 ctrl.delete_product = async (req, res) => {

@@ -1,5 +1,6 @@
 import React, {useState,useEffect,useContext} from 'react'
 import ProductService from '../../Services/ProductService';
+
 import {AuthContext} from '../../Context/AuthContext';
 
 
@@ -12,6 +13,7 @@ export default function Endpage(props) {
 
      useEffect(() => {
           ProductService.getcart().then(data => {
+               console.log(data);
                setCart(data)
                setSales(data.length)
           })
@@ -31,6 +33,8 @@ export default function Endpage(props) {
                ProductService.save_in_history(ProductData).then(data => {
                     console.log(data);
                })
+               let stock = product.stock - product.quantity
+               ProductService.stock(product.id_product, stock)
           });
           incomes.forEach(element => {
                income += element 

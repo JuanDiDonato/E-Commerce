@@ -19,16 +19,19 @@ export default function Statistics() {
 
 
      let date = []
+     // eslint-disable-next-line
      statistics.map(statistic => {
           date.push(moment(statistic.last_updated).fromNow())
      })
 
      let sales = []
+     // eslint-disable-next-line
      statistics.map(statistic => {
           sales.push(statistic.sales)
      })
 
      let incomes = []
+     // eslint-disable-next-line
      statistics.map(statistic => {
           incomes.push(statistic.income)
      })

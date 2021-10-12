@@ -37,18 +37,21 @@ const Navbar = () => {
         <Link to="/" className="nav-link">
           <div className="text-light" ><h5><i className="fa fa-home" aria-hidden="true"></i> Inicio</h5></div>
         </Link>
-        <Link to="/buys" className="nav-link">
-          <div className="text-light" ><h5>Mis Compras</h5></div>
-        </Link>
+        
         {user.id_role === 1 ?
           <div className="cart-menu align-items-center d-flex">
+            <Link to="/buys" className="nav-link">
+                <div className="text-light" ><h5>Mis Compras</h5></div>
+                </Link>
             <div className="sidebar-social">
               <li>
                 <Link to="/cart" className="cart"><i className="fa fa-shopping-cart mr-1 text-light" aria-hidden="true"></i>
                   <span id="cart_menu_num" data-action="cart-can" className="text-warning">{itemsToBuy}</span>
                 </Link>
+                
               </li>
             </div>
+            
           </div>
           : null}
 

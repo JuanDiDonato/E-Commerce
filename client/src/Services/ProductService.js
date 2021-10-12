@@ -12,8 +12,8 @@ export default {
           return data
      },
      //Add product to cart
-     add : async (id_product,quantity) => {
-          const {data : {messages}} = await axios.post('/client/add/'+id_product, {quantity}, {validateStatus:false})
+     add : async (id_product,quantity,stock) => {
+          const {data : {messages}} = await axios.post('/client/add/'+id_product, {quantity,stock}, {validateStatus:false})
           return messages
      },
      //Get cart
@@ -59,6 +59,11 @@ export default {
      //add statistics
      statistics : async (sales,income) => {
           const {data} = await axios.post('/client/statistics', {sales, income},{validateStatus:false})
+          return data
+     },
+     //stock
+     stock : async (id_product,stock) => {
+          const {data} = await axios.put('/client/edit/stock/'+id_product, {stock},{validateStatus:false})
           return data
      }
      

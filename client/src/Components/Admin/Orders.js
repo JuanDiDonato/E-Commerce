@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import AdminServices from '../../Services/AdminServices'
 
 
-export default function Orders() {
+export default function Orders(props) {
 
      const [orders, setOrders] = useState([])
 
@@ -21,7 +21,10 @@ export default function Orders() {
                     })
                }
           })
-          
+     }
+
+     const view = (id_product) => {
+          props.history.push("/product/" + id_product);
      }
 
      return (
@@ -51,7 +54,7 @@ export default function Orders() {
                                                        <th scope="col">{order.id_order}</th>
                                                        <th scope="col" className="text-primary">{order.fullname}</th>
                                                        <th scope="col" className="text-primary">{order.address}</th>
-                                                       <th scope="col" className="text-primary">{order.id_product}</th>
+                                                       <th scope="col" className="text-primary" style={{cursor:'pointer'}} onClick={() => view(order.id_product)}>{order.id_product}</th>
                                                        <th scope="col" className="text-primary">{order.quantity} Unidad/es</th>
                                                        <th scope="col" className="text-danger" style={{cursor:'pointer'}} onClick={() => end_order(order.id_order)}>Finalizar Pedido</th>
                                                   </tr>

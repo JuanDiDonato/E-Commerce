@@ -17,9 +17,6 @@ export default function Product(props) {
      useEffect(() => {
           ProductService.product_id(id_product).then(data => {
                setProduct(data)
-   
-
-
           })
 
           //eslint-disable-next-line
@@ -27,14 +24,12 @@ export default function Product(props) {
 
      const add_to_cart = () => {
           const quantity =document.getElementById('quantity').value
-          ProductService.add(id_product,quantity).then(data => {
+          let stock = product.stock
+          ProductService.add(id_product,quantity,stock).then(data => {
                setMessage(data)
                if(data.error === false){
                     setItemsToBuy(itemsToBuy + 1)
-
                }
-           
-
           })
      }
 

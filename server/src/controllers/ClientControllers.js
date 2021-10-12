@@ -92,6 +92,15 @@ ctrl.mercadopago = (req, res) => {
     })
 }
 
+//edit stock
+ctrl.stock = async (req, res) => {
+    const {id_product} = req.params
+    const {stock} = req.body
+    await pool.query('UPDATE products SET stock = ? WHERE id_product = ?', [stock, id_product])
+    res.status(200).json({error:false})
+}
+
+
 //Obtener productos
 ctrl.products = async (req, res) => {
     const result = await pool.query('SELECT * FROM products')
@@ -119,7 +128,7 @@ ctrl.categories = async (req,res) => {
 //Ver carrito
 ctrl.get_cart = async (req, res) => {
     const {id_user} = req.user[0]
-    const result = await pool.query('SELECT products.id_product, products.title, products.price AS unit_price, products.photo, cart.quantity FROM products INNER JOIN cart ON cart.id_product = products.id_product WHERE cart.id_user  = ?', id_user)
+    const result = await pool.query('SELECT products.id_product, products.title, products.price AS unit_price, products.stock ,products.photo, cart.quantity FROM products INNER JOIN cart ON cart.id_product = products.id_product WHERE cart.id_user  = ?', id_user)
     res.status(200).json(result)
 }
 
@@ -127,12 +136,12 @@ ctrl.get_cart = async (req, res) => {
 ctrl.add_cart = async (req, res) => {
     const {id_product} = req.params
     const {id_user} = req.user[0]
-    const {quantity} = req.body
+    const {quantity, stock} = req.body
     const product_in_cart = await pool.query('SELECT * FROM cart WHERE id_product = ? AND id_user = ?', [id_product,id_user])
     if(product_in_cart.length > 0){
         res.status(403).json({messages:{'message' : 'Este producto ya esta en el carrito', 'error' : true}})
     }else{
-        await pool.query('INSERT INTO cart SET ?', {id_product, id_user, quantity})
+        await pool.query('INSERT INTO cart SET ?', {id_product, id_user, quantity, stock})
         res.status(200).json({messages:{'message' : 'Producto agregado al carrito', 'error' : false}})
     }
 }
