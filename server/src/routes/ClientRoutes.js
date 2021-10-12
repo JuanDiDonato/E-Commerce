@@ -1,6 +1,6 @@
 const {Router} = require('express')
 const router = Router()
-const {register, address, login, logout, products, product_id, categories, authenticated, get_cart, add_cart, delete_cart, clear,order, mercadopago, history, save_history}  = require('../controllers/ClientControllers')
+const {register, address, login, logout, products, product_id, categories, authenticated, get_cart, add_cart, delete_cart, clear,order, mercadopago, history, save_history, statistics}  = require('../controllers/ClientControllers')
 const passport = require('passport')
 require('../passport')
 
@@ -51,5 +51,8 @@ router.post('/history', passport.authenticate('jwt',{session:false}), save_histo
 
 //Authenticated
 router.get('/authenticated', passport.authenticate('jwt', { session: false }), authenticated )
+
+//Agregar estadisticas
+router.post('/statistics', passport.authenticate('jwt', { session: false }), statistics)
 
 module.exports=router

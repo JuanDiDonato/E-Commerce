@@ -6,34 +6,47 @@ import {AuthContext} from '../../Context/AuthContext';
 export default function Endpage(props) {
      // const { location : {search}} = props;
      const [cart, setCart] = useState([])
+     const [sales, setSales] = useState()
      const {user} = useContext(AuthContext)
 
 
      useEffect(() => {
           ProductService.getcart().then(data => {
                setCart(data)
+               setSales(data.length)
           })
           
      }, [])
 
+
      const push_order = () => {
+          const incomes = []
+          let income = 0         
           cart.forEach(product => {
-               console.log(product);
-               let id_product = product.id_product
-               let quantity = product.quantity
-               ProductService.add_order(id_product, user.address, quantity ).then(data => {
+               incomes.push(product.unit_price * product.quantity)
+               const ProductData = {'id_product': product.id_product, quantity : product.quantity, 'photo' : product.photo, 'title' : product.title, 'address' : user.address}
+               ProductService.add_order(ProductData).then(data => {
                     console.log(data);
                })
-               ProductService.save_in_history(id_product, quantity).then(data => {
+               ProductService.save_in_history(ProductData).then(data => {
                     console.log(data);
                })
           });
+          incomes.forEach(element => {
+               income += element 
+          });
+          ProductService.statistics(sales,income).then(data => {
+               console.log(data);
+          })
      }
-     
 
+     
+     
+     
      const Back = () => {
           push_order()
           setCart([])
+          setSales()
           ProductService.clear_cart().then(data => {
                console.log(data);
           })

@@ -164,5 +164,11 @@ ctrl.get_orders = async (req, res) => {
     res.status(200).json({orders})
 }
 
+//Obtener Estadisticas
+ctrl.statistics = async (req, res) => {
+    const data = await pool.query('SELECT * FROM statistics')
+    res.status(200).json({data})
+}
+
 
 module.exports=ctrl

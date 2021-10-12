@@ -29,8 +29,9 @@ export default function Shoping() {
                     {history.map(his => {
                          return(
                               <div key={his.id_history} className="border">
-                                   <li>{his.id_product}</li>
-                                   <li>{his.id_user}</li>
+                                   <li>{his.title}</li>
+                                   <li>{his.quantity}</li>
+                                   <img src={his.photo} alt={his.title} />
                               </div>
                          )
                     })}

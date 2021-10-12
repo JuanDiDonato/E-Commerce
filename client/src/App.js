@@ -36,6 +36,7 @@ import ListProducts from './Components/Admin/ListProducts';
 import EditProduct from './Components/Admin/EditProduct'
 import Categories from './Components/Admin/Categories'
 import Orders from './Components/Admin/Orders'
+import Statistics from './Components/Admin/Statistics'
 
 
 
@@ -52,7 +53,6 @@ function App() {
         <UnPrivateRoute exact path="/login" component={Login} />
         <UnPrivateRoute exact path="/register" component={Register} />
         
-        
         <PrivateRoute exact path="/endpage" id_role={[1]} component={Endpage}/>
         <PrivateRoute exact path="/buys" id_role={[1]} component={Shopping}/>
         <PrivateRoute exact path="/registeradmin" id_role={[2]} component={RegisterAdmin}/>
@@ -61,6 +61,7 @@ function App() {
         <PrivateRoute exact path="/edit/:id_product" id_role={[2]} component={EditProduct}/>
         <PrivateRoute exact path="/categories" id_role={[2]} component={Categories}/>
         <PrivateRoute exact path="/orders" id_role={[2]} component={Orders}/>
+        <PrivateRoute exact path="/statistics" id_role={[2]} component={Statistics}/>
     </Router>
     )
 }

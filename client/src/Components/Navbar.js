@@ -17,7 +17,6 @@ const Navbar = () => {
       }
     });
   }
-  console.log(user);
   const unauthenticatedNavBar = () => {
     return (
       <>

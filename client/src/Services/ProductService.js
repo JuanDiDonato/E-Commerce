@@ -42,8 +42,8 @@ export default {
           return data
      },
      //add order
-     add_order : async (id_product, address, quantity) => {
-          const {data} = await axios.post('/client/order', {id_product, address, quantity},{validateStatus:false})
+     add_order : async (ProductData) => {
+          const {data} = await axios.post('/client/order', ProductData,{validateStatus:false})
           return data
      },
      //get history
@@ -52,10 +52,15 @@ export default {
           return history
      },
      //save in history
-     save_in_history : async(id_product, quantity) => {
-          const {data} = await axios.post('/client/history', {id_product, quantity},{validateStatus:false})
+     save_in_history : async(ProductData) => {
+          const {data} = await axios.post('/client/history', ProductData,{validateStatus:false})
           return data
      },
+     //add statistics
+     statistics : async (sales,income) => {
+          const {data} = await axios.post('/client/statistics', {sales, income},{validateStatus:false})
+          return data
+     }
      
 
 

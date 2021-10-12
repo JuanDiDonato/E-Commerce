@@ -161,8 +161,8 @@ ctrl.clear = async (req, res) => {
 //Agregar order
 ctrl.order = async (req, res) => {
     const {id_user, fullname} = req.user[0]
-    console.log(req.user);
     const {id_product, address, quantity} = req.body
+    console.log(req.body);
     await pool.query('INSERT INTO orders SET ?', {id_user, fullname,address,id_product,quantity})
     res.status(200).json({error : false})
 }
@@ -175,14 +175,15 @@ ctrl.history = async (req, res) => {
 
 ctrl.save_history= async (req, res) => {
     const {id_user} = req.user[0]
-    const {id_product, quantity} = req.body
-    if(id_product === null ||id_product === '' || quantity === null || quantity === ''){
-        res.status(403).json({error : true})
-    }else{
-        await pool.query('INSERT INTO history_shopping SET ?', {id_user,id_product,quantity})
-        res.status(200).json({error: false})
-    }
+    const {quantity,title,photo} = req.body
+    await pool.query('INSERT INTO history_shopping SET ?', {id_user,quantity,title,photo})
+    res.status(200).json({error: false})
+}
 
+ctrl.statistics = async (req, res) => {
+    const {income, sales} = req.body
+    await pool.query('INSERT INTO statistics SET ?', {income, sales})
+    res.status(200).json({error : false})
 }
 
 module.exports=ctrl
