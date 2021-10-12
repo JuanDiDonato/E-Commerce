@@ -168,11 +168,11 @@ export default function Cart() {
                     </div>
                     <div>
                          <h4>¿Esta todo correcto?</h4>
-                         <div className="col-12">
-                              {cart.length > 0 ? <button className="btn btn-outline-primary col-12  p-1 mx-auto" onClick={() => chekout()}> <img src={mp} alt="mplogo" />  <h3 className="m-3">PROCEDER AL PAGO</h3></button> : null}
-
-                         </div>
-
+                         {user.address ?
+                              <div className="col-12  m-5">
+                                   {cart.length > 0 ? <button className="btn btn-outline-primary col-12  p-1 mx-auto" onClick={() => chekout()}> <img src={mp} alt="mplogo" />  <h3 className="m-3">PROCEDER AL PAGO</h3></button> : null}
+                              </div>
+                         : null}
                     </div>
 
                </div>

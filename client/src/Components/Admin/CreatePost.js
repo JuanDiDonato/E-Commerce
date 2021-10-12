@@ -1,11 +1,13 @@
-import React, { useEffect, useContext} from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState,useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import AdminServices from '../../Services/AdminServices';
 import { AdminContext } from '../../Context/AdminContext'
+import axios from 'axios';
 
 export default function CreatePost(props) {
 
-     const {categories, setCategories} = useContext(AdminContext)
+     const { categories, setCategories } = useContext(AdminContext)
+     const [product, setProduct] = useState({title:'',categories:'',price:0, stock:0,description:'',photo:[]})
 
      useEffect(() => {
           AdminServices.categories().then(data => {
@@ -14,84 +16,89 @@ export default function CreatePost(props) {
           // eslint-disable-next-line
      }, [])
 
-     const create_post = e => {
-          e.preventDefault()
-          const title = document.getElementById('title').value
-          const categories = document.getElementById('category').value
-          const price = document.getElementById('price').value
-          const stock = document.getElementById('stock').value
-          const description = document.getElementById('description').value
-          const photo = document.getElementById('photo').value
-          const post = {title, categories, price, stock, description, photo}
-          if(title === '' || categories === '' || price === '' || stock === '' || description === ''){
-               alert('Complete todos los campos')
-          }else{
-               AdminServices.create(post).then(data => {
-                    alert(data)
-               })
-          }
-          document.getElementById('title').value = ''
-          document.getElementById('price').value = ''
-          document.getElementById('stock').value = ''
-          document.getElementById('description').value = ''
-          document.getElementById('photo').value = ''
-          props.history.push('/')
+     const onChange = e =>{
+          setProduct({...product,[e.target.name] : e.target.value});
+          console.log(product);
+     }
+
+     const subirArchivo= e =>{
+          setProduct({...product,photo: e});
      }
      
-     if(categories.length === 0){
-          return(
+     const create_post = async e => {
+          e.preventDefault()
+          const formData = new FormData()
+          formData.append('photo', product.photo)
+          formData.append('body', product.title) //en una costante body le envio el title
+          formData.append('body', product.categories)
+          formData.append('body', product.price)
+          formData.append('body', product.stock)
+          formData.append('body', product.description)
+
+
+          if (product.title === ''|| product.categories==='' ||  product.price === '' ||  product.stock === '' ||  product.description === '' || product.photo === '' ||  product.photo === null) {
+               alert('Complete todos los campos')
+          } else {
+               await axios.post('/admin/create', formData, { validateStatus: false })
+               // AdminServices.create().then(data => {
+               //      alert(data)
+               // })
+          }
+          props.history.push('/')
+     }
+
+     if (categories.length === 0) {
+          return (
                <div className="container mx-auto text-center mt-5">
                     <h2>¡Antes de crear una publicacion, debe crear al menos una categoria!</h2>
                     <Link to='/categories' className="btn btn-primary">Crear</Link>
                </div>
           )
-     }else{
+     } else {
           return (
                <div className="container">
                     <div className="card mt-5 p-5 mb-5">
-                         <form>
+                         <form encType='multipart/form-data'>
                               <div className="form-group">
                                    <label htmlFor="exampleFormControlInput1">Titulo</label>
-                                   <input type="text" className="form-control" id="title" placeholder="Titulo de la publicacion" />
+                                   <input type="text" className="form-control" name="title" onChange={onChange} placeholder="Titulo de la publicacion" />
                               </div>
                               <div className="form-group">
                                    <label htmlFor="exampleFormControlSelect1">Categoria</label>
-                                   <select className="form-control" id="category">
+                                   <select className="form-control" onChange={onChange}  name="categories">
                                         {categories.map(category => {
-                                             return(
-                                                  <option key={category.category}>{category.category}</option>
+                                             return (
+                                                  <option key={category.category} value={category.category}>{category.category}</option>
                                              )
-                                             
+
                                         })}
                                    </select>
                               </div>
                               <div className="form-group">
                                    <label htmlFor="exampleFormControlInput1">Precio</label>
-                                   <input type="number" className="form-control" id="price" placeholder="Precio" />
+                                   <input type="number" className="form-control" name="price" onChange={onChange} placeholder="Precio" />
                               </div>
                               <div className="form-group">
                                    <label htmlFor="exampleFormControlInput1">Stock</label>
-                                   <input type="number" className="form-control" id="stock" placeholder="Stock" />
+                                   <input type="number" className="form-control" name="stock" onChange={onChange} placeholder="Stock" />
                               </div>
                               <div className="form-group">
                                    <label htmlFor="exampleFormControlTextarea1">Descripcion</label>
-                                   <textarea className="form-control" id="description" rows="3"></textarea>
+                                   <textarea className="form-control" name="description" onChange={onChange} rows="3"></textarea>
                               </div>
                               <div className="form-group">
-                                   <label htmlFor="exampleFormControlInput1">URL LINK (development)</label>
-                                   <input type="text" className="form-control" id="photo" placeholder="url link image" />
+                                   <label htmlFor="exampleFormControlInput1">Foto (BETA)</label>
+                                   <input type="file" className="form-control" id="btn_enviar"  onChange={(e)=>subirArchivo(e.target.files[0])} name="photo" />
                               </div>
                               <div>
-                                   <button type="submit" onClick={create_post} className="btn btn-warning btn-block">Crear</button>
+                                   <button type="submit" onClick={create_post} className="btn btn-warning btn-block mt-3">Crear</button>
                               </div>
-                              
                          </form>
                     </div>
                </div>
-     
+
           )
      }
-     
-     }
 
-     
+}
+

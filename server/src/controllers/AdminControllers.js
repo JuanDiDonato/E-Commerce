@@ -90,7 +90,17 @@ ctrl.create = async (req, res) => {
     const {id_role} = req.user[0]
     const disable = 0
     if(id_role === 2){
-        const {title, categories, description, price, stock, photo} = req.body
+
+        console.log(req.body);
+        console.log(req.file);
+        const photo = req.file.filename
+        const ObjetProduct = req.body.body
+        const title = ObjetProduct[0]
+        const categories = ObjetProduct[1]
+        const price = ObjetProduct[2]
+        const stock = ObjetProduct[3]
+        const description = ObjetProduct[4]
+        
         await pool.query('INSERT INTO products SET ?', {title,categories,description, price, stock, photo,disable})
         res.json('Añadido exitosamente.')
     }else{

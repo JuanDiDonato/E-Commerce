@@ -13,10 +13,12 @@ export default function Product(props) {
      const {itemsToBuy,setItemsToBuy} = useContext(ProductContext)
      const [product, setProduct] = useState({ id_product: "", title: "", categories: "", price: "", description: "", photo: "" })
      const [message,setMessage] = useState(null);
+     const [value, setValue] = useState()
 
      useEffect(() => {
           ProductService.product_id(id_product).then(data => {
                setProduct(data)
+               console.log(data);
           })
 
           //eslint-disable-next-line
@@ -33,6 +35,9 @@ export default function Product(props) {
           })
      }
 
+     const max_value = (value) => {
+          setValue(value)
+     }
 
 
      return (
@@ -43,15 +48,21 @@ export default function Product(props) {
                          <div className="row">
                           
                               <div className=" col-md-7">
-                                   <img src={product.photo} className="card-img-top col-md-6 mx-auto " alt={product.name} />
+                                   <img src={'http://localhost:5000/images/'+product.photo} className="card-img-top col-md-6 mx-auto " alt={product.name} />
                               </div>
                               <div className="col-md-5 mt-5 separacion">
                                    <p className="text-center mt-5 mb-3 titlep">{product.title}</p>
                                    <div className="card-body">
                                         <h3 className="card-title text-center mb-5 text-primary">${product.price} </h3>
                                         <p className="card-text">{product.description}</p>
-                                        <input type="number" className="form-control mb-3 text-center" defaultValue="1" id="quantity"/>
-                                        <button className="btn btn-primary btn-block col-12" onClick={() => add_to_cart(product.id_product)}><i className="fa fa-cart-plus fa-3x" aria-hidden="true"></i> <h5>Añadir al Carrito</h5></button>
+                                        <hr />
+                                        <p className="card-text">Stock disponible: {product.stock}</p>
+                                        <input type="number" className="form-control mb-3 text-center" onChange={(e)=>max_value(e.target.value)} defaultValue="1" max={product.stock} min='1' id="quantity"/>
+                                        {value > product.stock || value < 1 ? 
+                                        <button className="btn btn-primary btn-block col-12 disabled "><i className="fa fa-cart-plus fa-3x" aria-hidden="true"></i> <h5>Añadir al Carrito</h5></button>
+                                        :
+                                        <button className="btn btn-primary btn-block col-12 " id="buy" onClick={() => add_to_cart(product.id_product)}><i className="fa fa-cart-plus fa-3x" aria-hidden="true"></i> <h5>Añadir al Carrito</h5></button>}
+                                        
                                    </div>
                               </div>
                          </div>
