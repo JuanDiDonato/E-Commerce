@@ -15,6 +15,15 @@ export default function Events() {
           })
      }, [])
 
+     const delete_event = (id_event) => {
+          AdminServices.delete_event(id_event).then(data => {
+               console.log(data);
+               AdminServices.get_events().then(data => {
+                    setEvents(data)
+               })
+          })
+     }
+
      return (
           <div className="container mx-auto text-center col-md-10">
                <div>
@@ -34,9 +43,8 @@ export default function Events() {
                                         <li>Descuento: {event.discount * 100}%</li>
                                         <li>Desde: {moment(event.from_date).fromNow()}</li>
                                         <li>Finaliza: {moment(event.to_date).fromNow()}</li>
-                                       
+                                        <button className="btn btn-primary" onClick={() => delete_event(event.id_event)}>Borrar</button>
                                    </div>
-                                   
                               </div>
                          )
                     })}

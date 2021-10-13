@@ -67,7 +67,7 @@ export default {
           return data
      },
      delete_event : async (id_event) => {
-          const {data} = await axios.post('/admin/events/'+id_event, {validateStatus:false})
+          const {data} = await axios.delete('/admin/events/'+id_event, {validateStatus:false})
           return data
      },
 

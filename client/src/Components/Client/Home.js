@@ -7,41 +7,36 @@ import { AdminContext } from '../../Context/AdminContext';
 import moment from 'moment'
 import 'moment/locale/es'
 
-export default function Home(props) {
+export default function Home() {
+
      let history = useHistory();
+
      //eslint-disable-next-line
      const {categories, setCategories} = useContext(AdminContext)
      const [products, setProducts] = useState([])
      const [date, setDate] = useState()
-     //const [categories, setCategories] = useState([])
      const [results, setResults] = useState([])
+
      useEffect(() => {
           ProductService.get_all().then(data => {
-               console.log(data);
                if(data.length > 0){
                     setProducts(data)
                     setResults(data)
-                    console.log('PRIMERA');
                }else{
                     ProductService.products().then(data => {
                          setResults(data)
                          setProducts(data)
-                         console.log('setfiadsads');
                     })
                }
-               
           })
           setDate(moment(new Date()).utc())
           //eslint-disable-next-line
      }, [])
 
-
-
      const view = (id_product) => {
           history.push("/product/" + id_product);
      }
      
-
      const SearchByCategory = (products,category) => {
           const FilterByCategory = products.filter((product) => product.categories.toLowerCase().includes(category.toLowerCase()))
           if(category.length > 0){
@@ -85,7 +80,7 @@ export default function Home(props) {
                                                             <h4 className="card-title">$ {obj.price}</h4> 
                                                             : 
                                                             <div>
-                                                                 { from_date < date && date < to_date ? <h4 className="card-title"> OFERTA {obj.discount*100}%  <hr />${obj.price - (obj.price * obj.discount)}</h4> 
+                                                                 { from_date < date && date < to_date ? <h4 className="card-title"> OFERTA {obj.discount*100}%  <hr />${Math.trunc(obj.price - (obj.price * obj.discount))}</h4> 
                                                                  :
                                                                  <h4 className="card-title">$ {obj.price}</h4> }
                                                             </div>}

@@ -29,8 +29,13 @@ export default function Event_register(props) {
           e.preventDefault();
           AdminServices.add_event(event,ids).then(data => {
                console.log(data);
+               if(data.error === false){
+                    props.history.push("/events")
+               }
                
           })
+          
+          
      }
 
      const add_id = (status, id_product) => {
