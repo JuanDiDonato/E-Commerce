@@ -110,7 +110,7 @@ ctrl.products = async (req, res) => {
 //Obtener productos por id
 ctrl.product_id = async (req, res) => {
     const {id_product} = req.params
-    const result = await pool.query('SELECT * FROM products WHERE id_product = ?', id_product)
+    const result = await pool.query('SELECT events.event_name, events.discount,events.from_date,events.to_date,products.id_product,products.title,products.categories,products.price,products.description,products.stock,products.photo,products.disable,products.event FROM events INNER JOIN products WHERE products.id_product = ?', id_product)
     res.json(result[0])
 }
 
@@ -128,7 +128,7 @@ ctrl.categories = async (req,res) => {
 //Ver carrito
 ctrl.get_cart = async (req, res) => {
     const {id_user} = req.user[0]
-    const result = await pool.query('SELECT products.id_product, products.title, products.price AS unit_price, products.stock ,products.photo, cart.quantity FROM products INNER JOIN cart ON cart.id_product = products.id_product WHERE cart.id_user  = ?', id_user)
+    const result = await pool.query('SELECT products.id_product, products.event,products.title, products.stock ,products.photo, cart.quantity, cart.unit_price, events.event_name, events.discount,events.from_date,events.to_date FROM (products,events) INNER JOIN cart ON cart.id_product = products.id_product WHERE cart.id_user = ?',id_user)
     res.status(200).json(result)
 }
 
@@ -136,12 +136,12 @@ ctrl.get_cart = async (req, res) => {
 ctrl.add_cart = async (req, res) => {
     const {id_product} = req.params
     const {id_user} = req.user[0]
-    const {quantity, stock} = req.body
+    const {quantity, stock, unit_price} = req.body
     const product_in_cart = await pool.query('SELECT * FROM cart WHERE id_product = ? AND id_user = ?', [id_product,id_user])
     if(product_in_cart.length > 0){
         res.status(403).json({messages:{'message' : 'Este producto ya esta en el carrito', 'error' : true}})
     }else{
-        await pool.query('INSERT INTO cart SET ?', {id_product, id_user, quantity, stock})
+        await pool.query('INSERT INTO cart SET ?', {id_product, id_user, quantity, stock, unit_price})
         res.status(200).json({messages:{'message' : 'Producto agregado al carrito', 'error' : false}})
     }
 }

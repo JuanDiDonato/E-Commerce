@@ -127,7 +127,7 @@ ctrl.product_id = async (req, res) => {
     const { id_role } = req.user[0]
     if (id_role === 2) {
         const { id_product } = req.params
-        const result = await pool.query('SELECT * FROM products WHERE id_product = ?', id_product)
+        const result = await pool.query('SELECT events.event_name, events.discount,events.from_date,events.to_date,products.id_product,products.title,products.categories,products.price,products.description,products.stock,products.photo,products.disable,products.event FROM events INNER JOIN products WHERE products.id_product = ?', id_product)
         res.json(result[0])
     } else {
         res.json({ 'message': 'Unauthorized' })

@@ -80,7 +80,7 @@ export default function Home() {
                                                             <h4 className="card-title">$ {obj.price}</h4> 
                                                             : 
                                                             <div>
-                                                                 { from_date < date && date < to_date ? <h4 className="card-title"> OFERTA {obj.discount*100}%  <hr />${Math.trunc(obj.price - (obj.price * obj.discount))}</h4> 
+                                                                 { from_date < date && date < to_date ? <h4 className="card-title"> OFERTA {obj.discount*100}%  <hr />${Intl.NumberFormat().format(obj.price - (obj.price * obj.discount))}</h4> 
                                                                  :
                                                                  <h4 className="card-title">$ {obj.price}</h4> }
                                                             </div>}

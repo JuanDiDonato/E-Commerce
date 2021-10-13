@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Message from '../../Components/Message';
 import AdminServices from '../../Services/AdminServices'
 
+
 export default function Event_register(props) {
 
      const [products, setProducts] = useState([])

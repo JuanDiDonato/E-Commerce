@@ -13,6 +13,7 @@ export default function Events() {
           AdminServices.get_events().then(data => {
                setEvents(data)
           })
+          
      }, [])
 
      const delete_event = (id_event) => {
