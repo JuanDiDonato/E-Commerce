@@ -1,9 +1,15 @@
 const {Router} = require('express')
 const router = Router()
-const {create, categories, category, edit_category, disable,delete_category,products, product_id, edit, delete_product,register_admin, get_orders, delete_order, statistics}  = require('../controllers/AdminControllers')
+const {create, categories, category,edit_category, disable,delete_category,products, product_id,
+     edit, delete_product,register_admin, get_orders, delete_order, statistics, events,add_event,
+     delete_event,all}  = require('../controllers/AdminControllers')
 const passport = require('passport')
 
 //Routes
+
+//get products and events
+router.get('/all', all)
+
 //register admin
 router.post('/registerAdmin', passport.authenticate('jwt',{session:false}),register_admin )
 
@@ -31,23 +37,29 @@ router.get('/product/:id_product',passport.authenticate('jwt',{session:false}), 
 //edit
 router.put('/edit/:id_product',passport.authenticate('jwt',{session:false}), edit )
 
-
-
 //disable
 router.put('/disable/:id_product',passport.authenticate('jwt',{session:false}), disable )
 
 //delete
 router.delete('/delete/:id_product',passport.authenticate('jwt',{session:false}), delete_product )
 
-//Borrar una order
+//delete a order
 router.post('/order/delete',  passport.authenticate('jwt',{session:false}), delete_order)
 
-//Obterner ordenes
+//get orders
 router.get('/order', passport.authenticate('jwt',{session:false}), get_orders)
 
-//Obtener estadisticas
+//get statistics
 router.get('/statistics' ,passport.authenticate('jwt',{session:false}), statistics)
 
+//get events
+router.get('/events', passport.authenticate('jwt',{session:false}), events)
+
+//add event
+router.post('/events', passport.authenticate('jwt',{session:false}), add_event)
+
+//delete event
+router.delete('/events/:id_event', passport.authenticate('jwt',{session:false}), delete_event)
 
 
 module.exports=router

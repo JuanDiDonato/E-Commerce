@@ -31,7 +31,10 @@ export default function Shoping() {
                               <div key={his.id_history} className="border">
                                    <li>{his.title}</li>
                                    <li>{his.quantity}</li>
-                                   <img src={his.photo} alt={his.title} />
+                                   <div className="col-md-7">
+                                        <img src={'http://localhost:5000/images/'+his.photo} className="card-img-top col-md-2 mx-auto " alt={his.title} />
+                                   </div>
+                                   
                               </div>
                          )
                     })}

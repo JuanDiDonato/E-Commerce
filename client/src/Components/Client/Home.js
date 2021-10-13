@@ -3,22 +3,39 @@ import React, { useState, useEffect,useContext } from 'react'
 import ProductService from '../../Services/ProductService';
 import { useHistory } from "react-router-dom";
 import { AdminContext } from '../../Context/AdminContext';
+//Moment
+import moment from 'moment'
+import 'moment/locale/es'
 
 export default function Home(props) {
      let history = useHistory();
      //eslint-disable-next-line
      const {categories, setCategories} = useContext(AdminContext)
      const [products, setProducts] = useState([])
+     const [date, setDate] = useState()
      //const [categories, setCategories] = useState([])
      const [results, setResults] = useState([])
      useEffect(() => {
-          ProductService.products().then(data => {
+          ProductService.get_all().then(data => {
                console.log(data);
-               setProducts(data)
-               setResults(data)
+               if(data.length > 0){
+                    setProducts(data)
+                    setResults(data)
+                    console.log('PRIMERA');
+               }else{
+                    ProductService.products().then(data => {
+                         setResults(data)
+                         setProducts(data)
+                         console.log('setfiadsads');
+                    })
+               }
+               
           })
+          setDate(moment(new Date()).utc())
           //eslint-disable-next-line
      }, [])
+
+
 
      const view = (id_product) => {
           history.push("/product/" + id_product);
@@ -56,14 +73,23 @@ export default function Home(props) {
                          <div className="row mt-5">
                               {/* eslint-disable-next-line */}
                               {results.map(obj => {
-                                  
                                    if(obj.disable === 0 && obj.stock !== 0){
+                                        let from_date =  moment(obj.from_date).utc()
+                                        let to_date =  moment(obj.to_date).utc()
                                         return (
                                              <div className="mb-3 col-md-3" onClick={() => view(obj.id_product)} key={obj.id_product}>
                                                   <div className="card">
-                                                       <img src={obj.photo} className="card-img-top" alt="..." style={{ height: "250px" }} />
+                                                       <img src={'http://localhost:5000/images/'+obj.photo} className="card-img-top" alt="..." style={{ height: "250px" }} />
                                                        <div className="card-body">
-                                                            <h4 className="card-title">$ {obj.price}</h4>
+                                                            {!obj.event ? 
+                                                            <h4 className="card-title">$ {obj.price}</h4> 
+                                                            : 
+                                                            <div>
+                                                                 { from_date < date && date < to_date ? <h4 className="card-title"> OFERTA {obj.discount*100}%  <hr />${obj.price - (obj.price * obj.discount)}</h4> 
+                                                                 :
+                                                                 <h4 className="card-title">$ {obj.price}</h4> }
+                                                            </div>}
+                                                            
                                                             <p className="card-text">{obj.title}</p>
                                                        </div>
                                                   </div>

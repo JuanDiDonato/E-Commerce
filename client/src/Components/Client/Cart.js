@@ -114,7 +114,7 @@ export default function Cart() {
                                         <div className="row sb">
                                              <div className="col-2"></div>
                                              <div className="col-2">
-                                                  <img src={product.photo} className="card-img-top col-md-6 mx-auto " alt={product.name} />
+                                                  <img src={'http://localhost:5000/images/'+product.photo} className="card-img-top col-md-6 mx-auto " alt={product.name} />
 
 
                                              </div>

@@ -21,6 +21,7 @@ export default function Dashboard() {
                     <div className="card col-md-4 p-1  "><Link to='/categories'>Categorias</Link></div>
                     <div className="card col-md-4 p-1  "><Link to='/orders'>Envios pendientes</Link></div>
                     <div className="card col-md-4 p-1  "><Link to='/statistics'>Estadisticas</Link></div>
+                    <div className="card col-md-4 p-1  "><Link to='/events'>Crear evento</Link></div>
                </div>
           </div>
      )

@@ -57,7 +57,19 @@ export default {
      statistics : async () => {
           const {data : {data}} = await axios.get('/admin/statistics',{validateStatus:false})
           return data
-     }
+     },
+     get_events : async () => {
+          const {data:{events}} = await axios.get('/admin/events',{validateStatus:false})
+          return events
+     },
+     add_event : async (event,id_products) => {
+          const {data} = await axios.post('/admin/events', {event,id_products},{validateStatus:false})
+          return data
+     },
+     delete_event : async (id_event) => {
+          const {data} = await axios.post('/admin/events/'+id_event, {validateStatus:false})
+          return data
+     },
 
 
 }

@@ -68,7 +68,7 @@ export default function Endpage(props) {
                                    <div key={product.id_product} className="border mx-auto p-3">
                                         <li>{product.title}</li>
                                         <li>{product.quantity}</li>
-                                        <img src={product.photo} alt={product.title} />
+                                        <img src={'http://localhost:5000/images/'+product.photo} alt={product.title} />
                                    </div>
                               )
                          })}
