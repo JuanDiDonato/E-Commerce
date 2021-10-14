@@ -19,16 +19,29 @@ export default function Home() {
 
      useEffect(() => {
           ProductService.get_all().then(data => {
-               if(data.length > 0){
-                    setProducts(data)
-                    setResults(data)
-               }else{
-                    ProductService.products().then(data => {
-                         setResults(data)
-                         setProducts(data)
-                    })
-               }
+               console.log(data);
+               let i = 0
+               data.map(element => {
+                    if(element.id_product !== i){
+                         results.push(element)
+                         
+                         i = element.id_product
+                    }
+               });
+               setProducts(results)
+               
+               // if(data.length > 0){
+               //      setProducts(data)
+               //      setResults(data)
+               // }else{
+               //       ProductService.products().then(data => {
+               //            setResults(data)
+               //            setProducts(data)
+               //       })
+               // }
+               
           })
+     
           setDate(moment(new Date()).utc())
           //eslint-disable-next-line
      }, [])

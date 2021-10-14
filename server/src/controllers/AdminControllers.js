@@ -5,7 +5,7 @@ const ctrl = {}
 
 //obtener productos y Eventos
 ctrl.all = async (req, res) => {
-    const all_data = await pool.query('SELECT events.event_name, events.discount,events.from_date,events.to_date,products.id_product,products.title,products.categories,products.price,products.description,products.stock,products.photo,products.disable,products.event FROM events INNER JOIN products ')
+    const all_data = await pool.query('SELECT events.event_name, events.discount,events.from_date,events.to_date,products.id_product,products.title,products.categories,products.price,products.description,products.stock,products.photo,products.disable,products.event FROM events INNER JOIN products WHERE products.event = events.id_event OR products.event IS NULL')
     res.status(200).json({all_data})
 }
 
@@ -95,7 +95,6 @@ ctrl.create = async (req, res) => {
     const { id_role } = req.user[0]
     const disable = 0
     if (id_role === 2) {
-
         const photo = req.file.filename
         const ObjetProduct = req.body.body
         const title = ObjetProduct[0]
@@ -103,8 +102,8 @@ ctrl.create = async (req, res) => {
         const price = ObjetProduct[2]
         const stock = ObjetProduct[3]
         const description = ObjetProduct[4]
-
-        await pool.query('INSERT INTO products SET ?', { title, categories, description, price, stock, photo, disable })
+        const event = 0
+        await pool.query('INSERT INTO products SET ?', { title, categories, description, price, stock, photo, disable ,event})
         res.json('Añadido exitosamente.')
     } else {
         res.json({ 'message': 'Unauthorized' })
@@ -236,11 +235,31 @@ ctrl.delete_event = async (req, res) => {
 }
 
 //edit product event status
-ctrl.product_event = async (req, res) => {
-    const { id_product } = req.params
-    const { id_event } = req.body
-    await pool.query('UPDATE products SET event = ? WHERE id_product IN (?)', [id_event, id_product])
-    res.status(200).json({ error: false })
+// ctrl.product_event = async (req, res) => {
+//     const { id_product } = req.params
+//     const { id_event } = req.body
+//     await pool.query('UPDATE products SET event = ? WHERE id_product IN (?)', [id_event, id_product])
+//     res.status(200).json({ error: false })
+// }
+
+//get event by id
+ctrl.event = async (req, res) => {
+    const {id_event} = req.params
+    const event = await pool.query('SELECT * FROM events WHERE events.id_event = ?', id_event)
+    res.status(200).json(event)
 }
+
+ctrl.update_event = async (req, res) => {
+    const {event,id_products} = req.body
+    console.log(id_products);
+    const {id_event} = req.params
+    const event_data = { event_name: event.event_name, 'discount': event.discount / 100, from_date: event.from_date, to_date: event.to_date }
+    await pool.query('UPDATE events SET ? WHERE id_event = ?', [event_data, id_event])
+    await pool.query('UPDATE products SET products.event = ? WHERE id_product IN (?)', [id_event,id_products])
+    res.status(200).json({ error: false })
+    
+}
+
+
 
 module.exports = ctrl

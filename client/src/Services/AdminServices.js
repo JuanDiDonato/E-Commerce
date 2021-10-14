@@ -70,6 +70,15 @@ export default {
           const {data} = await axios.delete('/admin/events/'+id_event, {validateStatus:false})
           return data
      },
+     get_event : async (id_event) => {
+          const {data} = await axios.get('/admin/event/'+id_event, {validateStatus:false})
+          return data
+     },
+     update_event : async (event,id_event,id_products) => {
+          console.log(id_products);
+          const {data} = await axios.put('/admin/event/'+id_event, {event,id_products}, {validateStatus:false})
+          return data
+     }
 
 
 }

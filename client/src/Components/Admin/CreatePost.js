@@ -36,7 +36,7 @@ export default function CreatePost(props) {
           formData.append('body', product.description)
 
 
-          if (product.title === ''|| product.categories==='' ||  product.price === '' ||  product.stock === '' ||  product.description === '' || product.photo === '' ||  product.photo === null) {
+          if (product.title === '' ||  product.price === '' ||  product.stock === '' ||  product.description === '' ) {
                alert('Complete todos los campos')
           } else {
                await axios.post('/admin/create', formData, { validateStatus: false })

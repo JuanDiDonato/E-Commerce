@@ -23,8 +23,8 @@ export default function Cart() {
      let a = 0
 
      useEffect(() => {
-          
           ProductService.getcart().then(data => {
+               
                if (data.length > 0) {
                     setCart(data)
                     console.log(data);

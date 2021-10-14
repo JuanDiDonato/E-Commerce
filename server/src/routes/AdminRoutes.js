@@ -2,7 +2,7 @@ const {Router} = require('express')
 const router = Router()
 const {create, categories, category,edit_category, disable,delete_category,products, product_id,
      edit, delete_product,register_admin, get_orders, delete_order, statistics, events,add_event,
-     delete_event,all}  = require('../controllers/AdminControllers')
+     delete_event,all,event,update_event}  = require('../controllers/AdminControllers')
 const passport = require('passport')
 
 //Routes
@@ -55,11 +55,17 @@ router.get('/statistics' ,passport.authenticate('jwt',{session:false}), statisti
 //get events
 router.get('/events', passport.authenticate('jwt',{session:false}), events)
 
+//get event
+router.get('/event/:id_event', passport.authenticate('jwt',{session:false}), event)
+
 //add event
 router.post('/events', passport.authenticate('jwt',{session:false}), add_event)
 
 //delete event
 router.delete('/events/:id_event', passport.authenticate('jwt',{session:false}), delete_event)
+
+//update event
+router.put('/event/:id_event', passport.authenticate('jwt',{session:false}), update_event)
 
 
 module.exports=router

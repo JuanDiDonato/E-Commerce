@@ -128,7 +128,7 @@ ctrl.categories = async (req,res) => {
 //Ver carrito
 ctrl.get_cart = async (req, res) => {
     const {id_user} = req.user[0]
-    const result = await pool.query('SELECT products.id_product, products.event,products.title, products.stock ,products.photo, cart.quantity, cart.unit_price, events.event_name, events.discount,events.from_date,events.to_date FROM (products,events) INNER JOIN cart ON cart.id_product = products.id_product WHERE cart.id_user = ?',id_user)
+    const result = await pool.query('SELECT products.id_product, products.event,products.title, products.stock ,products.photo, cart.quantity, cart.unit_price, events.event_name, events.discount,events.from_date,events.to_date FROM (products,events) INNER JOIN cart ON cart.id_product = products.id_product WHERE cart.id_user = ? AND products.event = events.id_event',id_user)
     res.status(200).json(result)
 }
 

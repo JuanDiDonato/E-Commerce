@@ -39,7 +39,7 @@ import Orders from './Components/Admin/Orders'
 import Statistics from './Components/Admin/Statistics'
 import Events from './Components/Admin/Events'
 import Event_register from './Components/Admin/Event_register'
-
+import EditEvent from './Components/Admin/EditEvent'
 
 
 function App() {
@@ -66,6 +66,7 @@ function App() {
         <PrivateRoute exact path="/statistics" id_role={[2]} component={Statistics}/>
         <PrivateRoute exact path="/events" id_role={[2]} component={Events}/>
         <PrivateRoute exact path="/new_event" id_role={[2]} component={Event_register}/>
+        <PrivateRoute exact path="/edit_event/:id_event" id_role={[2]} component={EditEvent}/>
     </Router>
     )
 }
