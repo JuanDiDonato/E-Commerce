@@ -24,7 +24,7 @@ export default function Cart() {
 
      useEffect(() => {
           ProductService.getcart().then(data => {
-               
+               console.log(data);
                if (data.length > 0) {
                     setCart(data)
                     console.log(data);

@@ -24,7 +24,6 @@ export default function Home() {
                data.map(element => {
                     if(element.id_product !== i){
                          results.push(element)
-                         
                          i = element.id_product
                     }
                });

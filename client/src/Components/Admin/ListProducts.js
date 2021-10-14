@@ -11,11 +11,19 @@ export default function ListProducts(props) {
      //eslint-disable-next-line
      const [products, setProducts] = useState([])
      const [date, setDate] = useState()
+     //eslint-disable-next-line
+     const [results, setResults] = useState([])
 
      useEffect(() => {
           ProductService.get_all().then(data => {
-               setProducts(data)
-               console.log(data);
+               let i = 0
+               data.map(element => {
+                    if(element.id_product !== i){
+                         results.push(element)
+                         i = element.id_product
+                    }
+               });
+               setProducts(results)
           })
           setDate(moment(new Date()).utc())
           //eslint-disable-next-line
@@ -34,7 +42,6 @@ export default function ListProducts(props) {
           if(status === 0){
                let disable = 1
                AdminServices.disable(disable,id_product).then(data => {
-                    console.log(data);
                     AdminServices.products().then(data => {
                          setProducts(data)
                     })
@@ -42,7 +49,6 @@ export default function ListProducts(props) {
           }else{
                let disable = 0
                AdminServices.disable(disable,id_product).then(data => {
-                    console.log(data);
                     AdminServices.products().then(data => {
                          setProducts(data)
                     })
@@ -87,7 +93,7 @@ export default function ListProducts(props) {
                               </thead>
                                <tbody>
                                    
-                                   {products.map(product => {
+                                   {results.map(product => {
                                         let from_date =  moment(product.from_date).utc()
                                         let to_date =  moment(product.to_date).utc()
                                         return(
@@ -101,7 +107,7 @@ export default function ListProducts(props) {
                                                             : 
                                                             <th  >
                                                                  { from_date < date && date < to_date ? 
-                                                                 <th scope="row" className="text-primary mx-auto text-center">${Intl.NumberFormat().format(product.price - (product.price * product.discount))}</th> 
+                                                                 Intl.NumberFormat().format(product.price - (product.price * product.discount))
                                                                  :
                                                                  <th scope="row">${product.price}</th>}
                                                             </th>}

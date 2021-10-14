@@ -126,7 +126,7 @@ ctrl.product_id = async (req, res) => {
     const { id_role } = req.user[0]
     if (id_role === 2) {
         const { id_product } = req.params
-        const result = await pool.query('SELECT events.event_name, events.discount,events.from_date,events.to_date,products.id_product,products.title,products.categories,products.price,products.description,products.stock,products.photo,products.disable,products.event FROM events INNER JOIN products WHERE products.id_product = ?', id_product)
+        const result = await pool.query('SELECT events.event_name, events.discount,events.from_date,events.to_date,products.id_product,products.title,products.categories,products.price,products.description,products.stock,products.photo,products.disable,products.event FROM events INNER JOIN products WHERE products.id_product = ? AND products.event = events.id_event', id_product)
         res.json(result[0])
     } else {
         res.json({ 'message': 'Unauthorized' })
@@ -227,6 +227,7 @@ ctrl.delete_event = async (req, res) => {
     const { id_event } = req.params
     const results = await pool.query('SELECT * FROM events WHERE id_event = ?', id_event)
     if (results.length > 0) {
+        await pool.query('UPDATE products SET event = 0 WHERE event = ? ', id_event)
         await pool.query('DELETE FROM events WHERE id_event = ?', id_event)
         res.status(200).json({ error: false })
     } else {
