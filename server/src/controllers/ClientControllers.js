@@ -110,7 +110,7 @@ ctrl.products = async (req, res) => {
 //Obtener productos por id
 ctrl.product_id = async (req, res) => {
     const {id_product} = req.params
-    const result = await pool.query('SELECT events.event_name, events.discount,events.from_date,events.to_date,products.id_product,products.title,products.categories,products.price,products.description,products.stock,products.photo,products.disable,products.event FROM events INNER JOIN products WHERE products.id_product = ?', id_product)
+    const result = await pool.query('SELECT events.event_name, events.discount,events.from_date,events.to_date,products.id_product,products.title,products.categories,products.price,products.description,products.stock,products.photo,products.disable,products.event FROM events INNER JOIN products WHERE products.id_product = ? AND products.event = events.id_event', id_product)
     res.json(result[0])
 }
 

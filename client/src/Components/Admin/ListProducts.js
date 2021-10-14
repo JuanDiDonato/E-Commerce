@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
 import AdminServices from '../../Services/AdminServices'
+import ProductService from '../../Services/ProductService'
+//Moment
+import moment from 'moment'
+import 'moment/locale/es'
 
 export default function ListProducts(props) {
      let history = useHistory();
      //eslint-disable-next-line
      const [products, setProducts] = useState([])
+     const [date, setDate] = useState()
 
      useEffect(() => {
-          AdminServices.products().then(data => {
+          ProductService.get_all().then(data => {
                setProducts(data)
                console.log(data);
           })
+          setDate(moment(new Date()).utc())
+          //eslint-disable-next-line
      }, [])
 
      // const delete_product = (id_product) => {
@@ -69,7 +76,8 @@ export default function ListProducts(props) {
                                         <th scope="col">Id</th>
                                         <th scope="col">Titulo</th>
                                         <th scope="col">Categoria</th>
-                                        <th scope="col">Precio</th>
+                                        <th scope="col">Precio Original</th>
+                                        <th scope="col">Precio Descuento</th>
                                         <th scope="col">Stock</th>
                                         <th scope="col">Estado</th>
                                         <th scope="col" className="text-warning">Ver</th>
@@ -80,17 +88,28 @@ export default function ListProducts(props) {
                                <tbody>
                                    
                                    {products.map(product => {
+                                        let from_date =  moment(product.from_date).utc()
+                                        let to_date =  moment(product.to_date).utc()
                                         return(
-                                        <tr key={product.id_product} className="text-center">
+                                        <tr key={product.id_product} >
                                              <th scope="row">{product.id_product}</th>
-                                             <th scope="row">{product.title}</th>
+                                             <th scope="row" className="text-center">{product.title}</th>
                                              <th scope="row">{product.categories ? product.categories : 'Sin categoria'}</th>
                                              <th scope="row">${product.price}</th>
+                                             {!product.event ? 
+                                                            <th scope="row">${product.price}</th>
+                                                            : 
+                                                            <th  >
+                                                                 { from_date < date && date < to_date ? 
+                                                                 <th scope="row" className="text-primary mx-auto text-center">${Intl.NumberFormat().format(product.price - (product.price * product.discount))}</th> 
+                                                                 :
+                                                                 <th scope="row">${product.price}</th>}
+                                                            </th>}
                                              <th scope="row">{product.stock}</th>
                                              <th scope="row">{product.disable === 0 ? 'Activo' : 'Deshabilitado'}</th>
-                                             <th scope="row"><i style={{cursor:'pointer'}} onClick={() => view(product.id_product)} className="fa fa-plus"></i></th>
-                                             <th scope="row"><i style={{cursor:'pointer'}} onClick={() => edit_product(product.id_product)} className="fa fa-pencil"></i></th>
-                                             <th scope="row">{product.disable === 0 ? <i style={{cursor:'pointer'}} onClick={() => change_status(product.id_product, product.disable)} className="fa fa-minus"></i> 
+                                             <th scope="row" className="text-center"><i style={{cursor:'pointer'}} onClick={() => view(product.id_product)} className="fa fa-plus"></i></th>
+                                             <th scope="row" className="text-center"><i style={{cursor:'pointer'}} onClick={() => edit_product(product.id_product)} className="fa fa-pencil"></i></th>
+                                             <th scope="row" className="text-center">{product.disable === 0 ? <i style={{cursor:'pointer'}} onClick={() => change_status(product.id_product, product.disable)} className="fa fa-minus"></i> 
                                              : <i style={{cursor:'pointer'}} onClick={() => change_status(product.id_product, product.disable)} className="fa fa-plus"></i>}</th>
                                         </tr>
                                         ) 
