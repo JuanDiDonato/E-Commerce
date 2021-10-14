@@ -17,6 +17,7 @@ export default function ListProducts(props) {
      useEffect(() => {
           ProductService.get_all().then(data => {
                let i = 0
+               // eslint-disable-next-line
                data.map(element => {
                     if(element.id_product !== i){
                          results.push(element)

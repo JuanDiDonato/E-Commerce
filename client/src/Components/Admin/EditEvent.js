@@ -7,7 +7,8 @@ import 'moment/locale/es'
 
 export default function EditEvent(props) {
      const { match: { params } } = props;
-     const id_event = params.id_event
+     let id_event = params.id_event
+     id_event = Number(id_event)
      const [products, setProducts] = useState([])
      const [event, setEvent] = useState({ event_name: "", discount: "", from_date: "", to_date: "" });
      //eslint-disable-next-line
@@ -21,9 +22,8 @@ export default function EditEvent(props) {
           })
           AdminServices.products().then(data => {
                setProducts(data)
-               console.log(data);
                data.forEach(product => {
-                    if(product.event == id_event){
+                    if(product.event === id_event){
                          ids.push(product.id_product)
                     }
                });
@@ -121,7 +121,7 @@ export default function EditEvent(props) {
                                                                                 <th scope="row">${product.price}</th>
                                                                                 <th scope="row">{product.stock}</th>
                                                                                 <th scope="row"><i style={{ cursor: 'pointer' }} onClick={() => view(product.id_product)} className="fa fa-plus"></i></th>
-                                                                                {product.event == id_event ?
+                                                                                {product.event === id_event ?
                                                                                      <th scope="row" ><input type="checkbox" defaultChecked={true}  onClick={(e) => add_id(e.target.checked, product.id_product)} /></th>
                                                                                 :
                                                                                 <th scope="row" ><input type="checkbox" onClick={(e) => add_id(e.target.checked, product.id_product)} /></th>}
