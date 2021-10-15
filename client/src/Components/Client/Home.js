@@ -104,7 +104,7 @@ export default function Home() {
                                         let to_date =  moment(obj.to_date).utc()
                                         return (
                                              <div className="mb-3 col-md-3" onClick={() => view(obj.id_product)} key={obj.id_product}>
-                                                  <div className="card">
+                                                  <div className="card" style={{ cursor: 'pointer' }}>
                                                        <img src={'http://localhost:5000/images/'+obj.photo} className="card-img-top" alt="..." style={{ height: "250px" }} />
                                                        <div className="card-body">
                                                             {!obj.event ? 
@@ -113,8 +113,10 @@ export default function Home() {
                                                             <div>
                                                                  { from_date < date && date < to_date ? 
                                                                  <div>
-                                                                      <h5 className="card-title" style={{textDecoration : 'line-through'}}>$ {obj.price}</h5> 
-                                                                      <h4 className="card-title"> OFERTA {obj.discount*100}%  <hr />${Intl.NumberFormat().format(obj.price - (obj.price * obj.discount))}</h4> 
+                                                                      <h4> OFERTA </h4>
+                                                                      <hr />
+                                                                      <h6 className="card-title text-secondary" style={{textDecoration : 'line-through',fontSize : '95%'}}>$ {obj.price}</h6>
+                                                                      <h4 className="card-title" style={{display:'flex'}}>${Intl.NumberFormat().format(obj.price - (obj.price * obj.discount))}<p className="text-success mt-3 ml-1" style={{fontSize : '60%'}}>{obj.discount*100}% OFF</p></h4> 
                                                                  </div>
                                                                  
                                                                  :

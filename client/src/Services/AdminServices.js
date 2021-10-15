@@ -75,10 +75,12 @@ export default {
           return data
      },
      update_event : async (event,id_event,id_products) => {
-          console.log(id_products);
           const {data} = await axios.put('/admin/event/'+id_event, {event,id_products}, {validateStatus:false})
           return data
+     },
+     Mstatistics : async () => {
+          const {data } = await axios.get('/admin/Mstatistics', {validateStatus:false})
+          return data
      }
-
 
 }

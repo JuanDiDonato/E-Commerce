@@ -252,15 +252,16 @@ ctrl.event = async (req, res) => {
 
 ctrl.update_event = async (req, res) => {
     const {event,id_products} = req.body
-    console.log(id_products);
     const {id_event} = req.params
     const event_data = { event_name: event.event_name, 'discount': event.discount / 100, from_date: event.from_date, to_date: event.to_date }
     await pool.query('UPDATE events SET ? WHERE id_event = ?', [event_data, id_event])
     await pool.query('UPDATE products SET products.event = ? WHERE id_product IN (?)', [id_event,id_products])
     res.status(200).json({ error: false })
-    
 }
 
-
+ctrl.Mstatistics = async (req, res) => {
+    const statistics = await pool.query('SELECT * FROM monthly_statistics')
+    res.status(200).json(statistics)
+}
 
 module.exports = ctrl

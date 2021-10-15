@@ -12,21 +12,21 @@ export default function CreatePost(props) {
      useEffect(() => {
           AdminServices.categories().then(data => {
                setCategories(data)
-               console.log(data);
                product.categories = data[0].category
-               console.log(product);
           })
           // eslint-disable-next-line
      }, [])
 
      const onChange = e =>{
           setProduct({...product,[e.target.name] : e.target.value});
-          console.log(product);
+
      }
 
      const subirArchivo= e =>{
           setProduct({...product,photo: e});
+
      }
+     
      
      const create_post = async e => {
           e.preventDefault()
@@ -90,7 +90,11 @@ export default function CreatePost(props) {
                                    <textarea className="form-control" name="description" onChange={onChange} rows="3"></textarea>
                               </div>
                               <div className="form-group">
-                                   <label htmlFor="exampleFormControlInput1">Foto (BETA)</label>
+                                   <label htmlFor="exampleFormControlInput1">Foto 1(BETA)</label>
+                                   <input type="file" className="form-control" id="btn_enviar"  onChange={(e)=>subirArchivo(e.target.files[0])} name="photo" />
+                              </div>
+                              <div className="form-group">
+                                   <label htmlFor="exampleFormControlInput1">Foto 2(BETA)</label>
                                    <input type="file" className="form-control" id="btn_enviar"  onChange={(e)=>subirArchivo(e.target.files[0])} name="photo" />
                               </div>
                               <div>

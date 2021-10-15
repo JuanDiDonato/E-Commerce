@@ -14,13 +14,11 @@ const path = require('path')
 app.set('port', 5000)
 app.use(express.json())
 app.use(CookieParser())
-
-
-
 //Midlewares
+
 //Morgan
 app.use(morgan('dev'))
-    //Multer
+//Multer
 const storage = multer.diskStorage({
     destination: path.join(__dirname, 'public/images'),
     filename: (req, file, cb) => {
@@ -34,10 +32,12 @@ app.use(multer({
     },
 }).single('photo'))
 
+//Helpers
+require('./helpers/cron')
+
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
-
 
 //Routes
 app.use('/client', require('./routes/ClientRoutes'));
