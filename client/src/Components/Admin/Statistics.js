@@ -16,7 +16,8 @@ export default function Statistics() {
           })
      }, [])
      
-
+     let mesActual = new Intl.DateTimeFormat('es-ES', { month: 'long'}).format(new Date());
+     console.log(mesActual);
 
      let date = []
      // eslint-disable-next-line
@@ -82,10 +83,10 @@ export default function Statistics() {
 
      return (
           <div>
-               <div className=" container col-md-6 mt-5">
+               <div className=" container col-md-10 mt-5">
                     {Sales()}
                </div>
-               <div className=" container col-md-6 mt-5">
+               <div className=" container col-md-10 mt-5">
                     {Incomes()}
                </div>
           </div>

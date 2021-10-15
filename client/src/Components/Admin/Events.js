@@ -18,7 +18,6 @@ export default function Events() {
 
      const delete_event = (id_event) => {
           AdminServices.delete_event(id_event).then(data => {
-               console.log(data);
                AdminServices.get_events().then(data => {
                     setEvents(data)
                })
@@ -42,7 +41,7 @@ export default function Events() {
                <div>
                {/* eslint-disable-next-line */}
                     {events.map(event => {
-                         if(event.id_event !== 1){
+                         if(event.id_event !== 0){
                               return(
                                    <div key={event.id_event}>
                                         <div className="card">

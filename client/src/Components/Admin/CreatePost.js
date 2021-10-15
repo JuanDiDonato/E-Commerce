@@ -12,6 +12,9 @@ export default function CreatePost(props) {
      useEffect(() => {
           AdminServices.categories().then(data => {
                setCategories(data)
+               console.log(data);
+               product.categories = data[0].category
+               console.log(product);
           })
           // eslint-disable-next-line
      }, [])
@@ -65,7 +68,7 @@ export default function CreatePost(props) {
                               </div>
                               <div className="form-group">
                                    <label htmlFor="exampleFormControlSelect1">Categoria</label>
-                                   <select className="form-control" onChange={onChange}  name="categories">
+                                   <select className="form-control" onChange={onChange} defaultValue={categories[0].category} name="categories">
                                         {categories.map(category => {
                                              return (
                                                   <option key={category.category} value={category.category}>{category.category}</option>

@@ -217,7 +217,7 @@ ctrl.add_event = async (req, res) => {
         await pool.query('INSERT INTO events SET ?', event_data)
         const event1 = await pool.query('SELECT * FROM events WHERE event_name = ?', event_name)
         const id_event = event1[0].id_event
-        await pool.query('UPDATE products SET products.event = ? WHERE id_product IN (?)', [id_event,id_products])
+        await pool.query('UPDATE products SET products.event = ?  WHERE id_product IN (?)', [id_event,id_products])
         res.status(200).json({ error: false })
     }
 }

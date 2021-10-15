@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import AdminServices from '../../Services/AdminServices';
 import Message from '../../Components/Message';
+
 //Moment
 import moment from 'moment'
 import 'moment/locale/es'
@@ -9,6 +10,7 @@ export default function EditEvent(props) {
      const { match: { params } } = props;
      let id_event = params.id_event
      id_event = Number(id_event)
+
      const [products, setProducts] = useState([])
      const [event, setEvent] = useState({ event_name: "", discount: "", from_date: "", to_date: "" });
      //eslint-disable-next-line
@@ -23,16 +25,18 @@ export default function EditEvent(props) {
           AdminServices.products().then(data => {
                setProducts(data)
                data.forEach(product => {
-                    if(product.event === id_event){
+                    if (product.event === id_event) {
                          ids.push(product.id_product)
                     }
                });
-               
+
           })
           // eslint-disable-next-line
      }, [])
 
-
+     if (id_event === 0) {
+          props.history.push('/events')
+     }
 
 
      const onChange = e => {
@@ -59,7 +63,7 @@ export default function EditEvent(props) {
                ids.splice(index, 1)
           }
      }
-     
+
      const view = (id_product) => {
           props.history.push("/product/" + id_product);
      }
@@ -112,7 +116,6 @@ export default function EditEvent(props) {
                                                             <tbody>
 
                                                                  {products.map(product => {
-                                        
                                                                       return (
                                                                            <tr key={product.id_product} className="text-center">
                                                                                 <th scope="row">{product.id_product}</th>

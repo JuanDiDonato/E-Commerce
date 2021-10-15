@@ -96,7 +96,12 @@ ctrl.mercadopago = (req, res) => {
 ctrl.stock = async (req, res) => {
     const {id_product} = req.params
     const {stock} = req.body
-    await pool.query('UPDATE products SET stock = ? WHERE id_product = ?', [stock, id_product])
+    if(stock !== 0){
+        await pool.query('UPDATE products SET stock = ? WHERE id_product = ?', [stock, id_product])
+    }
+    if(stock === 0){
+        await pool.query('UPDATE products SET stock = ?, disable = 1 WHERE id_product = ?', [stock, id_product])
+    }
     res.status(200).json({error:false})
 }
 

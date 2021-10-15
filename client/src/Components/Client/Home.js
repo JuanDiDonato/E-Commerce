@@ -16,6 +16,7 @@ export default function Home() {
      const [products, setProducts] = useState([])
      const [date, setDate] = useState()
      const [results, setResults] = useState([])
+     const [order, setOrder] = useState(false)
 
      useEffect(() => {
           ProductService.get_all().then(data => {
@@ -58,6 +59,20 @@ export default function Home() {
               setResults(products)
           }
      }
+
+     const PriceOrder = () => {
+          if(order === false){
+              setOrder(true)
+              const ProductsOrder = results.sort(((a, b) => b.price - a.price));
+              setResults(ProductsOrder)
+          }else{
+              setOrder(false)
+              const ProductsOrder = results.sort(((a, b) => a.price - b.price));
+              setResults(ProductsOrder)
+          }
+      }
+
+
      if(products.length === 0){
           return(
                <div className="container mx-auto text-center mt-5">
@@ -78,6 +93,9 @@ export default function Home() {
                                    )
                               })}
                          </div>
+                         <div className="p-3">
+                            <input type="radio" className="m-1" name="orden" id="orden" onClick={() => PriceOrder()} />Descendente
+                        </div>
                          <div className="row mt-5">
                               {/* eslint-disable-next-line */}
                               {results.map(obj => {
@@ -93,7 +111,12 @@ export default function Home() {
                                                             <h4 className="card-title">$ {obj.price}</h4> 
                                                             : 
                                                             <div>
-                                                                 { from_date < date && date < to_date ? <h4 className="card-title"> OFERTA {obj.discount*100}%  <hr />${Intl.NumberFormat().format(obj.price - (obj.price * obj.discount))}</h4> 
+                                                                 { from_date < date && date < to_date ? 
+                                                                 <div>
+                                                                      <h5 className="card-title" style={{textDecoration : 'line-through'}}>$ {obj.price}</h5> 
+                                                                      <h4 className="card-title"> OFERTA {obj.discount*100}%  <hr />${Intl.NumberFormat().format(obj.price - (obj.price * obj.discount))}</h4> 
+                                                                 </div>
+                                                                 
                                                                  :
                                                                  <h4 className="card-title">$ {obj.price}</h4> }
                                                             </div>}

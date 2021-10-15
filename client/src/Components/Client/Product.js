@@ -11,7 +11,6 @@ export default function Product(props) {
 
      const { match: { params } } = props;
      const id_product = params.id_product
-     console.log(id_product);
      const {itemsToBuy,setItemsToBuy} = useContext(ProductContext)
      const [product, setProduct] = useState({ id_product: "", title: "", categories: "", price: "", description: "", photo: "" })
      const [message,setMessage] = useState(null);
@@ -21,7 +20,6 @@ export default function Product(props) {
      useEffect(() => {
           ProductService.product_id(id_product).then(data => {
                setProduct(data)
-               console.log(data);
           })
           setDate(moment(new Date()).utc())
           //eslint-disable-next-line

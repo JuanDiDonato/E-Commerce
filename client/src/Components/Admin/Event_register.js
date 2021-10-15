@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import Message from '../../Components/Message';
 import AdminServices from '../../Services/AdminServices'
+import { AdminContext } from '../../Context/AdminContext'
 
 
 export default function Event_register(props) {
@@ -11,11 +12,15 @@ export default function Event_register(props) {
      const [ids, setIds] = useState([])
      //eslint-disable-next-line
      const [message, setMessage] = useState(null);
+     const [results, setResults] = useState([])
+     //eslint-disable-next-line
+     const { categories, setCategories } = useContext(AdminContext)
      let timerID = useRef(null);
 
      useEffect(() => {
           AdminServices.products().then(data => {
                setProducts(data)
+               setResults(data)
           })
           return () => {
                clearTimeout(timerID);
@@ -28,22 +33,31 @@ export default function Event_register(props) {
 
      const onSubmit = e => {
           e.preventDefault();
-          AdminServices.add_event(event,ids).then(data => {
+          AdminServices.add_event(event, ids).then(data => {
                console.log(data);
-               if(data.error === false){
+               if (data.error === false) {
                     props.history.push("/events")
                }
-               
+
           })
-          
-          
+
+
+     }
+
+     const SearchByCategory = (products, category) => {
+          const FilterByCategory = products.filter((product) => product.categories.toLowerCase().includes(category.toLowerCase()))
+          if (category.length > 0) {
+               setResults(FilterByCategory)
+          } else {
+               setResults(products)
+          }
      }
 
      const add_id = (status, id_product) => {
-          if(status === true){
+          if (status === true) {
                ids.push(id_product)
           }
-          if(status === false){
+          if (status === false) {
                const index = ids.indexOf(id_product)
                ids.splice(index, 1)
           }
@@ -82,6 +96,17 @@ export default function Event_register(props) {
                                         </div>
                                         <div>
                                              <h4> Selecciona los productos afectados</h4>
+                                             <div className="form-group col-md-4 mx-auto mt-4">
+                                                  <label htmlFor="exampleFormControlSelect1">Categoria</label>
+                                                  <select className="form-control" onClick={e => SearchByCategory(products, e.target.value)} name="categories">
+                                                       <option value=''></option>
+                                                       {categories.map(category => {
+                                                            return (
+                                                                 <option key={category.category} value={category.category}>{category.category}</option>
+                                                            )
+                                                       })}
+                                                  </select>
+                                             </div>
                                              <div>
                                                   <div className="col-md-12 mx-auto mt-3">
                                                        <table className="table">
@@ -98,7 +123,7 @@ export default function Event_register(props) {
                                                             </thead>
                                                             <tbody>
 
-                                                                 {products.map(product => {
+                                                                 {results.map(product => {
                                                                       return (
                                                                            <tr key={product.id_product} className="text-center">
                                                                                 <th scope="row">{product.id_product}</th>
@@ -107,7 +132,7 @@ export default function Event_register(props) {
                                                                                 <th scope="row">${product.price}</th>
                                                                                 <th scope="row">{product.stock}</th>
                                                                                 <th scope="row"><i style={{ cursor: 'pointer' }} onClick={() => view(product.id_product)} className="fa fa-plus"></i></th>
-                                                                                <th scope="row"><input type="checkbox" name="select_discount"  onClick={(e) => add_id(e.target.checked, product.id_product)}/></th>
+                                                                                <th scope="row"><input type="checkbox" name="select_discount" onClick={(e) => add_id(e.target.checked, product.id_product)} /></th>
                                                                            </tr>
                                                                       )
                                                                  })}

@@ -5,7 +5,6 @@ import {AuthContext} from '../../Context/AuthContext';
 
 
 export default function Endpage(props) {
-     // const { location : {search}} = props;
      const [cart, setCart] = useState([])
      const [sales, setSales] = useState()
      const {user} = useContext(AuthContext)
@@ -44,9 +43,6 @@ export default function Endpage(props) {
           })
      }
 
-     
-     
-     
      const Back = () => {
           push_order()
           setCart([])
