@@ -2,6 +2,7 @@ const pool = require('../database/connection')
 const ctrl = {}
 const {EncryptPassword} = require('../helpers/bcrypt')
 const jwt = require('jsonwebtoken')
+const nodemailer = require('nodemailer');
 //Mercado Pago
 const mercadopago = require('mercadopago')
 mercadopago.configure({
@@ -20,6 +21,36 @@ ctrl.SignToken = Id_user => {
 ctrl.authenticated = (req,res) => {
     const { id_user, email, id_role, address, fullname } = req.user[0];
     res.status(200).json({ isAuthenticated: true, user: { id_user, email, id_role, address, fullname}});
+}
+
+//Email
+ctrl.email = async (req, res) => {
+    const email = req.body.email
+
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'didonatojuan7@gmail.com',
+            pass: 'LRDRySD2007'
+        },
+    });
+    const mailOption = {
+        from: "remitente",
+        to: req.body.email,
+        subject: "Email reenviado de ECommerce",
+        text: "¡Muchas gracias por comprar en ECommerce! Vas a recibir tu compra en los proximos dias, segun disponibilidad. Ante cualquier duda no dudes en consultarnos, podes escribirnos por: **REDES SOCIALES** "
+    }
+    await transporter.sendMail(mailOption, (error, info)=>{
+        if(error){
+            console.log(error);
+            res.status(500).json({error : true})
+        }else{
+            console.log(info);
+            res.status(200).json({error : false})
+        }
+    })
 }
 
 

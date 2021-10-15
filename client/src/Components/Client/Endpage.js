@@ -8,13 +8,16 @@ export default function Endpage(props) {
      const [cart, setCart] = useState([])
      const [sales, setSales] = useState()
      const {user} = useContext(AuthContext)
+     console.log(user);
 
 
      useEffect(() => {
           ProductService.getcart().then(data => {
-               console.log(data);
                setCart(data)
                setSales(data.length)
+          })
+          ProductService.send_email(user.email).then(data => {
+               console.log(data);
           })
           
      }, [])

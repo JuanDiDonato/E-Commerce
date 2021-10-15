@@ -69,6 +69,10 @@ export default {
      get_all : async () => {
           const {data : {all_data}} = await axios.get('/admin/all', {validateStatus:false})
           return all_data
+     },
+     send_email : async (email) => {
+          const {data} = await axios.post('/client/email', {email},{validateStatus:false})
+          return data
      }
      
 

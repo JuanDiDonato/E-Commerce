@@ -147,6 +147,7 @@ ctrl.disable = async (req, res) => {
         res.json({ 'message': 'Unauthorized' })
     }
 }
+
 //Editar producto por id
 ctrl.edit = async (req, res) => {
     const { id_role } = req.user[0]
@@ -160,7 +161,6 @@ ctrl.edit = async (req, res) => {
         res.json({ 'message': 'Unauthorized' })
     }
 }
-
 
 //Borrar producto por id
 ctrl.delete_product = async (req, res) => {
@@ -234,14 +234,6 @@ ctrl.delete_event = async (req, res) => {
         res.status(403).json({ message: 'Evento no encontrado', error: true })
     }
 }
-
-//edit product event status
-// ctrl.product_event = async (req, res) => {
-//     const { id_product } = req.params
-//     const { id_event } = req.body
-//     await pool.query('UPDATE products SET event = ? WHERE id_product IN (?)', [id_event, id_product])
-//     res.status(200).json({ error: false })
-// }
 
 //get event by id
 ctrl.event = async (req, res) => {
