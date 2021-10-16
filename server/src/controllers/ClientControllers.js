@@ -32,8 +32,8 @@ ctrl.email = async (req, res) => {
         port: 465,
         secure: true,
         auth: {
-            user: 'didonatojuan7@gmail.com',
-            pass: 'LRDRySD2007'
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD
         },
     });
     const mailOption = {
