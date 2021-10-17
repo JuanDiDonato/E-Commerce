@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import AdminServices from '../../Services/AdminServices';
+import '../../assets/css/events.css'
 //Moment
 import moment from 'moment'
 import 'moment/locale/es'
@@ -29,12 +30,11 @@ export default function Events() {
      }
 
      return (
-          <div className="container mx-auto text-center col-md-10">
+          <div className="form">
                <div>
                     <h2>Crear nuevo evento</h2>
-                    <Link to='/new_event' className="btn btn-primary btn-block">Crear</Link>
+                    <Link to='/new_event' className="btn">Crear</Link>
                </div>
-               <hr />
                <div>
                     <h2>Eventos activos</h2>
                </div>
@@ -44,7 +44,7 @@ export default function Events() {
                          if(event.id_event !== 0){
                               return(
                                    <div key={event.id_event}>
-                                        <div className="card">
+                                        <div className="card" >
                                              <li>Nombre: {event.event_name}</li>
                                              <li>Descuento: {event.discount * 100}%</li>
                                              <li>Desde: {moment(event.from_date).fromNow()}</li>

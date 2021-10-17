@@ -4,9 +4,9 @@ import Message from '../../Components/Message';
 
 export default function RegisterAdmin(props) {
 
-     const [user,setUser] = useState({email: "", fullname: "",password : ""});
+     const [user, setUser] = useState({ email: "", fullname: "", password: "" });
      // eslint-disable-next-line
-     const [message,setMessage] = useState(null);
+     const [message, setMessage] = useState(null);
 
      useEffect(() => {
           return () => {
@@ -14,14 +14,14 @@ export default function RegisterAdmin(props) {
           }
      }, []);
 
-     let timerID =useRef(null)
+     let timerID = useRef(null)
 
      const onChange = e => {
           setUser({ ...user, [e.target.name]: e.target.value });
      }
 
      const resetForm = () => {
-          setUser({ email: "", fullname : "",password: "" });
+          setUser({ email: "", fullname: "", password: "" });
      }
 
      const onSubmit = e => {
@@ -39,34 +39,30 @@ export default function RegisterAdmin(props) {
      }
 
      return (
-          <div className="ml-1 mr-1 z-1">
-               <div className="container mt-3">{message ? <Message message={message} /> : null}</div>
-               <div className="row mt-5 p-3">
-                    <div className="col-md-6 mx-auto text-center">
-                         <div className="card  border-warning">
-                              <div className="card-header ">
-                                   <h2 className=" mt-1"> Registrar nuevo administrador</h2>
+          <div className="form">
+               <div >{message ? <Message message={message} /> : null}</div>
+               <div >
+                    <div >
+                         <h2> Registrar nuevo administrador</h2>
+                    </div>
+                    <div >
+                         <form onSubmit={onSubmit}>
+                              <div className="form-group">
+                                   <label htmlFor="email">Email</label>
+                                   <input type="email" name="email" onChange={onChange} value={user.email} className="form-control" placeholder="Ingresá tu Email" />
                               </div>
-                              <div className="card-body">
-                                   <form onSubmit={onSubmit}>
-                                        <div className="form-group">
-                                             <label htmlFor="email">Email</label>
-                                             <input type="email" name="email" onChange={onChange} value={user.email} className="form-control" placeholder="Ingresá tu Email" />
-                                        </div>
-                                        <div className="form-group">
-                                             <label htmlFor="text">Nombre completo</label>
-                                             <input type="text" name="fullname" onChange={onChange} value={user.fullname} className="form-control" placeholder="Ingresá tu Email" />
-                                        </div>
-                                        <div className="form-group">
-                                             <label htmlFor="password" className="mt-4 " > Contraseña</label>
-                                             <input type="password" name="password" onChange={onChange} value={user.password} className="form-control mb-5" placeholder="Ingresa tu Contraseña" />
-                                        </div>
-                                        <div className="form-group">
-                                             <button className="btn col-12 btn-warning btn-block" type="submit">Registrar</button>
-                                        </div>
-                                   </form>
+                              <div className="form-group">
+                                   <label htmlFor="text">Nombre completo</label>
+                                   <input type="text" name="fullname" onChange={onChange} value={user.fullname} className="form-control" placeholder="Ingresá tu nombre y apellido" />
                               </div>
-                         </div>
+                              <div className="form-group">
+                                   <label htmlFor="password" className="mt-4 " > Contraseña</label>
+                                   <input type="password" name="password" onChange={onChange} value={user.password} className="form-control mb-5" placeholder="Ingresa tu Contraseña" />
+                              </div>
+                              <div className="form-group">
+                                   <button className="btn" type="submit">Registrar</button>
+                              </div>
+                         </form>
                     </div>
                </div>
           </div>

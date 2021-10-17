@@ -1,0 +1,28 @@
+body{
+     padding: 0;
+     margin: 0;
+     background-color: rgba(253, 59, 33, 0.1);
+}
+.home{
+     margin: 5%;
+     padding:1%;
+}
+.home h1{
+     text-align: center;
+}
+.home h3{
+     text-align: center;
+}
+.home li{
+     font-size: 120%;
+     padding: 1%;
+}
+::-webkit-scrollbar{
+     background-color:rgba(255, 0, 64, 0.1);
+ }
+::-webkit-scrollbar-thumb{
+     background-color: rgba(253, 59, 33, 0.5);
+}
+::-webkit-scrollbar-track{
+     background-color: transparent !important;
+}

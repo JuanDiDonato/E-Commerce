@@ -184,17 +184,17 @@ export default function Statistics() {
      );
 
      return (
-          <div>
-               <div className=" container col-md-8 mt-5">
+          <div className="form">
+               <div>
                     {Sales()}
                </div>
-               <div className=" container col-md-8 mt-5">
+               <div>
                     {Incomes()}
                </div>
-               <div className=" container col-md-8 mt-5">
+               <div>
                     {MonthIncome()}
                </div>
-               <div className=" container col-md-8 mt-5">
+               <div >
                     {MonthSale()}
                </div>
           </div>

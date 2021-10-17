@@ -1,0 +1,8 @@
+.card{
+     border:none;
+     box-shadow: 2px 3px 1px 0px rgba(253, 59, 33, 0.8);
+     background-color:rgba(253, 59, 33, 0.3);
+     padding: 1%;
+     color:purple;
+     font-weight: bold;
+}

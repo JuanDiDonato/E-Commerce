@@ -71,15 +71,15 @@ export default function EditEvent(props) {
 
 
      return (
-          <div className="ml-1 mr-1 z-1">
-               <div className="container mt-3">{message ? <Message message={message} /> : null}</div>
-               <div className="row mt-5 p-3">
-                    <div className="col-md-8 mx-auto text-center">
-                         <div className="card  border-warning">
-                              <div className="card-header ">
-                                   <h2 className=" mt-1">Editar evento</h2>
+          <div className="form">
+               <div >{message ? <Message message={message} /> : null}</div>
+               <div >
+                    <div>
+                         <div>
+                              <div>
+                                   <h2>Editar evento</h2>
                               </div>
-                              <div className="card-body">
+                              <div>
                                    <form onSubmit={onSubmit}>
                                         <div className="form-group">
                                              <label htmlFor="text">Nombre</label>
@@ -100,24 +100,24 @@ export default function EditEvent(props) {
                                         <div>
                                              <h4> Selecciona los productos afectados</h4>
                                              <div>
-                                                  <div className="col-md-12 mx-auto mt-3">
-                                                       <table className="table">
+                                                  <div>
+                                                       <table>
                                                             <thead>
-                                                                 <tr className="text-center">
+                                                                 <tr className="table-eve-thead">
                                                                       <th scope="col">Id</th>
                                                                       <th scope="col">Titulo</th>
                                                                       <th scope="col">Categoria</th>
                                                                       <th scope="col">Precio</th>
                                                                       <th scope="col">Stock</th>
                                                                       <th scope="col">Ver</th>
-                                                                      <th scope="col" className="text-danger">Seleccionar</th>
+                                                                      <th scope="col">Seleccionar</th>
                                                                  </tr>
                                                             </thead>
                                                             <tbody>
 
                                                                  {products.map(product => {
                                                                       return (
-                                                                           <tr key={product.id_product} className="text-center">
+                                                                           <tr key={product.id_product} className="table-eve-body">
                                                                                 <th scope="row">{product.id_product}</th>
                                                                                 <th scope="row">{product.title}</th>
                                                                                 <th scope="row">{product.categories ? product.categories : 'Sin categoria'}</th>

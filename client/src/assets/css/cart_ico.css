@@ -6,7 +6,6 @@
     font-size: 10px;
     font-weight: bold;
 }
-
 .sidebar-social span {
     width: 15px;
     height: 15px;
@@ -16,7 +15,6 @@
     -webkit-box-shadow: 0.5px -0.5px 3px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0.5px -0.5px 3px 0px rgba(0, 0, 0, 0.75);
 }
-
 .sidebar-social i {
     text-decoration: none;
     display: block;
@@ -25,15 +23,11 @@
     color: #444444;
     margin-top: 0px;
 }
-
-
 /* CSS para posicionar el bade cerca del carrito*/
-
 .cart {
     text-decoration: none;
     position: relative;
 }
-
 #cart_menu_num {
     position: absolute;
     top: -3px;
@@ -41,40 +35,31 @@
     background: rgb(255, 255, 255);
     text-decoration: none;
 }
-
 .cerrar {
     cursor: pointer;
 }
-
 .titlep {
     font-size: 250%;
 }
-
 .separacion {
     border-left: 1px solid #88b2ff;
 }
-
 .sb {
     padding-bottom: 20px;
     border-bottom: 1px solid #88b2ff;
 }
-
 .btn-outline-warning:hover {
     color: white;
 }
-
 .bordeado {
     border-radius: 100%;
 }
-
 .nodecoracion {
     text-decoration: none;
 }
-
 .btn-warning {
     color: white;
 }
-
 .btn-warning:hover {
     color: white;
 }

@@ -1,0 +1,28 @@
+.body_grid{
+     display: grid;
+     grid-template-columns: 20% 80%;
+     font-family: 'Karla', sans-serif; 
+}
+.nav-format{
+     background-color: rgba(253, 59, 33, 0.4);
+     height: 100vh;
+     width: 20vw;
+     padding: 2%;
+     margin-right: 2%;
+}
+.nav-group{
+     text-align: center;
+     margin: 3%;
+     border-right: 1px solid purple;
+}
+.nav-element{
+     padding:3%;
+     margin-right: 2%;
+     
+}
+.nav-element a{
+     text-decoration: none;
+}
+.nav-element h4{
+     text-decoration: none;
+}

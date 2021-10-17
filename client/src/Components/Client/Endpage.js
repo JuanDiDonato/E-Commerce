@@ -19,7 +19,7 @@ export default function Endpage(props) {
           ProductService.send_email(user.email).then(data => {
                console.log(data);
           })
-          
+          // eslint-disable-next-line
      }, [])
 
 

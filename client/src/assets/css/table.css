@@ -1,0 +1,76 @@
+.table-products-thead{
+     display:grid ;
+     grid-template-columns:  10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+     background-color: rgba(253, 59, 33, 0.6);
+     margin-top: 3%;
+     padding-top: 1%;
+     padding-bottom: 1%;
+     color: white;
+     width: 61.9vw;
+     /*font-weight: 10%;*/
+}
+.table-products-body{
+     display:grid;
+     grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+     text-align: center !important;
+     padding: 1%;
+     width: 61.9vw ;
+}
+
+.table-orders-thead{
+     display:grid ;
+     grid-template-columns:   16.66% 16.66% 16.66% 16.66% 16.66% 16.66% ;
+     background-color: rgba(253, 59, 33, 0.6);
+     margin-top: 3%;
+     padding-top: 1%;
+     padding-bottom: 1%;
+     color: white;
+     width: 61.9vw;
+     /*font-weight: 10%;*/
+}
+.table-orders-body{
+     display:grid;
+     grid-template-columns: 16.66% 16.66% 16.66% 16.66% 16.66% 16.66%;
+     text-align: center !important;
+     padding:0.5%;
+     width: 61.9vw ;
+}
+
+.table-cat-thead{
+     display:grid ;
+     grid-template-columns:33.33% 33.33% 33.33% ;
+     background-color: rgba(253, 59, 33, 0.6);
+     margin-top: 3%;
+     padding-top: 1%;
+     padding-bottom: 1%;
+     color: white;
+     width: 61.9vw;
+     /*font-weight: 10%;*/
+}
+.table-cat-body{
+     display:grid;
+     grid-template-columns:33.33% 33.33% 33.33%;
+     text-align: center !important;
+     padding:0.5%;
+     width: 61.9vw ;
+}
+
+.table-eve-thead{
+     display:grid ;
+     grid-template-columns: 14.28% 14.28% 14.28% 14.28% 14.28% 14.28% 14.28% ;
+     background-color: rgba(253, 59, 33, 0.6);
+     margin-top: 3%;
+     padding-top: 1%;
+     padding-bottom: 1%;
+     color: white;
+     width: 61.9vw;
+     /*font-weight: 10%;*/
+}
+.table-eve-body{
+     display:grid;
+     grid-template-columns: 14.28% 14.28% 14.28% 14.28% 14.28% 14.28% 14.28%;
+     text-align: center !important;
+     padding:0.5%;
+     width: 61.9vw ;
+}
+

@@ -44,8 +44,8 @@ export default function CreatePost(props) {
      }
 
      return (
-          <div className="container">
-               <div className="card mt-5 p-5 mb-5">
+          <div className="form">
+               <div>
                     <form>
                          <div className="form-group">
                               <label htmlFor="exampleFormControlInput1">Titulo</label>
@@ -64,22 +64,22 @@ export default function CreatePost(props) {
                          </div>
                          <div className="form-group">
                               <label htmlFor="exampleFormControlInput1">Precio</label>
-                              <input type="number" className="form-control" id="price" placeholder="Precio" defaultValue={product.price} />
+                              <input type="number"  id="price" placeholder="Precio" defaultValue={product.price} />
                          </div>
                          <div className="form-group">
                               <label htmlFor="exampleFormControlInput1">Stock</label>
-                              <input type="number" className="form-control" id="stock" placeholder="Stock" defaultValue={product.stock} />
+                              <input type="number"  id="stock" placeholder="Stock" defaultValue={product.stock} />
                          </div>
                          <div className="form-group">
                               <label htmlFor="exampleFormControlTextarea1">Descripcion</label>
-                              <textarea className="form-control" id="description" rows="3" defaultValue={product.description}></textarea>
+                              <textarea  id="description" rows="3" defaultValue={product.description}></textarea>
                          </div>
                          <div className="form-group">
                               <label htmlFor="exampleFormControlInput1">URL LINK (development)</label>
-                              <input type="text" className="form-control" id="photo" placeholder="url link image" defaultValue={product.photo} />
+                              <input type="text" id="photo" placeholder="url link image" defaultValue={product.photo} />
                          </div>
                          <div>
-                              <button type="submit" onClick={edit_post} className="btn btn-warning btn-block">Finalizar</button>
+                              <button type="submit" onClick={edit_post} className="btn">Finalizar</button>
                          </div>
                          
                     </form>

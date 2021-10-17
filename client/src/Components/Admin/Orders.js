@@ -28,16 +28,16 @@ export default function Orders(props) {
      }
 
      return (
-          <div className="container col-md-10 mx-auto mt-5">
+          <div className="form">
                <div>
-                    <div className="text-center mb-3">
+                    <div>
                          <h3>Envios pendientes</h3>
                     </div>
 
                     <div >
-                         <table className="table">
+                         <table>
                               <thead>
-                                   <tr className="text-center">
+                                   <tr className="table-orders-thead">
                                         <th scope="col">ID del pedido</th>
                                         <th scope="col" className="text-primary">Cliente</th>
                                         <th scope="col" className="text-primary">Direccion de envio</th>
@@ -50,7 +50,7 @@ export default function Orders(props) {
                                    {
                                         orders.map(order => {
                                              return (
-                                                  <tr className="text-center" key={order.id_order}>
+                                                  <tr className="table-orders-body" key={order.id_order}>
                                                        <th scope="col">{order.id_order}</th>
                                                        <th scope="col" className="text-primary">{order.fullname}</th>
                                                        <th scope="col" className="text-primary">{order.address}</th>

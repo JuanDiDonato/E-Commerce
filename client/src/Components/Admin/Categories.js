@@ -47,25 +47,25 @@ export default function Categories() {
 
 
      return (
-          <div className="container col-md-10 mx-auto mt-5">
+          <div className="form">
                <div className="form-group">
                     <input type="text" id="category" placeholder="Nombre de la categoria" className="form-control"/>
                     {editMode ? 
-                    <button className="btn btn-success btn-block mt-2 mb-5" onClick={() => edit_category()}>Actualizar categoria</button>
+                    <button className="btn" onClick={() => edit_category()}>Actualizar categoria</button>
                      : 
-                    <button className="btn btn-primary btn-block mt-2 mb-5" onClick={() => create_category()}>Añadir categoria</button>}
+                    <button className="btn" onClick={() => create_category()}>Añadir categoria</button>}
                     
                </div>
                {categories.length > 0 ?
                <div>
-                    <div  className="text-center mb-3">
+                    <div>
                          <h3>Lista de categorias</h3>
                     </div>
                     
                     <div >
-                         <table className="table">
+                         <table >
                               <thead>
-                                   <tr className="text-center">
+                                   <tr className="table-cat-thead">
                                         <th scope="col">Categoria</th>
                                         <th scope="col" className="text-primary">Editar</th>
                                         <th scope="col" className="text-danger">Borrar</th>
@@ -74,7 +74,7 @@ export default function Categories() {
                               <tbody>
                                    {categories.map(category => {
                                         return (
-                                             <tr className="text-center" key={category.category}>
+                                             <tr className="table-cat-body" key={category.category}>
                                                   <th scope="col">{category.category}</th>
                                                   <th scope="row"><i style={{cursor:'pointer'}} onClick={() => edit_mode(category.category)} className="fa fa-pencil"></i></th>
                                                   <th scope="row"><i style={{cursor:'pointer'}} onClick={() => delete_category(category.category)} className="fa fa-trash"></i></th>
