@@ -56,13 +56,14 @@ const Navbar = () => {
           </div>
           :
           <div>
-            <div className="nav-element"><Link to='/registeradmin'><h4>Crear nuevo administrador</h4></Link></div>
             <div className="nav-element"><Link to='/post'><h4>Crear nueva publicacion</h4></Link></div>
+            <div className="nav-element"><Link to='/events'><h4>Crear evento</h4></Link></div>
+            <div className="nav-element"><Link to='/orders'><h4>Envios pendientes</h4></Link></div>
             <div className="nav-element"><Link to='/list'><h4>Productos publicados</h4></Link></div>
             <div className="nav-element"><Link to='/categories'><h4>Categorias</h4></Link></div>
-            <div className="nav-element"><Link to='/orders'><h4>Envios pendientes</h4></Link></div>
             <div className="nav-element"><Link to='/statistics'><h4>Estadisticas</h4></Link></div>
-            <div className="nav-element"><Link to='/events'><h4>Crear evento</h4></Link></div>
+            <div className="nav-element"><Link to='/registeradmin'><h4>Crear nuevo administrador</h4></Link></div>
+            
           </div>}
 
         <div className="nav-element" onClick={onClickLogoutHandler}><h4><i className="fa fa-sign-out" ></i> Cerrar sesión </h4></div>

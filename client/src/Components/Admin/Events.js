@@ -33,12 +33,12 @@ export default function Events() {
           <div className="form">
                <div>
                     <h2>Crear nuevo evento</h2>
-                    <Link to='/new_event' className="btn">Crear</Link>
+                    <Link to='/new_event' className="btn-event">Crear</Link>
                </div>
                <div>
                     <h2>Eventos activos</h2>
                </div>
-               <div>
+               <div className="grid-events">
                {/* eslint-disable-next-line */}
                     {events.map(event => {
                          if(event.id_event !== 0){

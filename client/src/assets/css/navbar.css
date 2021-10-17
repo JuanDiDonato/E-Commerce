@@ -5,15 +5,16 @@
 }
 .nav-format{
      background-color: rgba(253, 59, 33, 0.4);
-     height: 100vh;
+     height: 150vh;
      width: 20vw;
      padding: 2%;
      margin-right: 2%;
+     border-right: 2px solid purple;
 }
 .nav-group{
      text-align: center;
      margin: 3%;
-     border-right: 1px solid purple;
+     
 }
 .nav-element{
      padding:3%;

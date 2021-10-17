@@ -1,8 +1,41 @@
+.grid-events{
+     display: grid;
+     grid-template-columns: 33% 33% 33%;
+}
+
 .card{
      border:none;
-     box-shadow: 2px 3px 1px 0px rgba(253, 59, 33, 0.8);
-     background-color:rgba(253, 59, 33, 0.3);
-     padding: 1%;
+     box-shadow:  1px 2px 1px 0px rgba(0, 0, 0, 0.3); 
+     background-color:rgba(235, 235, 235, 0.4);
+     border-radius:5px;
+     text-align: center;
+     padding: 2%;
      color:purple;
      font-weight: bold;
+     margin:auto;
+     width: 90%
+}
+.card li{
+     margin: 1%;
+}
+.btn-event{
+     border:none;
+     background-color:rgba(253, 59, 33, 0.4); 
+     display:grid;
+     grid-template-columns: 100%;
+     text-align: center;
+     text-decoration: none;
+     border-radius: 5px;
+     padding-top:2%;
+     padding-bottom: 2%;
+     padding-left: 5%;
+     padding-right: 5%;
+     margin: 1%;
+     font-family: 'Karla', sans-serif; 
+     font-weight: bold;
+     font-size: 110%;   
+}
+.btn-event:hover{
+     background-color:rgba(253, 59, 33, 0.5);
+     color:white
 }

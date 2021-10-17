@@ -1,11 +1,13 @@
 .table-products-thead{
      display:grid ;
      grid-template-columns:  10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
-     background-color: rgba(253, 59, 33, 0.6);
+     background-color: rgba(253, 59, 33, 0.4);
+     text-align: center;
      margin-top: 3%;
      padding-top: 1%;
      padding-bottom: 1%;
-     color: white;
+     border-radius: 5px;
+     color: purple;
      width: 61.9vw;
      /*font-weight: 10%;*/
 }
@@ -20,11 +22,13 @@
 .table-orders-thead{
      display:grid ;
      grid-template-columns:   16.66% 16.66% 16.66% 16.66% 16.66% 16.66% ;
-     background-color: rgba(253, 59, 33, 0.6);
+     background-color: rgba(253, 59, 33, 0.4);
      margin-top: 3%;
      padding-top: 1%;
      padding-bottom: 1%;
-     color: white;
+     text-align: center;
+     border-radius: 5px;
+     color: purple;
      width: 61.9vw;
      /*font-weight: 10%;*/
 }
@@ -39,11 +43,13 @@
 .table-cat-thead{
      display:grid ;
      grid-template-columns:33.33% 33.33% 33.33% ;
-     background-color: rgba(253, 59, 33, 0.6);
+     background-color: rgba(253, 59, 33, 0.4);
      margin-top: 3%;
      padding-top: 1%;
      padding-bottom: 1%;
-     color: white;
+     border-radius: 5px;
+     text-align: center;
+     color: purple;
      width: 61.9vw;
      /*font-weight: 10%;*/
 }
@@ -58,11 +64,13 @@
 .table-eve-thead{
      display:grid ;
      grid-template-columns: 14.28% 14.28% 14.28% 14.28% 14.28% 14.28% 14.28% ;
-     background-color: rgba(253, 59, 33, 0.6);
+     background-color: rgba(253, 59, 33, 0.4);
+     text-align: center;
      margin-top: 3%;
      padding-top: 1%;
      padding-bottom: 1%;
-     color: white;
+     border-radius: 5px;
+     color: purple;
      width: 61.9vw;
      /*font-weight: 10%;*/
 }

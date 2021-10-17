@@ -1,11 +1,16 @@
 .form{
-     text-align:center;
+     text-align:left;
      margin-top: 2%;
      margin-bottom: 2%;
      margin-left: 8%;
      margin-right: 8%;
      padding: 2%;
+     border-radius: 5px;
 }
+.form h2{
+     text-align: center;
+}
+
 .form-group{
      padding:1%;
      margin: 1%;
@@ -20,13 +25,16 @@
      grid-template-columns: 100%;
      text-decoration: none;
      border: none;
-     box-shadow: 1px 2px 1px 0px purple;
+     border-radius: 5px;
+     background-color: rgba(235, 235, 235, 0.4);
+     box-shadow: 1px 2px 1px 0px rgba(0, 0, 0, 0.3); 
      padding: 1.5%;
      width: 60vw;
      margin-top: 2%;
      font-family: 'Karla', sans-serif; 
      font-weight: bold;
 }
+
 .form-group input::placeholder{
      font-style: italic;
      text-align: center;
@@ -37,10 +45,12 @@ select {
      grid-template-columns: 100%;
      text-decoration: none;
      border: none;
-     box-shadow: 1px 2px 1px 0px purple;
      padding: 1.5%;
      width: 61.9vw;
      margin-top: 2%;
+     background-color: rgba(235, 235, 235, 0.4);
+     box-shadow: 1px 2px 1px 0px rgba(0, 0, 0, 0.3); 
+     border-radius: 5px;
 }
 select:focus{ outline: none;}
 
@@ -51,10 +61,15 @@ select:focus{ outline: none;}
 .exeption input{
      text-decoration: none;
      border: none;
-     box-shadow: 1px 2px 1px 0px purple;
      padding: 3%;
      width: 28.2vw;
      margin-top: 2%;
+     margin-left: 2.5%;
+     background-color: rgba(235, 235, 235, 0.4);
+     box-shadow: 1px 2px 1px 0px rgba(0, 0, 0, 0.3); 
+     border-radius: 5px;
+}
+.exeption label{
      margin-left: 2.5%;
 }
 .text-area{
@@ -62,7 +77,6 @@ select:focus{ outline: none;}
      grid-template-columns: 100%;
      text-decoration: none;
      border: none;
-     box-shadow: 1px 2px 1px 0px purple;
      padding: 1.5%;
      width: 60vw;
      margin-top: 2%; 
@@ -70,21 +84,31 @@ select:focus{ outline: none;}
      text-align: center;
      font-family: 'Karla', sans-serif; 
      font-weight: bold;
+     background-color: rgba(235, 235, 235, 0.4);
+     box-shadow: 1px 2px 1px 0px rgba(0, 0, 0, 0.3); 
+     border-radius: 5px;
 }
 
 .btn{
      border:none;
-     border-radius: none;
-     background-color:rgba(253, 59, 33, 0.5);
-     margin:1%;
+     background-color:rgba(253, 59, 33, 0.4); 
+     border-radius: 5px;
      padding-top:2%;
      padding-bottom: 2%;
-     padding-left: 5%;
-     padding-right: 5%;
+     padding-left: 4%;
+     padding-right: 4%;
+     width: max-content;
+     margin: auto;
+     margin-left: 2%;
+     font-family: 'Karla', sans-serif; 
+     font-weight: bold;
+     font-size: 110%;    
 }
-
+.btn a {
+     text-decoration: none;
+}
 .btn:hover{
-     background-color:rgba(253, 59, 33, 0.8);
+     background-color:rgba(253, 59, 33, 0.5);
      color:white
 }
 
