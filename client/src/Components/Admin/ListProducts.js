@@ -102,19 +102,19 @@ export default function ListProducts(props) {
                          </select>
                     </div>
                     <div>
-                         <table className="table-products ">
+                         <table className="table ">
                               <thead>
                                    <tr className="" >
-                                        <th scope="col">Id</th>
-                                        <th scope="col">Titulo</th>
-                                        <th scope="col">Categoria</th>
-                                        <th scope="col">Precio Original</th>
-                                        <th scope="col">Precio Descuento</th>
-                                        <th scope="col">Stock</th>
-                                        <th scope="col">Estado</th>
-                                        <th scope="col" className="text-warning">Ver</th>
-                                        <th scope="col" className="text-primary">Editar</th>
-                                        <th scope="col" className="text-danger">Cambiar estado</th>
+                                        <th scope="col" data-label='Id'>Id</th>
+                                        <th scope="col" data-label='Titulo'>Titulo</th>
+                                        <th scope="col" data-label='Categoria'>Categoria</th>
+                                        <th scope="col" data-label='Precio'>Precio Original</th>
+                                        <th scope="col" data-label='Precio con descuento'>Precio Descuento</th>
+                                        <th scope="col" data-label='Stock'>Stock</th>
+                                        <th scope="col" data-label='Estado'>Estado</th>
+                                        <th scope="col" data-label='Ver' className="text-warning">Ver</th>
+                                        <th scope="col" data-label='Editar' className="text-primary">Editar</th>
+                                        <th scope="col" data-label='Cambiar estado' className="text-danger">Cambiar estado</th>
                                    </tr>
                               </thead>
                               <tbody>
@@ -123,29 +123,29 @@ export default function ListProducts(props) {
                                         let to_date = moment(product.to_date).utc()
                                         return (
                                              <tr key={product.id_product} className="table-grid" >
-                                                  <th scope="row">{product.id_product}</th>
-                                                  <th scope="row" className="text-center">{product.title}</th>
-                                                  <th scope="row">{product.categories ? product.categories : 'Sin categoria'}</th>
-                                                  <th scope="row">${product.price}</th>
+                                                  <td >{product.id_product}</td>
+                                                  <td  className="text-center">{product.title}</td>
+                                                  <td>{product.categories ? product.categories : 'Sin categoria'}</td>
+                                                  <td>${product.price}</td>
                                                   {!product.event ?
-                                                       <th scope="row">${product.price}</th>
+                                                       <td>${product.price}</td>
                                                        :
-                                                       <th className="text-primary"style={{textAlign: 'center'}} >
+                                                       <td style={{textAlign: 'center'}} >
                                                             {from_date < date && date < to_date ?
                                                                  '$'+Intl.NumberFormat().format(product.price - (product.price * product.discount))
                                                                  :
                                                                  '$'+product.price
                                                             }
-                                                       </th>
+                                                       </td>
                                                   }
-                                                  {product.stock === 0 ? <th scope="row" className="text-danger">{product.stock}</th> : <th scope="row">{product.stock}</th>}
+                                                  {product.stock === 0 ? <td  className="text-danger">{product.stock}</td> : <td >{product.stock}</td>}
                                                   
-                                                  <th scope="row">{product.disable === 0 ? 'Activo' : 'Oculto'}</th>
+                                                  <td>{product.disable === 0 ? 'Activo' : 'Oculto'}</td>
                                                   
-                                                  <th scope="row" className="icons btn-actions "><i style={{ cursor: 'pointer' }} onClick={() => view(product.id_product)} className="fa fa-plus"></i></th>
-                                                  <th scope="row" className="icons btn-actions"><i style={{ cursor: 'pointer' }} onClick={() => edit_product(product.id_product)} className="fa fa-pencil"></i></th>
-                                                  <th scope="row" className="icons btn-actions">{product.disable === 0 ? <i style={{ cursor: 'pointer' }} onClick={() => change_status(product.id_product, product.disable)} className="fa fa-minus"></i>
-                                                       : <i style={{ cursor: 'pointer' }} onClick={() => change_status(product.id_product, product.disable)} className="fa fa-plus"></i>}</th>
+                                                  <td  className="icons btn-actions "><i style={{ cursor: 'pointer' }} onClick={() => view(product.id_product)} className="fa fa-plus"></i></td>
+                                                  <td  className="icons btn-actions"><i style={{ cursor: 'pointer' }} onClick={() => edit_product(product.id_product)} className="fa fa-pencil"></i></td>
+                                                  <td  className="icons btn-actions">{product.disable === 0 ? <i style={{ cursor: 'pointer' }} onClick={() => change_status(product.id_product, product.disable)} className="fa fa-minus"></i>
+                                                       : <i style={{ cursor: 'pointer' }} onClick={() => change_status(product.id_product, product.disable)} className="fa fa-plus"></i>}</td>
                                              </tr>
                                         )
                                    })}

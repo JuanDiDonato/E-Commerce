@@ -1,88 +1,72 @@
-.table-products{
-     table-layout: fixed;
+.table {
      width: 100%;
-     text-align: center;
      border-collapse: collapse;
-     margin-top: 3%;
-
-}
-.table-categories{
+     margin: 0;
+     margin-top: 5vh;
+     padding: 0;
      table-layout: fixed;
-     width: 100%;
-     text-align: center;
-     border-collapse: collapse;
-     margin-top: 3%;
-
+     
 }
-.table-orders{
-     table-layout: fixed;
-     width: 100%;
-     text-align: center;
-     border-collapse: collapse;
-     margin-top: 3%;
-
+.table caption {
+     font-size: 28px;
+     text-transform: uppercase;
+     font-weight: bold;
+     margin: 8px 0px;
 }
-thead tr{
+.table tr {
+     background-color: transparent;
+     border-top: 1px solid rgb(204, 204, 204)
+}
+.table th, .table td {
+     font-size: 100%;
+     font-weight: bold;
+     padding: 8px;
+     text-align: center;
+}
+.table thead th{ 
+     text-transform: uppercase;
+     background-color: rgba(255, 0, 55, 1);
      color: white;
-     background-color:rgba(255, 0, 55, 1);
-     box-shadow:1px 1px 1px 3px rgba(255, 0, 55, 1);
-     padding:5%;
-     border-radius: 5px;
 }
-tbody tr {
-     height: 8vh;
-     border-bottom: 1px solid grey
+.table tbody tr:hover {
+     background-color: rgba(255, 0, 55, 0.1);
 }
-tr .btn-order{
-     width: 60%;
-     margin: auto;
-     margin-top: 5%;
-     margin-bottom: 2%;
+.table tbody td:hover {
+     background-color: rgba(255, 0, 55, 0.2);
 }
-
-
-/*media query*/
-@media screen and (max-width: 768px) {
-     .table-products th,
-     .table-orders th{
-          display:block;
-          width:80vw;
-          margin-bottom:4%
+ 
+ @media screen and (max-width: 800px) {
+     .table {
+         border: 0px;
+         display:grid;
+     grid-template-columns: 100%;
      }
-     .table-orders thead,
-     .table-products thead{
-          display: none;
+     .table caption {
+         font-size: 22px;
      }
-     .table-products .icons{
-          display:inline;
-          margin-top: 5%;
+     .table thead {
+         display: none;
      }
-     .table-products tbody tr,
-     .table-orders tbody tr{  
-          display:inline-table;
-          border: none !important;
-          background-color: rgba(235, 235, 235, 0.4);
-          box-shadow: 1px 2px 1px 0px rgba(0, 0, 0, 0.3); 
-          border-radius: 5px;
-          margin-top:6%;
+     .table tr {
+         margin-bottom: 5vh;
+         display: block;
+         box-shadow: 1px 1px 3px 0px rgba(255, 0, 55, 1);
      }
-     tr .btn-order{
-          width: 50%;
-          margin: auto;
-          margin-top: 2%;
-          margin-bottom: 2%;
+     .table th, .table td {
+         font-size: 12px;
      }
-     tr .btn-actions{
-          margin:1%;
-          color: white;
-          border-radius: 5px;
-          background-color: rgba(255, 0, 55, 1);
-          box-shadow: 1px 1px 3px 0px rgba(255, 0, 55, 0.9);
+     .table td {
+         display: block;
+         border-bottom: 1px solid #ddd;
+         text-align: right;
      }
-    
-
-}
-
-
-
-	
+     .table  td:last-child {
+         border-bottom: none;
+     }
+     .table td::before {
+         content: attr('data-label');
+         font-weight: bold;
+         text-transform: uppercase;
+         float: left;
+     }
+ }

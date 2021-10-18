@@ -56,7 +56,6 @@ select {
      box-shadow: 1px 2px 1px 0px rgba(0, 0, 0, 0.3); 
      border-radius: 5px;
 }
-select:focus{ outline: none;}
 
 .exeption{
      display:flex;
@@ -123,12 +122,11 @@ select:focus{ outline: none;}
      color:white
 }
 .btn-order{
-     display: flex;
+     display:flex;
      text-decoration: none;
      background-color:rgba(255, 0, 55, 1); 
      color:white;
-     padding-top:2%;
-     padding-bottom: 2%;
+     margin:14%;
      border-radius: 5px;
      font-family: 'Karla', sans-serif; 
      font-weight: bold;
@@ -139,7 +137,12 @@ select:focus{ outline: none;}
      padding-top: 2%;
      padding-bottom: 2%;
      margin-top: 3%;
-
-
 }
 
+@media screen and (max-width: 800px) {
+     .btn-order{
+          margin: 0;
+          padding: 2%;
+          border-radius: 0px;
+     }
+ }

@@ -53,7 +53,6 @@ const Navbar = () => {
   const nav_icons_authenticated = () => {
     return(
       <div>
-         <div className="nav-icon"><Link to="/" ><i className="fa fa-long-arrow-right fa-2x spin" id="arrow"  onClick={show_nav}></i></Link></div>
         <div className="nav-icon"><Link to="/" ><i className="fa fa-home fa-2x"></i></Link></div>
         <div className="nav-icon" onClick={onClickLogoutHandler} style={{ cursor: 'pointer' }}><i className="fa fa-sign-out fa-2x"></i></div>
       </div>
@@ -107,8 +106,6 @@ const Navbar = () => {
     if (show === false) {
       setShow(true);
       const nav = document.getElementById('navBarLeft');
-      const arrow = document.getElementById('arrow')
-      arrow.classList.add('spin');
       nav.classList.remove('move-reverse');
       nav.classList.add('move');
     } else {
@@ -121,17 +118,16 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav className='nav-format' id="navBarLeft"  >
+      <nav className='nav-format' id="navBarLeft" onMouseEnter={() => show_nav()} onMouseLeave={() => show_nav()} >
         <div className="nav-group" >
           {!isAuthenticated ? 
             <Link to="/" ><h4>E-commerce</h4></Link>
             : 
             <div>
                 {show ? 
-                  <div>
-                    <div className="nav-icon nav-element" id="arrow" style={{textAlign: 'left'}}><i className="fa fa-long-arrow-left fa-2x" style={{ cursor: 'pointer' }} onClick={show_nav}></i></div>
-                    <div className="nav-element"><h4 style={{ fontSize: '150%', cursor: 'pointer'}} onClick={show_nav}>{user.fullname}</h4></div> 
-                  </div>
+                  
+                    <div className="nav-element"><h4 style={{ fontSize: '150%', cursor: 'pointer'}} >{user.fullname}</h4></div> 
+                  
                 : null}
             </div>
             }

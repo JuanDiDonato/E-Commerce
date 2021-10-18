@@ -35,7 +35,7 @@ export default function Orders(props) {
                     </div>
 
                     <div >
-                         <table className="table-orders">
+                         <table className="table">
                               <thead>
                                    <tr>
                                         <th scope="col">ID del pedido</th>
