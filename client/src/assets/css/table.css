@@ -1,84 +1,20 @@
-.table-products-thead{
-     display:grid ;
-     grid-template-columns:  10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
-     background-color: rgba(253, 59, 33, 0.4);
+.table-grid{
+     table-layout: fixed;
+     width: 100%;
      text-align: center;
+     border-collapse: collapse;
      margin-top: 3%;
-     padding-top: 1%;
-     padding-bottom: 1%;
-     border-radius: 5px;
-     color: purple;
-     width: 61.9vw;
-     /*font-weight: 10%;*/
-}
-.table-products-body{
-     display:grid;
-     grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
-     text-align: center !important;
-     padding: 1%;
-     width: 61.9vw ;
-}
 
-.table-orders-thead{
-     display:grid ;
-     grid-template-columns:   16.66% 16.66% 16.66% 16.66% 16.66% 16.66% ;
-     background-color: rgba(253, 59, 33, 0.4);
-     margin-top: 3%;
-     padding-top: 1%;
-     padding-bottom: 1%;
-     text-align: center;
+}
+thead tr{
+     color: white;
+     background-color:rgba(255, 0, 55, 1);
+     box-shadow:1px 1px 1px 3px rgba(255, 0, 55, 1);
+     padding:5%;
      border-radius: 5px;
-     color: purple;
-     width: 61.9vw;
-     /*font-weight: 10%;*/
 }
-.table-orders-body{
-     display:grid;
-     grid-template-columns: 16.66% 16.66% 16.66% 16.66% 16.66% 16.66%;
-     text-align: center !important;
-     padding:0.5%;
-     width: 61.9vw ;
-}
-
-.table-cat-thead{
-     display:grid ;
-     grid-template-columns:33.33% 33.33% 33.33% ;
-     background-color: rgba(253, 59, 33, 0.4);
-     margin-top: 3%;
-     padding-top: 1%;
-     padding-bottom: 1%;
-     border-radius: 5px;
-     text-align: center;
-     color: purple;
-     width: 61.9vw;
-     /*font-weight: 10%;*/
-}
-.table-cat-body{
-     display:grid;
-     grid-template-columns:33.33% 33.33% 33.33%;
-     text-align: center !important;
-     padding:0.5%;
-     width: 61.9vw ;
-}
-
-.table-eve-thead{
-     display:grid ;
-     grid-template-columns: 14.28% 14.28% 14.28% 14.28% 14.28% 14.28% 14.28% ;
-     background-color: rgba(253, 59, 33, 0.4);
-     text-align: center;
-     margin-top: 3%;
-     padding-top: 1%;
-     padding-bottom: 1%;
-     border-radius: 5px;
-     color: purple;
-     width: 61.9vw;
-     /*font-weight: 10%;*/
-}
-.table-eve-body{
-     display:grid;
-     grid-template-columns: 14.28% 14.28% 14.28% 14.28% 14.28% 14.28% 14.28%;
-     text-align: center !important;
-     padding:0.5%;
-     width: 61.9vw ;
+tbody tr {
+     height: 8vh;
+     border-bottom: 1px solid grey
 }
 

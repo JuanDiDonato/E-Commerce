@@ -6,6 +6,9 @@ import { Bar } from 'react-chartjs-2';
 //Moment
 import moment from 'moment'
 import 'moment/locale/es'
+//CUSTOM CSS
+import '../../assets/css/statistics.css'
+
 var lodash = require('lodash');
 export default function Statistics() {
 
@@ -184,18 +187,16 @@ export default function Statistics() {
      );
 
      return (
-          <div className="form">
+          <div className="statistics-grid">
                <div>
                     {Sales()}
+                    {MonthSale()}
+                    
+                    
                </div>
                <div>
                     {Incomes()}
-               </div>
-               <div>
                     {MonthIncome()}
-               </div>
-               <div >
-                    {MonthSale()}
                </div>
           </div>
      )

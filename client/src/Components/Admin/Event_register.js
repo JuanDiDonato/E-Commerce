@@ -74,7 +74,7 @@ export default function Event_register(props) {
                     <div>
                          <div>
                               <div>
-                                   <h2>Crear evento</h2>
+                                   <h1>Crear evento</h1>
                               </div>
                               <div>
                                    <form onSubmit={onSubmit}>
@@ -94,10 +94,10 @@ export default function Event_register(props) {
                                              <label htmlFor="date" className="mt-4 " >Hasta</label>
                                              <input type="date" name="to_date" onChange={onChange} value={event.to_date} className="form-control mb-5" placeholder="Fecha de finalizacion" />
                                         </div>
+                                        <h2> Selecciona los productos afectados</h2>
                                         <div>
-                                             <h4> Selecciona los productos afectados</h4>
                                              <div className="form-group">
-                                                  <label htmlFor="exampleFormControlSelect1">Categoria</label>
+                                                  <label htmlFor="exampleFormControlSelect1">Buscar por categorias</label>
                                                   <select onClick={e => SearchByCategory(products, e.target.value)} name="categories">
                                                        <option value=''></option>
                                                        {categories.map(category => {
@@ -109,7 +109,7 @@ export default function Event_register(props) {
                                              </div>
                                              <div>
                                                   <div>
-                                                       <table>
+                                                       <table className="table-grid">
                                                             <thead>
                                                                  <tr className="table-eve-thead">
                                                                       <th scope="col">Id</th>
@@ -142,9 +142,7 @@ export default function Event_register(props) {
                                                   </div>
                                              </div>
                                         </div>
-                                        <div className="form-group">
-                                             <button className="btn col-12 btn-outline-warning btn-block" type="submit"><h5>Guardar</h5></button>
-                                        </div>
+                                        <button className="btn" type="submit">Guardar</button>
                                    </form>
                               </div>
                          </div>

@@ -33,7 +33,7 @@ export default function Events() {
           <div className="form">
                <div>
                     <h2>Crear nuevo evento</h2>
-                    <Link to='/new_event' className="btn-event">Crear</Link>
+                    <Link to='/new_event' className="btn">Crear</Link>
                </div>
                <div>
                     <h2>Eventos activos</h2>
@@ -49,8 +49,11 @@ export default function Events() {
                                              <li>Descuento: {event.discount * 100}%</li>
                                              <li>Desde: {moment(event.from_date).fromNow()}</li>
                                              <li>Finaliza: {moment(event.to_date).fromNow()}</li>
-                                             <button className="btn btn-primary m-1" onClick={() => delete_event(event.id_event)}>Borrar</button>
-                                             <button className="btn btn-outline-primary m-1"  onClick={() => edit_event(event.id_event)}>Editar</button>
+                                             <div className="card-btn">
+                                                  <button className="btn-event" onClick={() => delete_event(event.id_event)}>Borrar</button>
+                                                  <button className="btn-event"  onClick={() => edit_event(event.id_event)}>Editar</button>
+                                             </div>
+                                             
                                         </div>
                                    </div>
                               )

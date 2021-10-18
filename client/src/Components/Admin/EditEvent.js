@@ -77,7 +77,7 @@ export default function EditEvent(props) {
                     <div>
                          <div>
                               <div>
-                                   <h2>Editar evento</h2>
+                                   <h1>Editar evento</h1>
                               </div>
                               <div>
                                    <form onSubmit={onSubmit}>
@@ -98,10 +98,10 @@ export default function EditEvent(props) {
                                              <input type="date" name="to_date" onChange={onChange} value={event.to_date} className="form-control mb-5" placeholder="Fecha de finalizacion" />
                                         </div>
                                         <div>
-                                             <h4> Selecciona los productos afectados</h4>
+                                             <h2> Selecciona los productos afectados</h2>
                                              <div>
                                                   <div>
-                                                       <table>
+                                                       <table className="table-grid">
                                                             <thead>
                                                                  <tr className="table-eve-thead">
                                                                       <th scope="col">Id</th>
@@ -137,9 +137,8 @@ export default function EditEvent(props) {
                                                   </div>
                                              </div>
                                         </div>
-                                        <div className="form-group">
-                                             <button className="btn col-12 btn-outline-warning btn-block" type="submit"><h5>Guardar</h5></button>
-                                        </div>
+                                        <button className="btn" type="submit">Guardar</button>
+                                        
                                    </form>
                               </div>
                          </div>

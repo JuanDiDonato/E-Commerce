@@ -31,11 +31,11 @@ export default function Orders(props) {
           <div className="form">
                <div>
                     <div>
-                         <h3>Envios pendientes</h3>
+                         <h1>Envios pendientes</h1>
                     </div>
 
                     <div >
-                         <table>
+                         <table className="table-grid">
                               <thead>
                                    <tr className="table-orders-thead">
                                         <th scope="col">ID del pedido</th>

@@ -1,0 +1,7 @@
+.statistics-grid{
+     display:grid;
+     grid-template-columns:50% 50%;
+     width: 75vw;
+     margin: auto;
+     margin-top: 2%;
+}

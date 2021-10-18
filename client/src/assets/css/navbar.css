@@ -1,15 +1,15 @@
 .body_grid{
-     display: grid;
-     grid-template-columns: 20% 80%;
+     display:flex;
      font-family: 'Karla', sans-serif; 
 }
 .nav-format{
-     background-color: rgba(253, 59, 33, 0.4);
-     height: 150vh;
-     width: 20vw;
+     background-color: rgba(255, 0, 55, 1);
+     height: 200%;
+     width: 6vw;
      padding: 2%;
      margin-right: 2%;
-     border-right: 2px solid purple;
+     box-shadow: 1px 1px 3px 0px rgba(255, 0, 55, 1);
+     color: white;
 }
 .nav-group{
      text-align: center;
@@ -23,7 +23,78 @@
 }
 .nav-element a{
      text-decoration: none;
+     color: white;
 }
 .nav-element h4{
      text-decoration: none;
+}
+.nav-icon{
+     font-size: 80%;
+     padding-top:5%;
+     margin-top: 5vh;
+}
+.nav-icon a{
+     text-decoration: none;
+     color:white;
+}
+.move{
+     animation-duration: 0.8s;
+     animation-fill-mode: forwards;
+     animation-name: show-nav;
+}
+.move-reverse{
+     animation-duration: 0.8s;
+     animation-fill-mode: forwards;
+     animation-name: show-nav-rev;
+}
+/*ANIMACIONES*/
+@keyframes show-nav {
+     from {
+         width: 6vw;
+     }
+     to{
+          width: 20vw;
+     }
+}
+@keyframes show-nav-rev {
+     from {
+         width: 20vw;
+     }
+     to{
+          width: 6vw;
+     }
+}
+/*MEDIA QUERYS*/
+@media(min-width: 320px) and (max-width : 768px){
+     .nav-format{
+          overflow:hidden;
+          width:15vw;
+     }
+     @keyframes show-nav {
+          from {
+              width: 15vw;
+          }
+          to{
+               width: 96vw;
+               height: 100%;
+               position: absolute;
+               top: 0px;
+               left: 0px;
+               z-index: 50; 
+          }
+     }
+     @keyframes show-nav-rev {
+          from {
+              width: 100vw;
+              width: 96vw;
+              height: 100%;
+              position: absolute;
+              top: 0px;
+              left: 0px;
+              z-index: 50; 
+          }
+          to{
+               width: 15vw;
+          }
+     }
 }

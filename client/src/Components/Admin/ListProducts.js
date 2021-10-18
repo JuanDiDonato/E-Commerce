@@ -88,7 +88,7 @@ export default function ListProducts(props) {
           return (
                <div className="form">
                     <div>
-                         <h2>Productos publicados</h2>
+                         <h1>Productos publicados</h1>
                     </div>
                     <div >
                          <label htmlFor="exampleFormControlSelect1">Categoria</label>
@@ -102,9 +102,9 @@ export default function ListProducts(props) {
                          </select>
                     </div>
                     <div>
-                         <table>
+                         <table className="table-grid">
                               <thead>
-                                   <tr className="table-products-thead">
+                                   <tr >
                                         <th scope="col">Id</th>
                                         <th scope="col">Titulo</th>
                                         <th scope="col">Categoria</th>
