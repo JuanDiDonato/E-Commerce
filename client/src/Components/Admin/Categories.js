@@ -65,7 +65,7 @@ export default function Categories() {
                     <div>
 
                          <div >
-                              <table className="table-grid">
+                              <table className="table-categories">
                                    <thead>
                                         <tr className="table-cat-thead">
                                              <th scope="col">Categoria</th>

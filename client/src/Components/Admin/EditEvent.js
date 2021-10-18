@@ -101,7 +101,7 @@ export default function EditEvent(props) {
                                              <h2> Selecciona los productos afectados</h2>
                                              <div>
                                                   <div>
-                                                       <table className="table-grid">
+                                                       <table className="table">
                                                             <thead>
                                                                  <tr className="table-eve-thead">
                                                                       <th scope="col">Id</th>

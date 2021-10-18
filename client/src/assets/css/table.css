@@ -1,4 +1,12 @@
-.table-grid{
+.table-products{
+     table-layout: fixed;
+     width: 100%;
+     text-align: center;
+     border-collapse: collapse;
+     margin-top: 3%;
+
+}
+.table-categories{
      table-layout: fixed;
      width: 100%;
      text-align: center;
@@ -17,4 +25,51 @@ tbody tr {
      height: 8vh;
      border-bottom: 1px solid grey
 }
+tr .btn-order{
+     width: 60%;
+     margin: auto;
+     margin-top: 5%;
+     margin-bottom: 2%;
+}
 
+
+/*media query*/
+@media screen and (max-width: 768px) {
+     .table-products th{
+          display:block;
+          width:80vw;
+          margin-bottom:4%
+     }
+
+     .table-products .icons{
+          display:inline;
+          margin-top: 5%;
+     }
+     .table-products tbody tr{  
+          display:inline-table;
+          border: none !important;
+          background-color: rgba(235, 235, 235, 0.4);
+          box-shadow: 1px 2px 1px 0px rgba(0, 0, 0, 0.3); 
+          border-radius: 5px;
+          margin-top:6%;
+     }
+     tr .btn-order{
+          width: 50%;
+          margin: auto;
+          margin-top: 2%;
+          margin-bottom: 2%;
+     }
+     tr .btn-actions{
+          margin:1%;
+          color: white;
+          border-radius: 5px;
+          background-color: rgba(255, 0, 55, 1);
+          box-shadow: 1px 1px 3px 0px rgba(255, 0, 55, 0.9);
+     }
+    
+
+}
+
+
+
+	

@@ -122,4 +122,24 @@ select:focus{ outline: none;}
      background-color:rgba(255, 0, 55, 0.8);
      color:white
 }
+.btn-order{
+     display: flex;
+     text-decoration: none;
+     background-color:rgba(255, 0, 55, 1); 
+     color:white;
+     padding-top:2%;
+     padding-bottom: 2%;
+     border-radius: 5px;
+     font-family: 'Karla', sans-serif; 
+     font-weight: bold;
+}
+.btn-actions{
+     padding-left:4%;
+     padding-right: 4%;
+     padding-top: 2%;
+     padding-bottom: 2%;
+     margin-top: 3%;
+
+
+}
 

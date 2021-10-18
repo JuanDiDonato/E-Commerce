@@ -12,13 +12,12 @@
      color: white;
 }
 .nav-group{
-     text-align: center;
      margin: 3%;
-     
 }
 .nav-element{
      padding:3%;
      margin-right: 2%;
+     text-align: left;
      
 }
 .nav-element a{
@@ -32,6 +31,7 @@
      font-size: 80%;
      padding-top:5%;
      margin-top: 5vh;
+     text-align: center;
 }
 .nav-icon a{
      text-decoration: none;
@@ -73,10 +73,11 @@
      @keyframes show-nav {
           from {
               width: 15vw;
+              height: 150vh;
           }
           to{
                width: 96vw;
-               height: 100%;
+               height: 150vh;
                position: absolute;
                top: 0px;
                left: 0px;
@@ -85,9 +86,8 @@
      }
      @keyframes show-nav-rev {
           from {
-              width: 100vw;
               width: 96vw;
-              height: 100%;
+              height: 150vh;
               position: absolute;
               top: 0px;
               left: 0px;
@@ -95,6 +95,7 @@
           }
           to{
                width: 15vw;
+               height: 150vh;
           }
      }
 }

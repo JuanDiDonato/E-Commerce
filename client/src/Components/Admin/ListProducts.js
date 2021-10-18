@@ -91,7 +91,7 @@ export default function ListProducts(props) {
                          <h1>Productos publicados</h1>
                     </div>
                     <div >
-                         <label htmlFor="exampleFormControlSelect1">Categoria</label>
+                         <h2>Categorias</h2>
                          <select className="form-control" onClick={e => SearchByCategory(products,e.target.value)}  name="categories">
                               <option value=''></option>
                               {categories.map(category => {
@@ -102,9 +102,9 @@ export default function ListProducts(props) {
                          </select>
                     </div>
                     <div>
-                         <table className="table-grid">
+                         <table className="table-products ">
                               <thead>
-                                   <tr >
+                                   <tr className="" >
                                         <th scope="col">Id</th>
                                         <th scope="col">Titulo</th>
                                         <th scope="col">Categoria</th>
@@ -122,7 +122,7 @@ export default function ListProducts(props) {
                                         let from_date = moment(product.from_date).utc()
                                         let to_date = moment(product.to_date).utc()
                                         return (
-                                             <tr key={product.id_product} className="table-products-body">
+                                             <tr key={product.id_product} className="table-grid" >
                                                   <th scope="row">{product.id_product}</th>
                                                   <th scope="row" className="text-center">{product.title}</th>
                                                   <th scope="row">{product.categories ? product.categories : 'Sin categoria'}</th>
@@ -141,9 +141,10 @@ export default function ListProducts(props) {
                                                   {product.stock === 0 ? <th scope="row" className="text-danger">{product.stock}</th> : <th scope="row">{product.stock}</th>}
                                                   
                                                   <th scope="row">{product.disable === 0 ? 'Activo' : 'Oculto'}</th>
-                                                  <th scope="row" className="text-center"><i style={{ cursor: 'pointer' }} onClick={() => view(product.id_product)} className="fa fa-plus"></i></th>
-                                                  <th scope="row" className="text-center"><i style={{ cursor: 'pointer' }} onClick={() => edit_product(product.id_product)} className="fa fa-pencil"></i></th>
-                                                  <th scope="row" className="text-center">{product.disable === 0 ? <i style={{ cursor: 'pointer' }} onClick={() => change_status(product.id_product, product.disable)} className="fa fa-minus"></i>
+                                                  
+                                                  <th scope="row" className="icons btn-actions "><i style={{ cursor: 'pointer' }} onClick={() => view(product.id_product)} className="fa fa-plus"></i></th>
+                                                  <th scope="row" className="icons btn-actions"><i style={{ cursor: 'pointer' }} onClick={() => edit_product(product.id_product)} className="fa fa-pencil"></i></th>
+                                                  <th scope="row" className="icons btn-actions">{product.disable === 0 ? <i style={{ cursor: 'pointer' }} onClick={() => change_status(product.id_product, product.disable)} className="fa fa-minus"></i>
                                                        : <i style={{ cursor: 'pointer' }} onClick={() => change_status(product.id_product, product.disable)} className="fa fa-plus"></i>}</th>
                                              </tr>
                                         )

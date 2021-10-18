@@ -39,3 +39,13 @@
      background-color:rgba(255, 0, 55, 0.8);
      
 }
+/*MEDIA QUERYS*/
+@media(min-width: 320px) and (max-width : 768px){
+     .grid-events{
+          display: grid;
+          grid-template-columns: 100%;
+     }
+     .card{
+          margin-top: 5%;
+     }
+}

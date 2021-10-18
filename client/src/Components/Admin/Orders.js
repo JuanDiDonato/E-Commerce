@@ -35,7 +35,7 @@ export default function Orders(props) {
                     </div>
 
                     <div >
-                         <table className="table-grid">
+                         <table className="table">
                               <thead>
                                    <tr className="table-orders-thead">
                                         <th scope="col">ID del pedido</th>
@@ -56,7 +56,7 @@ export default function Orders(props) {
                                                        <th scope="col" className="text-primary">{order.address}</th>
                                                        <th scope="col" className="text-primary" style={{cursor:'pointer'}} onClick={() => view(order.id_product)}>{order.id_product}</th>
                                                        <th scope="col" className="text-primary">{order.quantity} Unidad/es</th>
-                                                       <th scope="col" className="text-danger" style={{cursor:'pointer'}} onClick={() => end_order(order.id_order)}>Finalizar Pedido</th>
+                                                       <th scope="col" className="btn-order" style={{cursor:'pointer'}} onClick={() => end_order(order.id_order)}>Finalizar Pedido</th>
                                                   </tr>
                                              )
                                         })

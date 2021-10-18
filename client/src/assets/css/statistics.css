@@ -5,3 +5,13 @@
      margin: auto;
      margin-top: 2%;
 }
+/*Medias query*/
+@media(min-width: 320px) and (max-width : 768px){
+     .statistics-grid{
+          display:grid;
+          grid-template-columns:100%;
+          width: 75vw;
+          margin: auto;
+          margin-top: 2%;
+     }
+}
