@@ -109,7 +109,7 @@ export default function Event_register(props) {
                                              </div>
                                              <div>
                                                   <div>
-                                                       <table className="table">
+                                                       <table className="table-products">
                                                             <thead>
                                                                  <tr className="table-eve-thead">
                                                                       <th scope="col">Id</th>

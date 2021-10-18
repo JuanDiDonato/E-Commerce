@@ -35,9 +35,9 @@ export default function Orders(props) {
                     </div>
 
                     <div >
-                         <table className="table">
+                         <table className="table-orders">
                               <thead>
-                                   <tr className="table-orders-thead">
+                                   <tr>
                                         <th scope="col">ID del pedido</th>
                                         <th scope="col" className="text-primary">Cliente</th>
                                         <th scope="col" className="text-primary">Direccion de envio</th>
@@ -49,12 +49,13 @@ export default function Orders(props) {
                               <tbody>
                                    {
                                         orders.map(order => {
+                                             console.log(orders);
                                              return (
-                                                  <tr className="table-orders-body" key={order.id_order}>
+                                                  <tr key={order.id_order}>
                                                        <th scope="col">{order.id_order}</th>
                                                        <th scope="col" className="text-primary">{order.fullname}</th>
                                                        <th scope="col" className="text-primary">{order.address}</th>
-                                                       <th scope="col" className="text-primary" style={{cursor:'pointer'}} onClick={() => view(order.id_product)}>{order.id_product}</th>
+                                                       <th scope="col" className="text-primary" style={{cursor:'pointer', color : 'rgba(255, 0, 55, 1)', fontStyle : 'italic'}} onClick={() => view(order.id_product)}>Ver {order.id_product}</th>
                                                        <th scope="col" className="text-primary">{order.quantity} Unidad/es</th>
                                                        <th scope="col" className="btn-order" style={{cursor:'pointer'}} onClick={() => end_order(order.id_order)}>Finalizar Pedido</th>
                                                   </tr>

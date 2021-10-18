@@ -14,6 +14,14 @@
      margin-top: 3%;
 
 }
+.table-orders{
+     table-layout: fixed;
+     width: 100%;
+     text-align: center;
+     border-collapse: collapse;
+     margin-top: 3%;
+
+}
 thead tr{
      color: white;
      background-color:rgba(255, 0, 55, 1);
@@ -35,17 +43,22 @@ tr .btn-order{
 
 /*media query*/
 @media screen and (max-width: 768px) {
-     .table-products th{
+     .table-products th,
+     .table-orders th{
           display:block;
           width:80vw;
           margin-bottom:4%
      }
-
+     .table-orders thead,
+     .table-products thead{
+          display: none;
+     }
      .table-products .icons{
           display:inline;
           margin-top: 5%;
      }
-     .table-products tbody tr{  
+     .table-products tbody tr,
+     .table-orders tbody tr{  
           display:inline-table;
           border: none !important;
           background-color: rgba(235, 235, 235, 0.4);

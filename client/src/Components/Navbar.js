@@ -39,15 +39,13 @@ const Navbar = () => {
   const nav_icons = () => {
     return (
       <div>
-        
         <div className="nav-icon"><Link to='/post'><i className="fa fa-plus fa-2x"></i></Link></div>
         <div className="nav-icon"><Link to='/events'><i className="fa fa-calendar fa-2x"></i></Link></div>
         <div className="nav-icon"><Link to='/orders'><i className="fa fa-paper-plane fa-2x"></i></Link></div>
         <div className="nav-icon"><Link to='/list'><i className="fa fa-newspaper-o fa-2x"></i></Link></div>
         <div className="nav-icon"><Link to='/categories'><i className="fa fa-tasks fa-2x"></i></Link></div>
         <div className="nav-icon"><Link to='/statistics'><i className="fa fa-bar-chart fa-2x"></i></Link></div>
-        <div className="nav-icon"><Link to='/registeradmin'><i className="fa fa-user fa-2x"></i></Link></div>
-        
+        <div className="nav-icon"><Link to='/registeradmin'><i className="fa fa-user fa-2x"></i></Link></div>  
       </div>
     )
   }
@@ -55,9 +53,9 @@ const Navbar = () => {
   const nav_icons_authenticated = () => {
     return(
       <div>
+         <div className="nav-icon"><Link to="/" ><i className="fa fa-long-arrow-right fa-2x spin" id="arrow"  onClick={show_nav}></i></Link></div>
         <div className="nav-icon"><Link to="/" ><i className="fa fa-home fa-2x"></i></Link></div>
         <div className="nav-icon" onClick={onClickLogoutHandler} style={{ cursor: 'pointer' }}><i className="fa fa-sign-out fa-2x"></i></div>
-
       </div>
     )
   }
@@ -65,7 +63,6 @@ const Navbar = () => {
   const authenticatedNavBar = () => {
     return (
       <>
-
           {show ? 
             <div>
                 <div className="nav-element"><Link to="/" ><h4>Inicio</h4></Link></div>
@@ -110,7 +107,9 @@ const Navbar = () => {
     if (show === false) {
       setShow(true);
       const nav = document.getElementById('navBarLeft');
-      nav.classList.remove('move-reverse')
+      const arrow = document.getElementById('arrow')
+      arrow.classList.add('spin');
+      nav.classList.remove('move-reverse');
       nav.classList.add('move');
     } else {
       setShow(false);
@@ -121,20 +120,29 @@ const Navbar = () => {
   }
 
   return (
-    <nav className='nav-format' id="navBarLeft" onClick={show_nav}>
-      <div className="nav-group">
-        {!isAuthenticated ? 
-          <Link to="/" ><h4>E-commerce</h4></Link>
-           : 
-          <div>
-              {show ? <div className="nav-element"><h4 style={{ fontSize: '180%' }}>{user.fullname}</h4></div> : null}
+    <div>
+      <nav className='nav-format' id="navBarLeft"  >
+        <div className="nav-group" >
+          {!isAuthenticated ? 
+            <Link to="/" ><h4>E-commerce</h4></Link>
+            : 
+            <div>
+                {show ? 
+                  <div>
+                    <div className="nav-icon nav-element" id="arrow" style={{textAlign: 'left'}}><i className="fa fa-long-arrow-left fa-2x" style={{ cursor: 'pointer' }} onClick={show_nav}></i></div>
+                    <div className="nav-element"><h4 style={{ fontSize: '150%', cursor: 'pointer'}} onClick={show_nav}>{user.fullname}</h4></div> 
+                  </div>
+                : null}
+            </div>
+            }
+          <div >
+            {!isAuthenticated ? unauthenticatedNavBar() : authenticatedNavBar()}
           </div>
-          }
-        <div >
-          {!isAuthenticated ? unauthenticatedNavBar() : authenticatedNavBar()}
         </div>
-      </div>
-    </nav>
+      </nav>
+    
+    </div>
+    
   )
 }
 
