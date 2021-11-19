@@ -1,0 +1,107 @@
+.home_body{
+     text-align: center;
+     margin-left: 11.5vw;
+     margin-top:2vh;
+     width:80vw;
+     padding:1%;
+}
+
+.categories_1{
+     display:grid;
+     grid-template-columns: 25% 25% 25% 25%;
+     margin-bottom: 5vh;
+}
+
+.categories_1 .card{
+     padding-top: 3vh;
+     padding-bottom: 3vh;
+     margin:2%;
+}
+
+.products_grid{
+     display:grid;
+     grid-template-columns:25% 25% 25% 25%;
+}
+.products_grid .card{
+     padding-top:0;
+     padding-left: 0;
+     padding-right: 0;
+     margin-top:5vh;
+     height: 60vh;
+     width: 18vw;
+}
+.products_grid .card h4{
+     text-decoration: none;
+     text-align: center;
+     font-size: 120%;
+}
+.products_grid .card p{
+     text-decoration: none;
+     font-size: 105%;
+     padding:1%;
+}
+.products_grid .card .oferta h4{
+     text-decoration: none;
+     font-size: 170%;
+     color:rgb(0, 89, 255);
+     font-weight: bold;
+}
+.products_grid .card .oferta h5{
+     text-decoration: none;
+     font-size: 140%;
+     transform: translateY(-10vh);
+     font-weight: bold;
+     color:green;
+}
+.products_grid .card .oferta{
+     transform:translateY(-8%)
+}
+
+.products_grid .card .oferta h6{
+     text-decoration: none;
+     font-size: 90%;
+     transform: translateY(-5vh);
+     font-weight: 500;
+     text-decoration: line-through;
+}
+.products_grid .card img{
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: cover;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+     width: 18vw;
+     height: 35vh;
+     padding:0;
+     margin:0;
+}
+/*Medias query*/
+@media screen and (max-width: 800px) {
+     .home_body{
+          margin: auto;
+     }
+     .categories_1{
+          display:grid;
+          grid-template-columns: 50% 50%;
+     }
+     .categories_1 .card{
+          padding-top: 3vh;
+          padding-bottom: 3vh;
+
+     }
+     .products_grid .card .oferta{
+          transform:translateY(-15%)
+     }
+     .products_grid {
+          display:grid;
+          grid-template-columns: 100%;
+     }
+     .products_grid .card{
+          height: 65vh;
+          width: 75vw;
+     }
+     .products_grid .card img{
+          width: 75vw;
+          height: 40vh;
+     }
+ }

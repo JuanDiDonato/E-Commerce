@@ -1,0 +1,37 @@
+.table {
+     width: 100%;
+     border-collapse: collapse;
+     margin: 0;
+     margin-top: 5vh;
+     padding: 0;
+     table-layout: fixed;
+     
+}
+.table caption {
+     font-size: 28px;
+     text-transform: uppercase;
+     font-weight: bold;
+     margin: 8px 0px;
+}
+.table tr {
+     background-color: transparent;
+
+}
+.table th, .table td {
+     font-size: 100%;
+     font-weight: bold;
+     padding: 8px;
+     text-align: center;
+}
+.table thead th{ 
+     text-transform: uppercase;
+     background-color: rgba(255, 0, 55, 1);
+     color: white;
+}
+.table tbody tr:hover {
+     background-color: rgba(255, 0, 55, 0.1);
+}
+.table tbody td:hover {
+     background-color: rgba(255, 0, 55, 0.2);
+}
+ 

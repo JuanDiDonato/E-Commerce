@@ -1,0 +1,138 @@
+.body_grid{
+     font-family: 'Karla', sans-serif; 
+}
+.exp{
+     position:fixed;
+     z-index: 500;
+     left:5vw;
+     bottom: 2vh;
+     font-size: 80%;
+}
+.exp-color-hidden {
+     text-decoration: none;
+     color: rgba(255, 0, 55, 1) ;
+}
+.exp-color-show {
+     text-decoration: none;
+     color: white ;
+}
+.nav-format{
+     background-color: rgba(255, 0, 55, 1);
+     height: 100vh;
+     width: 6vw;
+     margin-right: 2%;
+     box-shadow: 1px 1px 3px 0px rgba(255, 0, 55, 1);
+     color: white;
+     position:fixed;
+     left:0;
+     top: 0;
+     z-index: 50;
+}
+.nav-group{
+     margin: 1%;
+}
+.nav-element{
+     margin-bottom: 4vh;
+     text-align: left;
+     font-size: 95%;
+}
+.nav-element a{
+     text-decoration: none;
+     color: white;
+}
+.nav-element h4{
+     text-decoration: none;
+     width: max-content;
+}
+.nav-icon{
+     font-size: 80%;
+     padding-top:5%;
+     margin-top: 5vh;
+     text-align: center;
+}
+.nav-icon a{
+     text-decoration: none;
+     color:white;
+}
+.move{
+     animation-duration: 0.8s;
+     animation-fill-mode: forwards;
+     animation-name: show-nav;
+}
+.move-reverse{
+     animation-duration: 0.8s;
+     animation-fill-mode: forwards;
+     animation-name: show-nav-rev;
+}
+
+@keyframes show-nav {
+     from {
+          padding-right: 0%;
+          padding-left: 0%;
+          text-decoration: transparent;
+          
+     }
+     to{
+          padding-right: 10vw;
+          padding-left: 3vw;
+     }
+}
+@keyframes show-nav-rev {
+     from {
+          padding-right: 10vw;
+          padding-left: 3vw;
+     }
+     to{
+          padding-right: 0%;
+          padding-left: 0%;
+          text-decoration: transparent;
+     }
+}
+/*MEDIA QUERYS*/
+@media(min-width: 320px) and (max-width : 800px){
+     .nav-format{
+          overflow:hidden ;
+          width:15vw;
+          position:fixed;
+          left:0;
+          z-index: 500;
+          visibility:hidden
+     }
+     .nav-element{
+          width: 100vw;
+          height: auto;
+          padding:0;
+     }
+     .nav-element h4{
+          text-decoration: none;
+          width: max-content;
+          text-align: center;
+          margin-left:10%
+     }
+     @keyframes show-nav {
+          from {
+              width: 15vw;
+              visibility:hidden;
+              opacity:0;
+
+          }
+          to{
+               width: 100vw;
+               visibility:visible;
+               opacity: 100%;
+
+          }
+     }
+     @keyframes show-nav-rev {
+          from {
+              width: 100vw;
+              visibility:visible;
+              opacity: 100%;
+          }
+          to{
+               width: 15vw;
+               visibility:hidden;
+               opacity: 0%;
+          }
+     }
+}
