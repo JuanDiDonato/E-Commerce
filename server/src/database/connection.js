@@ -7,7 +7,7 @@ const pool = mysql.createPool(database)
 
 pool.getConnection((error,connection) => {
     if(error){
-        return console.log('[-] '+error);
+        return console.log(error);
     }
     if(connection){
         console.log('[+] Base de datos conectada.');
