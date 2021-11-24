@@ -3,25 +3,23 @@ const router = Router()
 const adminsControllers = require('../controllers/admins')
 const passport = require('passport')
 
+const {validateSchemaAndFail} = require('../middlewares/params_validator'); // middlewares
+const {registerSchema} = require('../schemas/clients')  // Esquema clientes
+const {categorySchema} = require('../schemas/categories')  // Esquema de Categorias
+const {productSchema} = require('../schemas/products')  // Esquema de Productos
+const {eventSchema} = require('../schemas/events')  // Esquema de Eventos
+
 //POST REQUEST
 //Register admin
-router.post('/admin', passport.authenticate('jwt',{session:false}), adminsControllers.register_admin )
+router.post('/admin', validateSchemaAndFail(registerSchema),passport.authenticate('jwt',{session:false}), adminsControllers.register_admin )
 //Create
-router.post('/create', passport.authenticate('jwt',{session:false}), adminsControllers.create)
+router.post('/create', validateSchemaAndFail(productSchema),passport.authenticate('jwt',{session:false}), adminsControllers.create)
 //Create category
-router.post('/category', passport.authenticate('jwt',{session:false}), adminsControllers.category)
+router.post('/category', validateSchemaAndFail(categorySchema),passport.authenticate('jwt',{session:false}), adminsControllers.category)
 //Add event
-router.post('/events', passport.authenticate('jwt',{session:false}), adminsControllers.add_event)
+router.post('/events', validateSchemaAndFail(eventSchema),passport.authenticate('jwt',{session:false}), adminsControllers.add_event)
 
 //GET REQUEST
-//Get products and events
-router.get('/all', adminsControllers.all)
-//Cet categories
-router.get('/categories' ,adminsControllers.categories)
-//Get all products
-router.get('/products', passport.authenticate('jwt',{session:false}), adminsControllers.products)
-//Get products by id
-router.get('/product/:id_product',passport.authenticate('jwt',{session:false}), adminsControllers.product_id)
 //Get orders
 router.get('/order', passport.authenticate('jwt',{session:false}), adminsControllers.get_orders)
 //Get statistics
@@ -45,9 +43,9 @@ router.delete('/events/:id_event', passport.authenticate('jwt',{session:false}),
 
 //PUT REQUEST
 //Edit category
-router.put('/category/:category', passport.authenticate('jwt',{session:false}), adminsControllers.edit_category)
+router.put('/category/:category', validateSchemaAndFail(categorySchema),passport.authenticate('jwt',{session:false}), adminsControllers.edit_category)
 //Edit product
-router.put('/edit/:id_product',passport.authenticate('jwt',{session:false}), adminsControllers.edit)
+router.put('/edit/:id_product',validateSchemaAndFail(productSchema), passport.authenticate('jwt',{session:false}), adminsControllers.edit)
 //Disable product
 router.put('/disable/:id_product',passport.authenticate('jwt',{session:false}), adminsControllers.disable )
 //Update event

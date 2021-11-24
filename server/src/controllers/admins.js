@@ -1,87 +1,71 @@
-const pool = require('../database/connection')
+// Modulos
 const { EncryptPassword } = require('../helpers/bcrypt')
+
+// Servicios
+const {newUser} = require('../services/clients')  // Clientes
+const {getCategoriesByName, createCategories,
+     editCategory, deleteCategory} = require('../services/categories')  // Categorias
+const {createProducts, disableProduct, editProduct, deleteProduct, editProductByEvent, } = require('../services/products')  // Productos
+const {deleteOrder, getOrders} = require('../services/orders')  // Ordenes
+const {getStatistics} = require('../services/statistics')  // Estadisticas
+const {getEvents, getEvent, getEventById, 
+    createEvent, deleteEvent, editEvent} = require('../services/events') // Eventos
+const {getMonthlyStatistics} = require('../services/monthly_statistics')  // Estadisticas Mensuales
 const ctrl = {}
 
-//Get products and events
-ctrl.all = async (req, res) => {
-    const all_data = await pool.query('SELECT events.event_name, events.discount,events.from_date,events.to_date,products.id_product,products.title,products.categories,products.price,products.description,products.stock,products.photo,products.disable,products.event FROM events INNER JOIN products WHERE products.event = events.id_event OR products.event IS NULL')
-    res.status(200).json({all_data})
-}
+
 //Create admin user
-ctrl.register_admin = async (req, res) => {
+ctrl.register_admin = (req, res, next) => {
     const { email, fullname, password } = req.body
-    const { id_role } = req.user[0]
-    if (email == null || email == '' || password == null || password == '' || 
-        fullname == '' || fullname == null){
-            res.status(400).json({ message: 'Complete todos los campos', error: true })
-        }else{
-            const verifyUser = await pool.query('SELECT * FROM users WHERE email = ?', email)
-            if(verifyUser.length >= 1) {
-                res.status(422).json( {message: 'Este usuario ya existe', error: true })
-            }else{
-                const HashPassword = await EncryptPassword(password)
-                await pool.query('INSERT INTO users SET ?', { email, fullname, 'password': HashPassword, id_role })
-                res.status(201).json({message: 'Usuario creado exitosamente', error: false })
-            }
-        } 
-}
-//Logout
-ctrl.logout = (req, res) => {
-    res.clearCookie('access_token');
-    res.status(200).json(
-        { user: { name: '', surname: '', username: '', password: ''}, 
-        error: false });
-};
-//Get categories
-ctrl.categories = async (req, res) => {
-    const categories = await pool.query('SELECT * FROM categories')
-    res.status(200).json({categories})
+    const {id_role} = req.user
+    newUser({email, fullname, password, id_role}).then(admin => 
+        res.status(201).json({message: 'Usuario creado exitosamente', error: false }))  
+        .catch(next)
 }
 //Create categories
-ctrl.category = async (req, res) => {
+ctrl.category = (req, res, next) => {
     const {category} = req.body
-    if(category === null || category === ''){
-        res.status(400).json({ message: 'Complete el nombre de la categoria', error: true })
-    }else{
-        const categoryDB = await pool.query('SELECT * FROM categories WHERE category = ?', category)
-        if (categoryDB.length > 0) {
-            res.status(422).json({ message: 'Esta categoria ya existe', error: true })
-        } else {
-            await pool.query('INSERT INTO categories SET ?', {'category': category})
-            res.status(201).json({ message: 'Operacion completada', error: false })
-        }
-    }
+        getCategoriesByName(category).then(data => {
+            if (data.length > 0)
+                res.status(422).send({ message: 'Esta categoria ya existe', error: true })
+            else{
+                createCategories({category}).then(category => 
+                    res.status(201).send({ message: 'Operacion completada', error: false }))
+                    .catch(next)
+            }
+        }).cath(next)
 }
 //Edit category
-ctrl.edit_category = async (req, res) => {
+ctrl.edit_category = (req, res, next) => {
     const {category} = req.body
-    const oldCategory = req.params
-    if (category === null || category === '') {
-        res.status(400).json({ message: 'Complete el nombre de la categoria', error: true })
-    }else{
-        const results = await pool.query('SELECT * FROM categories WHERE category = ?', category)
-        if (results.length > 0) {
-            res.status(422).json({ message: 'Esta categoria ya existe', error: true })
-        } else {
-            await pool.query('UPDATE categories SET category = ? WHERE categories.category = ? ', [category, oldCategory.category])
-            res.status(201).json({ message: 'Operacion completada', error: false })
+    const oldCategory = req.param
+    getCategoriesByName(category).then(data => {
+        if (data.length > 0) 
+            res.status(422).send({ message: 'Esta categoria ya existe', error: true })
+        else{
+            editCategory({category}, oldCategory.category).then(
+                res.status(201).send({ message: 'Operacion completada', error: false }))
+                .catch(next)
         }
-    }
+    }).cath(next)
+
 }
 //Delete category
-ctrl.delete_category = async (req, res) => {
+ctrl.delete_category = (req, res, next) => {
     const {category} = req.params
-    const results = await pool.query('SELECT * FROM categories WHERE category = ?', category)
-    if (results.length > 0) {
-        await pool.query('DELETE FROM categories WHERE category = ?', category)
-        res.status(204).json()
-    } else {
-        res.status(400).json({ message: 'La categoria solicitada no existe', error: true })
-    }
+    console.log(category);
+    getCategoriesByName(category).then(data => {
+        if (data) {
+            deleteCategory(category).then(res.status(204).send()).cath(next)
+        } else{
+            res.status(400).send({ message: 'La categoria solicitada no existe', error: true })
+        }
+    }).cath(next)
+    
 }
 //Create a product
-ctrl.create = async (req, res) => {
-    let disable = 0, photo = [], event = 0
+ctrl.create = (req, res, next) => {
+    let disable = 0, photo = [], event = 1
     const title = req.body.title
     const categories = req.body.categories
     const price = req.body.price
@@ -92,29 +76,20 @@ ctrl.create = async (req, res) => {
         photo.push(element.filename)
     });
     photo = JSON.stringify(photo)
-    await pool.query('INSERT INTO products SET ?', { title, categories, description, price, stock, photo, disable, event })
-    res.status(201).json({message : 'Operacion completada', error : false})
-}
-//Get products
-ctrl.products = async (req, res) => {
-    const products = await pool.query('SELECT * FROM products')
-    res.status(200).json({products})
-}
-//Get products by id
-ctrl.product_id = async (req, res) => {
-    const { id_product } = req.params
-    const product = await pool.query('SELECT events.event_name, events.discount,events.from_date,events.to_date,products.id_product,products.title,products.categories,products.price,products.description,products.stock,products.photo,products.disable,products.event FROM events INNER JOIN products WHERE products.id_product = ? AND products.event = events.id_event', id_product)
-    res.status(200).json(product[0])
+    createProducts({ title, categories, description, price, stock, photo:'foto.jpg', disable, event }).then(
+        res.status(201).send({message : 'Operacion completada', error : false})
+    ).catch(next)
 }
 //Disable product
-ctrl.disable = async (req, res) => {
+ctrl.disable = (req, res, next) => {
     const {disable} = req.body
     const { id_product } = req.params
-    await pool.query('UPDATE products SET disable = ? WHERE id_product = ? ', [disable, id_product])
-    res.status(200).json({message : 'Operacion completada', error : false})
+    disableProduct({disable},id_product).then(
+        res.status(200).send({message : 'Operacion completada', error : false}))
+        .catch(next)
 }
 //Edit a product
-ctrl.edit = async (req, res) => {
+ctrl.edit = (req, res, next) => {
     let photo = []
     const { title, categories, description, price, stock } = req.body
     const { id_product } = req.params
@@ -123,88 +98,91 @@ ctrl.edit = async (req, res) => {
         photo.push(element.filename)
     });
     photo = JSON.stringify(photo)
-    const obj = { title, categories, description, price, stock, photo }
-    await pool.query('UPDATE products SET ? WHERE id_product = ? ', [obj, id_product])
-    res.status(200).json({message : 'Operacion completada', error:false})
+    editProduct({ title, categories, description, price, stock, photo },id_product).then(
+        res.status(200).send({message : 'Operacion completada', error:false})
+    ).catch(next)    
 }
 //Delete a product
-ctrl.delete_product = async (req, res) => {
+ctrl.delete_product = (req, res) => {
     const { id_product } = req.params
-    await pool.query('DELETE FROM products WHERE id_product = ?', id_product)
-    res.status(204).json()
+    deleteProduct(id_product).then(res.status(204).send())
 }
 //Delete a order
-ctrl.delete_order = async (req, res) => {
+ctrl.delete_order = (req, res, next) => {
     const { id_order } = req.params
-    if (id_order === '' || id_order === null) {
-        res.status(400).json({ message:'Orden no valida', error: true })
-    } else {
-        await pool.query('DELETE FROM orders WHERE id_order = ?', id_order)
-        res.status(204).json()
-    }
+    deleteOrder(id_order).then(res.status(204).send())
+    .catch(next)
 }
 //Get orders
-ctrl.get_orders = async (req, res) => {
-    const orders = await pool.query('SELECT * FROM orders')
-    res.status(200).json({orders})
+ctrl.get_orders = (req, res, next) => {
+    getOrders().then(orders => res.status(200).send({orders}))
+    .catch(next)
 }
 //Get statistics
-ctrl.statistics = async (req, res) => {
-    const data = await pool.query('SELECT * FROM statistics')
-    res.status(200).json({data})
+ctrl.statistics =  (req, res, next) => {
+    getStatistics().then(statistics => res.status(200).send({statistics}))
+    .catch(next)
 }
 //Get events
-ctrl.events = async (req, res) => {
-    const events = await pool.query('SELECT * FROM events')
-    res.status(200).json({events})
+ctrl.events = (req, res, next) => {
+    getEvents().then(events => res.status(200).send({events}))
+    .catch(next)
 }
 //Add events
-ctrl.add_event = async (req, res) => {
+ctrl.add_event = (req, res, next) => {
     let {event, id_products} = req.body
     const event_name = event.event_name
-    const event_data = { event_name, 'discount': event.discount / 100, from_date: event.from_date, to_date: event.to_date }
-    const result = await pool.query('SELECT * FROM events WHERE event_name = ?', event_name)
-    if (result.length > 0) {
-        res.status(422).json({ message:'Este nombre esta en uso', error: true })
-    } else {
-        await pool.query('INSERT INTO events SET ?', event_data)
-        const event1 = await pool.query('SELECT * FROM events WHERE event_name = ?', event_name)
-        const id_event = event1[0].id_event
-        await pool.query('UPDATE products SET products.event = ?  WHERE id_product IN (?)', [id_event,id_products])
-        res.status(201).json({message : 'Operacion completada', error : false})
-    }
+    const event_data = { event_name, 
+        'discount': event.discount / 100, 
+        from_date: event.from_date, 
+        to_date: event.to_date }
+    getEvent(event_name).then(events => {
+        if (events.length > 0)
+            res.status(422).send({ message:'Este nombre esta en uso', error: true })
+        else{
+            createEvent(event_data).then(newEvent => {
+                editProduct({id_event : newEvent.null}, id_products)
+                .then(res.status(201).send({message : 'Operacion completada', error : false}))
+                .catch(next)
+            }).catch(next)         
+        }
+    }).catch(next)
+
 }
 //Delete event
-ctrl.delete_event = async (req, res) => {
+ctrl.delete_event = (req, res, next) => {
     const {id_event} = req.params
-    const results = await pool.query('SELECT * FROM events WHERE id_event = ?', id_event)
-    if (results.length > 0) {
-        await pool.query('UPDATE products SET event = 0 WHERE event = ? ', id_event)
-        await pool.query('DELETE FROM events WHERE id_event = ?', id_event)
-        res.status(204).json()
-    } else {
-        res.status(400).json({ message: 'Evento no encontrado', error: true })
-    }
+    getEventById(id_event).then(event => {
+        if(event.length > 0) {
+            deleteEvent(id_event).then(
+                editProductByEvent({id_event : '1'}, id_event).then(
+                    res.status(204).send()
+                ).catch(next)
+            ).catch(next)
+        }else{
+            res.status(400).json({ message: 'Evento no encontrado', error: true })
+        }
+    }).catch(next)
+    
 }
 //Get event by id
-ctrl.event = async (req, res) => {
+ctrl.event = (req, res, next) => {
     const {id_event} = req.params
-    const event = await pool.query('SELECT * FROM events WHERE events.id_event = ?', id_event)
-    res.status(200).json(event)
+    getEventById(id_event).then(event => res.status(200).send(event))
+    .catch(next)
 }
 //Update event
-ctrl.update_event = async (req, res) => {
-    const {event,id_products} = req.body
+ctrl.update_event = (req, res, next) => {
+    const {event} = req.body
     const {id_event} = req.params
     const event_data = { event_name: event.event_name, 'discount': event.discount / 100, from_date: event.from_date, to_date: event.to_date }
-    await pool.query('UPDATE events SET ? WHERE id_event = ?', [event_data, id_event])
-    await pool.query('UPDATE products SET products.event = ? WHERE id_product IN (?)', [id_event,id_products])
-    res.status(204).json()
+    editEvent(event_data, id_event).then(res.status(204).send())
+    .catch(next)
 }
 //Get monthly statistics
-ctrl.Mstatistics = async (req, res) => {
-    const MonthlyStatistics = await pool.query('SELECT * FROM monthly_statistics')
-    res.status(200).json({MonthlyStatistics})
+ctrl.Mstatistics = async (req, res, next) => {
+    getMonthlyStatistics().then(MonthlyStatistics => res.status(200).json({MonthlyStatistics}))
+    .catch(next)
 }
 
 module.exports = ctrl

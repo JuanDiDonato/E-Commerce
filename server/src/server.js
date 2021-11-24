@@ -1,23 +1,19 @@
-//Express
+// Paquetes
 const express = require('express')
 const app = express()
-//Morgan
 const morgan = require('morgan')
-//Cookie Parser
 const CookieParser = require('cookie-parser')
-//Multer
 const multer = require('multer')
-//path
 const path = require('path')
+const passport = require('passport')
 
 //Server setting
-app.set('port', 5000)
+app.set('port', process.env.PORT)
 app.use(express.json())
 app.use(CookieParser())
-
-//Midlewares config
-//Morgan
 app.use(morgan('dev'))
+app.use(passport.initialize())
+
 //Multer
 const storage = multer.diskStorage({
     destination: path.join(__dirname, 'public/images'),
@@ -35,20 +31,17 @@ app.use(multer({
 //Helpers
 require('./helpers/cron')
 
-if (process.env.NODE_ENV !== 'production') {
+/*f (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
-}
+}*/
 
 //Routes
-app.use('/client', require('./routes/clients_routes'));
-app.use('/admin', require('./routes/admins_routes'));
+app.use('/client', require('./routes/clients'));
+app.use('/admin', require('./routes/admins'));
+app.use('/public', require('./routes/public'));
+app.use('/general', require('./routes/generals'));
 
 //Public
 app.use(express.static(path.join(__dirname, 'public')))
-
-//Start server
-app.listen(app.get('port'), () => {
-    console.log('[+] Servidor iniciado en: http://localhost:' + app.get('port'))
-})
 
 module.exports=app
