@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import ProductService from '../../Services/ProductService';
 import { ProductContext } from '../../Context/ProductContext';
+import { AuthContext } from '../../Context/AuthContext'
 //Moment
 import moment from 'moment'
 import 'moment/locale/es'
@@ -14,7 +15,8 @@ export default function Product(props) {
      const { match: { params } } = props;
      const id_product = params.id_product
      const {itemsToBuy,setItemsToBuy} = useContext(ProductContext)
-     const [product, setProduct] = useState({ id_product: "", title: "", categories: "", price: "", description: "", photo: "" })
+     const {user} = useContext(AuthContext)
+     const [product, setProduct] = useState({ id: "", title: "", categories: "", price: "", description: "", photo: "", Event : {} })
      const [message,setMessage] = useState(null);
      const [value, setValue] = useState()
      const [date, setDate] = useState()
@@ -38,44 +40,35 @@ export default function Product(props) {
           setDate(moment(new Date()).utc())
           //eslint-disable-next-line
      }, [])
-
      const add_to_cart = () => {
           let stock, unit_price
-          const quantity =document.getElementById('quantity').value
+          const quantity = document.getElementById('quantity').value
           stock = product.stock
-          if(product.event !== null){
-               if(from_date < date && date < to_date){
-                    unit_price = (product.price - (product.price * product.discount))
+          if(product.id_event !== null){
+               if(moment(product.Event.from_date).utc() < date && date < moment(product.Event.to_date).utc() ){
+                    unit_price = (product.price - (product.price * product.Event.discount))
                     ProductService.add(id_product,quantity,stock,unit_price).then(data => {
                          console.log(data);
                          setMessage(data)
                          setItemsToBuy(itemsToBuy + 1)
-                         
                     })
                }else{
                     unit_price = product.price
                     ProductService.add(id_product,quantity,stock,unit_price).then(data => {
                          setMessage(data)
-                         console.log(data);
                          setItemsToBuy(itemsToBuy + 1)
-                         
                     })
                }
           }else{
                ProductService.add(id_product,quantity,stock,product.price).then(data => {
                     setMessage(data)
                     setItemsToBuy(itemsToBuy + 1)
-                    
                })
           }
      }
      const max_value = (value) => {
           setValue(value)
      }
-
-     let from_date, to_date
-     from_date =  moment(product.from_date).utc()
-     to_date =  moment(product.to_date).utc()
      return (
           <div className="product_body">
                <div className="alert">{message ? <Message message={message}/> : null}</div>
@@ -86,7 +79,7 @@ export default function Product(props) {
                                    img.map(ph => {
                                         return(
                                              <img key={ph} src={'http://localhost:5000/images/'+ph} 
-                                             alt={product.name} />
+                                             alt={product.title} />
                                         )     
                                    })
                                    : null}
@@ -95,17 +88,16 @@ export default function Product(props) {
                               <div>
                                    <h1 className="titlep">{product.title}</h1>
                                    <div>
-     
-                                   {!product.event ? 
+                                   {product.id_event === null ? 
                                         <h2>$ {product.price}</h2> 
                                    : 
                                    <div>
-                                        { from_date < date && date < to_date ? 
-                                        <h6> OFERTA {product.discount*100}% 
-                                        <p>Finaliza {moment(product.to_date).fromNow()}</p> 
-                                        <hr />${Intl.NumberFormat().format(product.price - (product.price * product.discount))}
+                                        { moment(product.Event.from_date).utc() < date && date < moment(product.Event.to_date).utc() ? 
+                                        <h6> OFERTA {product.Event.discount*100}% 
+                                        <p>Finaliza {moment(product.Event.to_date).fromNow()}</p> 
+                                        <hr />${Intl.NumberFormat().format(product.price - (product.price * product.Event.discount))}
                                         </h6> 
-                                        :
+                                        :  
                                         <h2>$ {product.price}</h2> }
                                    </div>}
                                         <p>{product.description}</p>
@@ -122,10 +114,12 @@ export default function Product(props) {
                                              Añadir al Carrito
                                         </button>
                                         :
-                                        <button className="btn" id="buy" onClick={() => add_to_cart(product.id_product)}>
+                                        <div>
+                                             {user.id_role !== 2 ? 
+                                        <button className="btn" id="buy" onClick={() => add_to_cart(product.id)}>
                                              Añadir al Carrito
-                                        </button>}
-                                        
+                                        </button>: null}
+                                        </div> }
                                    </div>
                               </div>
                     </div>

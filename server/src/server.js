@@ -8,11 +8,11 @@ const path = require('path')
 const passport = require('passport')
 
 //Server setting
-app.set('port', process.env.PORT)
+app.use(passport.initialize())
 app.use(express.json())
 app.use(CookieParser())
 app.use(morgan('dev'))
-app.use(passport.initialize())
+
 
 //Multer
 const storage = multer.diskStorage({
@@ -31,9 +31,12 @@ app.use(multer({
 //Helpers
 require('./helpers/cron')
 
-/*f (process.env.NODE_ENV !== 'production') {
+/*if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }*/
+
+// Port
+app.set('port', process.env.PORT)
 
 //Routes
 app.use('/client', require('./routes/clients'));
@@ -44,4 +47,7 @@ app.use('/general', require('./routes/generals'));
 //Public
 app.use(express.static(path.join(__dirname, 'public')))
 
-module.exports=app
+//Start server
+app.listen(app.get('port'), () => {
+    console.log('[+] Servidor iniciado')
+})

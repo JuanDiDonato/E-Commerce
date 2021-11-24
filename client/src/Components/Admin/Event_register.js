@@ -135,14 +135,14 @@ export default function Event_register(props) {
 
                                                                  {results.map(product => {
                                                                       return (
-                                                                           <Tr key={product.id_product} >
-                                                                                <Td scope="row">{product.id_product}</Td>
+                                                                           <Tr key={product.id} >
+                                                                                <Td scope="row">{product.id}</Td>
                                                                                 <Td scope="row">{product.title}</Td>
                                                                                 <Td scope="row">{product.categories ? product.categories : 'Sin categoria'}</Td>
                                                                                 <Td scope="row">${product.price}</Td>
                                                                                 <Td scope="row">{product.stock}</Td>
-                                                                                <Td scope="row"><i style={{ cursor: 'pointer' }} onClick={() => view(product.id_product)} className="fa fa-plus"></i></Td>
-                                                                                <Td scope="row"><input type="checkbox" name="select_discount" onClick={(e) => add_id(e.target.checked, product.id_product)} /></Td>
+                                                                                <Td scope="row"><i style={{ cursor: 'pointer' }} onClick={() => view(product.id)} className="fa fa-plus"></i></Td>
+                                                                                <Td scope="row"><input type="checkbox" name="select_discount" onClick={(e) => add_id(e.target.checked, product.id)} /></Td>
                                                                            </Tr>
                                                                       )
                                                                  })}

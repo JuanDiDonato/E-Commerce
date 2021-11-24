@@ -26,41 +26,40 @@ ctrl.register_admin = (req, res, next) => {
 ctrl.category = (req, res, next) => {
     const {category} = req.body
         getCategoriesByName(category).then(data => {
-            if (data.length > 0)
+            if (data)
                 res.status(422).send({ message: 'Esta categoria ya existe', error: true })
             else{
                 createCategories({category}).then(category => 
                     res.status(201).send({ message: 'Operacion completada', error: false }))
                     .catch(next)
             }
-        }).cath(next)
+        }).catch(next)
 }
 //Edit category
 ctrl.edit_category = (req, res, next) => {
     const {category} = req.body
-    const oldCategory = req.param
+    const oldCategory = req.params
     getCategoriesByName(category).then(data => {
-        if (data.length > 0) 
+        if(data) 
             res.status(422).send({ message: 'Esta categoria ya existe', error: true })
         else{
             editCategory({category}, oldCategory.category).then(
                 res.status(201).send({ message: 'Operacion completada', error: false }))
                 .catch(next)
         }
-    }).cath(next)
+    }).catch(next)
 
 }
 //Delete category
 ctrl.delete_category = (req, res, next) => {
     const {category} = req.params
-    console.log(category);
     getCategoriesByName(category).then(data => {
         if (data) {
             deleteCategory(category).then(res.status(204).send()).cath(next)
         } else{
             res.status(400).send({ message: 'La categoria solicitada no existe', error: true })
         }
-    }).cath(next)
+    }).catch(next)
     
 }
 //Create a product
@@ -72,18 +71,20 @@ ctrl.create = (req, res, next) => {
     const description = req.body.description
     const stock = req.body.stock
     const Photos = req.files
+    console.log(req.files);
     Photos.forEach(element => {
         photo.push(element.filename)
     });
     photo = JSON.stringify(photo)
-    createProducts({ title, categories, description, price, stock, photo:'foto.jpg', disable, event }).then(
+    createProducts({ title, categories, description, price, stock, photo, disable, event }).then(
         res.status(201).send({message : 'Operacion completada', error : false})
     ).catch(next)
 }
 //Disable product
 ctrl.disable = (req, res, next) => {
     const {disable} = req.body
-    const { id_product } = req.params
+    const {id_product} = req.params
+    console.log(disable, id_product);
     disableProduct({disable},id_product).then(
         res.status(200).send({message : 'Operacion completada', error : false}))
         .catch(next)

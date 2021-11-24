@@ -13,17 +13,19 @@ export default function Categories() {
 
      const create_category = () => {
           const category = document.getElementById('category').value
-          AdminServices.new_category(category).then(data => {
-               console.log(data);
-               alert(data.message)
-               AdminServices.categories().then(data => {
-                    ;
-                    setCategories(data)
+          if(category.length === 0) alert('Ingrese un nombre') 
+          else{
+               AdminServices.new_category(category).then(data => {
+                    alert(data.message)
+                    AdminServices.categories().then(data => {
+                         ;
+                         setCategories(data)
+                    })
                })
-          })
-          document.getElementById('category').value = ''
+               document.getElementById('category').value = ''
+          }
+          
      }
-
      const delete_category = (category) => {
           AdminServices.delete_category(category).then(data => {
                AdminServices.categories().then(data => {
@@ -31,7 +33,6 @@ export default function Categories() {
                })
           })
      }
-
      const edit_mode = (category) => {
           setOldCategory(category)
           setEditMode(true)
@@ -40,16 +41,14 @@ export default function Categories() {
      const edit_category = () => {
           const category = document.getElementById('category').value
           AdminServices.edit_category(category, oldCategory).then(data => {
-               console.log(data);
+               alert(data.message)
                AdminServices.categories().then(data => {
-                    ;
                     setCategories(data)
                })
           })
           document.getElementById('category').value = ''
           setEditMode(false)
      }
-
 
      return (
           <div className="form">
@@ -77,14 +76,17 @@ export default function Categories() {
                                         </Tr>
                                    </Thead>
                                    <Tbody>
+                                        {/* eslint-disable-next-line */}
                                         {categories.map(category => {
-                                             return (
-                                                  <Tr key={category.category}>
-                                                       <Td scope="col">{category.category}</Td>
-                                                       <Td scope="row"><i style={{ cursor: 'pointer' }} onClick={() => edit_mode(category.category)} className="fa fa-pencil"></i></Td>
-                                                       <Td scope="row"><i style={{ cursor: 'pointer' }} onClick={() => delete_category(category.category)} className="fa fa-trash"></i></Td>
-                                                  </Tr>
-                                             )
+                                             if(category.category !== 'Sin Categoria'){
+                                                  return (
+                                                       <Tr key={category.category}>
+                                                            <Td scope="col">{category.category}</Td>
+                                                            <Td scope="row"><i style={{ cursor: 'pointer' }} onClick={() => edit_mode(category.category)} className="fa fa-pencil"></i></Td>
+                                                            <Td scope="row"><i style={{ cursor: 'pointer' }} onClick={() => delete_category(category.category)} className="fa fa-trash"></i></Td>
+                                                       </Tr>
+                                                  )
+                                             }
                                         })}
 
                                    </Tbody>

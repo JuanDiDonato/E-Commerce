@@ -25,22 +25,21 @@ export default function Cart() {
 
      useEffect(() => {
           ProductService.getcart().then(data => {
-               if (data.cart.length > 0) {
-                    setCart(data.cart)
-                    setItemsToBuy(data.cart.length)
+               if (data.length > 0) {
+                    setCart(data)
+                    setItemsToBuy(data.length)
                } else {
                     setCart([])
                     setTotal(0)
                }
                let images, images_array = [], image_end
-               data.cart.forEach(element => {
-                    console.log(element.photo);
-                    if(element.photo.includes('[') || element.photo.includes(']')){
-                         images = element.photo.slice(2,-2).split(',')
+               data.forEach(element => {
+                    if (element.Product.photo.includes('[') || element.Product.photo.includes(']')) {
+                         images = element.Product.photo.slice(2, -2).split(',')
                          const regex = /"/g; //g = global
-                         image_end = images[0].replace(regex,'')
+                         image_end = images[0].replace(regex, '')
                          images_array.push(image_end)
-                         
+
                     }
                     //eslint-disable-next-line
                     count = count + 1
@@ -90,19 +89,20 @@ export default function Cart() {
      const chekout = () => {
           const product_data = []
           cart.forEach(element => {
-               product_data.push({ 'title': element.title, 'unit_price': element.unit_price, 'quantity': element.quantity })
+               console.log(element);
+               product_data.push({ 'title': element.Product.title, 'unit_price': Number(element.unit_price), 'quantity': element.quantity })
+               console.log(product_data);
                if (product_data.length === cart.length) {
                     ProductService.mercadopago(product_data).then(data => {
+                         console.log(data);
                          window.location.href = data.url;
                     })
                }
           });
-
      }
      const changed = () => {
           setChange(true)
      }
-
      const change_address = () => {
           const address = document.getElementById('address').value
           AuthService.address(address).then(data => {
@@ -122,50 +122,46 @@ export default function Cart() {
                <div className="product_body">
                     <div>
                          {cart.map(product => {
-                              let from_date, to_date,images, images_array = [], image_end
-                                   from_date =  moment(product.from_date).utc()
-                                   to_date =  moment(product.to_date).utc()
-                                   if(product.photo.includes('[') || product.photo.includes(']')){
-                                        images = product.photo.slice(2,-2).split(',')
-                                        const regex = /"/g; //g = global
-                                        image_end = images[0].replace(regex,'')
-                                        images_array.push(image_end)
-                                        
-                                   }
+                              let from_date, to_date, images, images_array = [], image_end
+                              from_date = moment(product.Product.Event.from_date).utc()
+                              to_date = moment(product.Product.Event.to_date).utc()
+                              if (product.Product.photo.includes('[') || product.Product.photo.includes(']')) {
+                                   images = product.Product.photo.slice(2, -2).split(',')
+                                   const regex = /"/g; //g = global
+                                   image_end = images[0].replace(regex, '')
+                                   images_array.push(image_end)
+                              }
                               return (
-                                   <div key={product.id_product} className="card">
+                                   <div key={product.id} className="card">
                                         <div className="card_body">
                                              <div>
-                                             {img.length > 0 ?
-                                             // eslint-disable-next-line
-                                                  img.map(ph=> {
-                                                       if(ph === images_array[0]){
-                                                            return(
-                                                                 <img key={img[0]} src={'http://localhost:5000/images/'+ph} 
-                                                                 alt={product.name} />
-                                                            )
-                                                       }
-                                                       
-                                                  })
-                                                  
-                                             
-                                             : null}
+                                                  {img.length > 0 ?
+                                                       // eslint-disable-next-line
+                                                       img.map(ph => {
+                                                            if (ph === images_array[0]) {
+                                                                 return (
+                                                                      <img key={img[0]} src={'http://localhost:5000/images/' + ph}
+                                                                           alt={product.Product.title} />
+                                                                 )
+                                                            }
+                                                       })
+                                                       : null}
                                              </div>
                                              <div>
-                                                  <h4 > {product.title}</h4>
+                                                  <h4 > {product.Product.title}</h4>
 
                                                   <p> Cantidad: {product.quantity}</p>
-                                                  {!product.event ?
+                                                  {product.id_event === null ?
                                                        <h4>$ {product.unit_price}</h4>
                                                        :
                                                        <div>
-                                                            {from_date < date && date < to_date ? 
-                                                            <h4 > OFERTA {product.discount * 100}% <hr />${Intl.NumberFormat().format(product.unit_price)}</h4>
+                                                            {from_date < date && date < to_date ?
+                                                                 <h4 > OFERTA {product.Product.Event.discount * 100}% <hr />${Intl.NumberFormat().format(product.unit_price)}</h4>
                                                                  :
-                                                            <h4> ${ Intl.NumberFormat().format(product.unit_price)}</h4> }
+                                                                 <h4> ${Intl.NumberFormat().format(product.unit_price)}</h4>}
                                                        </div>
                                                   }
-                                                   
+
                                                   <button className="btn" onClick={() => delete_product(product.id_product)}> Eliminar</button>
                                              </div>
                                         </div>

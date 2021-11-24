@@ -10,7 +10,7 @@ export default {
           return data
      },
      products : async () => {
-          const {data : {products}} = await axios.get('/admin/products', {validateStatus:false})
+          const {data : {products}} = await axios.get('/general/products', {validateStatus:false})
           return products
      },
      delete: async (id_product) => {
@@ -18,7 +18,7 @@ export default {
           return data
      },
      categories : async () => {
-          const {data :{categories}} = await axios.get('/admin/categories' , {validateStatus:false})
+          const {data :{categories}} = await axios.get('/general/categories' , {validateStatus:false})
           return categories
      },
      new_category : async (category) => {
@@ -28,6 +28,7 @@ export default {
      },
      edit_category : async (category,oldCategory) => {
           const {data} = await axios.put('/admin/category/'+oldCategory, {category},{validateStatus:false})
+          console.log(data);
           return data
      },
      delete_category : async (category) => {
@@ -35,7 +36,7 @@ export default {
           return data
      },
      product_id : async (id_product) =>{
-          const {data} = await axios.get('/admin/product/'+id_product ,{validateStatus:false})
+          const {data} = await axios.get('/general/product/'+id_product ,{validateStatus:false})
           return data
      },
      edit : async (formData,id_product) => {
@@ -43,6 +44,7 @@ export default {
           return data
      },
      disable : async (disable,id_product) => {
+          console.log(disable, id_product);
           const {data} = await axios.put('/admin/disable/'+id_product,{disable},{validateStatus:false})
           return data
      },
@@ -55,8 +57,8 @@ export default {
           return data
      },
      statistics : async () => {
-          const {data : {data}} = await axios.get('/admin/statistics',{validateStatus:false})
-          return data
+          const {data : {statistics}} = await axios.get('/admin/statistics',{validateStatus:false})
+          return statistics
      },
      get_events : async () => {
           const {data:{events}} = await axios.get('/admin/events',{validateStatus:false})

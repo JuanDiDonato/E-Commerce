@@ -1,4 +1,5 @@
 const {getProductAndEvents} = require('../services/products') // Servicios de Productos
+const {signToken, newUser} = require('../services/clients')
 const ctrl = {}
 
 // Regtister user
@@ -15,7 +16,6 @@ ctrl.register = (req, res, next) => {
 ctrl.login = (req, res) => {
     if(req.isAuthenticated()){
         const {fullname,email, id, id_role, address} = req.user
-        console.log(req.user);
         const token = signToken(id)
         res.cookie('access_token', token, {httpOnly : true, sameSite : true})
         res.status(200).send({isAuthenticated : true, user: {fullname, email,id,id_role, address}})

@@ -8,7 +8,7 @@ export default {
      },
      //Get produc by id
      product_id : async (id_product) =>{
-          const {data} = await axios.get('/client/product/'+id_product ,{validateStatus:false})
+          const {data} = await axios.get('/general/product/'+id_product ,{validateStatus:false})
           return data
      },
      //Add product to cart
@@ -33,8 +33,8 @@ export default {
      },
      //Get categories
      categories : async () => {
-          const {data : {categories}} = await axios.get('/client/categories' , {validateStatus:false})
-          return categories
+          const {data} = await axios.get('/general/categories' , {validateStatus:false})
+          return data
      },
      //Clear cart
      clear_cart : async () => {
@@ -67,8 +67,8 @@ export default {
           return data
      },
      get_all : async () => {
-          const {data : {all_data}} = await axios.get('/admin/all', {validateStatus:false})
-          return all_data
+          const {data : {products}} = await axios.get('/public/all', {validateStatus:false})
+          return products
      },
      send_email : async (email) => {
           const {data} = await axios.post('/client/email', {email},{validateStatus:false})

@@ -42,7 +42,8 @@ export default function CreatePost(props) {
                alert('Complete todos los campos')
           } else {
                AdminServices.create(formData).then(data => {
-                    alert(data)
+                    console.log(data);
+                    alert(data.message)
                     props.history.push('/')
                })
           }

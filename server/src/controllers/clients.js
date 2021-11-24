@@ -17,9 +17,9 @@ mercadopago.configure({
 })
 // Authenticated
 ctrl.authenticated = (req,res) => {
-    const { id_user, email, id_role, address, fullname } = req.user[0];
+    const { id, email, id_role, address, fullname } = req.user;
     res.status(200).json({ isAuthenticated: true, 
-        user: { id_user, email, id_role, address, fullname}});
+        user: { id, email, id_role, address, fullname}});
 }
 // Send a email
 ctrl.email = async (req, res) => {
@@ -56,7 +56,7 @@ ctrl.address = (req, res, next) => {
         if(!user) res.status(400).send({'message' : 'El usuario no existe.', error : true})
         else{
             const {address} = req.body
-            registerAddress(address,id)
+            registerAddress({address},id)
             .then(res.status(201).send({message : 'Direccion actualizada', error : false}))
             .catch(next)
         }
@@ -93,7 +93,6 @@ ctrl.stock = (req, res, next) => {
         editStockAndDisable({stock, disable:'1'}, id_product).then(stock => res.status(204).send())
         .catch(next)
     }
-    
 }
 //Show cart
 ctrl.get_cart = (req, res, next) => {

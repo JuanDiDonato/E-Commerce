@@ -18,11 +18,9 @@ export default function Statistics() {
      useEffect(() => {
           AdminServices.statistics().then(data => {
                setStatistics(data)
-               
           })
           AdminServices.Mstatistics().then(data => {
                setMstatistics(data)
-               console.log(data);
           })
      }, [])
      
@@ -41,7 +39,7 @@ export default function Statistics() {
 
      let incomes = []
      // eslint-disable-next-line
-     mstatistics.map(statistic => {
+     statistics.map(statistic => {
           incomes.push(statistic.income)
      })
 

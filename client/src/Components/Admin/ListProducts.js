@@ -26,7 +26,7 @@ export default function ListProducts(props) {
                let i = 0
                // eslint-disable-next-line
                data.map(element => {
-                    if (element.id_product !== i) {
+                    if (element.id !== i) {
                          results.push(element)
                          i = element.id_product
                     }
@@ -51,25 +51,21 @@ export default function ListProducts(props) {
           if (status === 0) {
                let disable = 1
                AdminServices.disable(disable, id_product).then(data => {
-                    console.log(data);
                     AdminServices.products().then(data => {
                          setProducts(data);
                          setResults(data);
-                         console.log(data);
                     })
                })
                
           } else {
                let disable = 0
-               AdminServices.disable(disable, id_product).then(data => {
-                    console.log(data)
+               AdminServices.disable(disable, id_product).then(
                     AdminServices.products().then(data => {
                          setProducts(data);
                          setResults(data);
-                         console.log(data);
                     })
 
-               })
+               )
 
           }
      }
@@ -140,20 +136,18 @@ export default function ListProducts(props) {
                               </Thead>
                               <Tbody>
                                    {results.map(product => {
-                                        let from_date = moment(product.from_date).utc()
-                                        let to_date = moment(product.to_date).utc()
                                         return (
-                                             <Tr key={product.id_product} >
-                                                  <Td >{product.id_product}</Td>
+                                             <Tr key={product.id} >
+                                                  <Td >{product.id}</Td>
                                                   <Td>{product.title}</Td>
                                                   <Td>{product.categories ? product.categories : 'Sin categoria'}</Td>
                                                   <Td>${product.price}</Td>
-                                                  {!product.event ?
+                                                  {product.id_event == null ?
                                                        <Td>${product.price}</Td>
                                                        :
                                                        <Td>
-                                                            {from_date < date && date < to_date ?
-                                                                 '$'+Intl.NumberFormat().format(product.price - (product.price * product.discount))
+                                                            {moment(product.Event.from_date).utc() < date && date < moment(product.Event.to_date).utc() ?
+                                                                 '$'+Intl.NumberFormat().format(product.price - (product.price * product.Event.discount))
                                                                  :
                                                                  '$'+product.price
                                                             }
@@ -163,10 +157,10 @@ export default function ListProducts(props) {
                                                   
                                                   <Td>{product.disable === 0 ? 'Activo' : 'Oculto'}</Td>
                                                   
-                                                  <Td  ><i style={{ cursor: 'pointer' }} onClick={() => view(product.id_product)} className="fa fa-plus"></i></Td>
-                                                  <Td ><i style={{ cursor: 'pointer' }} onClick={() => edit_product(product.id_product)} className="fa fa-pencil"></i></Td>
-                                                  <Td>{product.disable === 0 ? <i style={{ cursor: 'pointer' }} onClick={() => change_status(product.id_product, product.disable)} className="fa fa-minus"></i>
-                                                       : <i style={{ cursor: 'pointer' }} onClick={() => change_status(product.id_product, product.disable)} className="fa fa-plus"></i>}</Td>
+                                                  <Td  ><i style={{ cursor: 'pointer' }} onClick={() => view(product.id)} className="fa fa-plus"></i></Td>
+                                                  <Td ><i style={{ cursor: 'pointer' }} onClick={() => edit_product(product.id)} className="fa fa-pencil"></i></Td>
+                                                  <Td>{product.disable === 0 ? <i style={{ cursor: 'pointer' }} onClick={() => change_status(product.id, product.disable)} className="fa fa-minus"></i>
+                                                       : <i style={{ cursor: 'pointer' }} onClick={() => change_status(product.id, product.disable)} className="fa fa-plus"></i>}</Td>
                                              </Tr>
                                         )
                                    })}

@@ -22,6 +22,7 @@ export default function Home() {
 
      useEffect(() => {
           ProductService.get_all().then(data => {
+               console.log(data);
                let i = 0
                data.forEach(element => {
                     if (element.id_product !== i) {
@@ -98,8 +99,8 @@ export default function Home() {
                          {results.map(obj => {
                               if (obj.disable === 0 && obj.stock !== 0) {
                                    let from_date, to_date, img, image_end, images = []
-                                   from_date = moment(obj.from_date).utc()
-                                   to_date = moment(obj.to_date).utc()
+                                   from_date = moment(obj.Event.from_date).utc()
+                                   to_date = moment(obj.Event.to_date).utc()
                                    if (obj.photo.includes('[') || obj.photo.includes(']')) {
                                         img = obj.photo.slice(2, -2).split(',')
                                         img.forEach(image => {
@@ -107,18 +108,17 @@ export default function Home() {
                                              image_end = image.replace(regex, '')
                                              images.push(image_end)
                                         })
+                                        console.log(obj);
                                         return (
-                                             <div onClick={() => view(obj.id_product)} key={obj.id_product}>
+                                             <div onClick={() => view(obj.id)} key={obj.id}>
                                                   <div className="card" style={{ cursor: 'pointer' }}>
                                                        <img src={'http://localhost:5000/images/' + images[0]} alt="..." />
                                                        <div >
-                                                            {!obj.event ?
+                                                            {obj.id_event === null ?
                                                                  <div>
                                                                       <h4>$ {obj.price}</h4>
                                                                       <p>{obj.title}</p>
                                                                  </div>
-                                                                 
-                                                                 
                                                                  :
                                                                  <div>
                                                                       {from_date < date && date < to_date ?
@@ -128,9 +128,9 @@ export default function Home() {
                                                                                      $ {obj.price}
                                                                                 </h6>
                                                                                 <h5>
-                                                                                     ${Intl.NumberFormat().format(obj.price - (obj.price * obj.discount))}
+                                                                                     ${Intl.NumberFormat().format(obj.price - (obj.price * obj.Event.discount))}
                                                                                      <p>
-                                                                                          {obj.discount * 100}% OFF
+                                                                                          {obj.Event.discount * 100}% OFF
                                                                                      </p>
                                                                                 </h5>
                                                                            </div>
