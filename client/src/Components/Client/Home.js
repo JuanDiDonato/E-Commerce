@@ -22,12 +22,11 @@ export default function Home() {
 
      useEffect(() => {
           ProductService.get_all().then(data => {
-               console.log(data);
                let i = 0
                data.forEach(element => {
-                    if (element.id_product !== i) {
+                    if (element.id !== i) {
                          results.push(element)
-                         i = element.id_product
+                         i = element.id
                     }
                });
                setProducts(results)
@@ -69,7 +68,7 @@ export default function Home() {
           }
      }
 
-
+     console.log(results);
      if (products.length === 0) {
           return (
                <div>
@@ -108,7 +107,6 @@ export default function Home() {
                                              image_end = image.replace(regex, '')
                                              images.push(image_end)
                                         })
-                                        console.log(obj);
                                         return (
                                              <div onClick={() => view(obj.id)} key={obj.id}>
                                                   <div className="card" style={{ cursor: 'pointer' }}>

@@ -12,12 +12,13 @@ export default function Endpage(props) {
 
      useEffect(() => {
           ProductService.getcart().then(data => {
+               console.log(data);
                setCart(data)
                setSales(data.length)
                let images, images_array = [], image_end
                data.forEach(element => {
-                    if(element.photo.includes('[') || element.photo.includes(']')){             
-                         images = element.photo.slice(2,-2).split(',')
+                    if(element.Product.photo.includes('[') || element.Product.photo.includes(']')){             
+                         images = element.Product.photo.slice(2,-2).split(',')
                          images.forEach(image => {
                               const regex = /"/g; //g = global
                               image_end = image.replace(regex,'')
@@ -41,7 +42,7 @@ export default function Endpage(props) {
           let income = 0         
           cart.forEach(product => {
                incomes.push(product.unit_price * product.quantity)
-               const ProductData = {'id_product': product.id_product, quantity : product.quantity, 'photo' : product.photo, 'title' : product.title, 'address' : user.address}
+               const ProductData = {'id_product': product.id_product, quantity : product.quantity, 'photo' : product.Product.Event.photo, 'title' : product.Product.title, 'address' : user.address}
                ProductService.add_order(ProductData).then(data => {
                     console.log(data);
                })
@@ -75,9 +76,10 @@ export default function Endpage(props) {
                <h2>Usted a comprado:</h2>
                <div className="product_end">
                {cart.map(product => {
+                    console.log(product);
                               let images, images_array = [], image_end
-                              if(product.photo.includes('[') || product.photo.includes(']')){
-                                   images = product.photo.slice(2,-2).split(',')
+                              if(product.Product.photo.includes('[') || product.Product.photo.includes(']')){
+                                   images = product.Product.photo.slice(2,-2).split(',')
                                    const regex = /"/g; //g = global
                                    image_end = images[0].replace(regex,'')
                                    images_array.push(image_end)

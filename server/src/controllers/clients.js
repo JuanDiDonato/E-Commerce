@@ -23,13 +23,12 @@ ctrl.authenticated = (req,res) => {
 }
 // Send a email
 ctrl.email = async (req, res) => {
-    const email = req.body.email
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 465,
         secure: true,
         auth: {
-            user: process.env.EMAIL,
+            user: 'juan_didonato@protonmail.com', //process.env.EMAIL,
             pass: process.env.PASSWORD
         },
     });
@@ -41,7 +40,7 @@ ctrl.email = async (req, res) => {
     }
     await transporter.sendMail(mailOption, (error, info)=>{
         if(error){
-            console.log(error);
+            console.log('[-]'+error);
             res.status(500).json({error : true})
         }else{
             console.log(info);

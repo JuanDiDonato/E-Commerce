@@ -9,12 +9,13 @@ import 'moment/locale/es'
 export default function Events() {
      let history = useHistory();
      const [events, setEvents]= useState([])
+     const [date, setDate] = useState()
 
      useEffect(() => {
           AdminServices.get_events().then(data => {
                setEvents(data)
           })
-          
+          setDate(moment(new Date()).utc())
      }, [])
 
      const delete_event = (id_event) => {
@@ -24,11 +25,9 @@ export default function Events() {
                })
           })
      }
-
      const edit_event = (id_event) => {
           history.push('/edit_event/'+id_event)
      }
-
      return (
           <div className="form">
                <div>
@@ -41,7 +40,8 @@ export default function Events() {
                <div className="grid-events">
                {/* eslint-disable-next-line */}
                     {events.map(event => {
-                         if(event.id_event !== 0){
+                         console.log(event.to_date > date);
+                         if(event.id_event !== 1 && moment(event.to_date).utc() > date){
                               return(
                                    <div key={event.id_event}>
                                         <div className="card" >
@@ -57,8 +57,9 @@ export default function Events() {
                                         </div>
                                    </div>
                               )
+                         }else if(event.id_event !== 1){
+                              delete_event(event.id_event)
                          }
-                         
                     })}
                </div>
           </div>
