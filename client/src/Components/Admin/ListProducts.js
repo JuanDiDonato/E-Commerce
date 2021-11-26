@@ -23,15 +23,16 @@ export default function ListProducts(props) {
 
      useEffect(() => {
           ProductService.get_all().then(data => {
-               let i = 0
-               // eslint-disable-next-line
-               data.map(element => {
-                    if (element.id !== i) {
-                         results.push(element)
-                         i = element.id_product
-                    }
-               });
-               setProducts(results)
+               setProducts(data)
+               setResults(data)
+               // let i = 0
+               // data.forEach(element => {
+               //      if (element.id !== i) {
+               //           results.push(element)
+               //           i = element.id_product
+               //      }
+               // });
+               // setProducts(results)
           })
           setDate(moment(new Date()).utc())
           //eslint-disable-next-line
@@ -47,29 +48,14 @@ export default function ListProducts(props) {
      // }
 
      const change_status = (id_product, status) => {
-          console.log(status);
-          if (status === 0) {
-               let disable = 1
-               AdminServices.disable(disable, id_product).then(data => {
-                    AdminServices.products().then(data => {
-                         setProducts(data);
-                         setResults(data);
-                    })
-               })
-               
-          } else {
-               let disable = 0
-               AdminServices.disable(disable, id_product).then(
-                    AdminServices.products().then(data => {
-                         setProducts(data);
-                         setResults(data);
-                    })
-
-               )
-
-          }
+          let disable;
+          if(status === 0) disable = 1; else{disable = 0};
+          AdminServices.disable(disable, id_product)
+          ProductService.get_all().then(data => {
+               setProducts(data)
+               setResults(data)
+          })
      }
-
      const view = (id_product) => {
           props.history.push("/product/" + id_product);
      }
@@ -94,7 +80,7 @@ export default function ListProducts(props) {
                setResults(products)
           }
      }
-
+     
      if (products.length === 0) {
           return (
                <div className="container mx-auto text-center  mt-5">
@@ -136,6 +122,7 @@ export default function ListProducts(props) {
                               </Thead>
                               <Tbody>
                                    {results.map(product => {
+                                        console.log(product.disable);
                                         return (
                                              <Tr key={product.id} >
                                                   <Td >{product.id}</Td>

@@ -12,7 +12,6 @@ export default function Endpage(props) {
 
      useEffect(() => {
           ProductService.getcart().then(data => {
-               console.log(data);
                setCart(data)
                setSales(data.length)
                let images, images_array = [], image_end
@@ -24,12 +23,9 @@ export default function Endpage(props) {
                               image_end = image.replace(regex,'')
                               images_array.push(image_end)
                          })
-                         
                     }
-                    
                });
                setImg(images_array)
-               
           })
           ProductService.send_email(user.email)
           
@@ -41,32 +37,25 @@ export default function Endpage(props) {
           const incomes = []
           let income = 0         
           cart.forEach(product => {
+               console.log(product);
                incomes.push(product.unit_price * product.quantity)
-               const ProductData = {'id_product': product.id_product, quantity : product.quantity, 'photo' : product.Product.Event.photo, 'title' : product.Product.title, 'address' : user.address}
-               ProductService.add_order(ProductData).then(data => {
-                    console.log(data);
-               })
-               ProductService.save_in_history(ProductData).then(data => {
-                    console.log(data);
-               })
+               const ProductData = {'id_product': product.id_product, quantity : product.quantity, 'photo' : product.Product.photo, 'title' : product.Product.title, 'address' : user.address}
+               ProductService.add_order(ProductData)
+               ProductService.save_in_history(ProductData)
                let stock = product.stock - product.quantity
                ProductService.stock(product.id_product, stock)
           });
           incomes.forEach(element => {
                income += element 
           });
-          ProductService.statistics(sales,income).then(data => {
-               console.log(data);
-          })
+          ProductService.statistics(sales,income)
      }
 
      const Back = () => {
           push_order()
           setCart([])
           setSales()
-          ProductService.clear_cart().then(data => {
-               console.log(data);
-          })
+          ProductService.clear_cart()
           props.history.push('/')
      }
 
@@ -76,14 +65,12 @@ export default function Endpage(props) {
                <h2>Usted a comprado:</h2>
                <div className="product_end">
                {cart.map(product => {
-                    console.log(product);
                               let images, images_array = [], image_end
                               if(product.Product.photo.includes('[') || product.Product.photo.includes(']')){
                                    images = product.Product.photo.slice(2,-2).split(',')
                                    const regex = /"/g; //g = global
                                    image_end = images[0].replace(regex,'')
-                                   images_array.push(image_end)
-                                   
+                                   images_array.push(image_end)   
                               }
                               return(
                                    <div key={product.id_product} className="card">
@@ -104,17 +91,12 @@ export default function Endpage(props) {
                                              })
                                         : null}
                                         </div>
-                                        
                                    </div>
                               )
                          })}
                </div>
-                         
-                    
-                    
                     <h3>Rebice su correo electronico</h3>
                     <h4>El vendedor enviara estos producto a {user.address}</h4>
-               
                <div>
                     <button type="button" className="btn btn-primary" onClick={() =>{Back()}}>Volver al inicio</button>
                </div>

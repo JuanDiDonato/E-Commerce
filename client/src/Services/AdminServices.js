@@ -44,9 +44,8 @@ export default {
           return data
      },
      disable : async (disable,id_product) => {
-          console.log(disable, id_product);
-          const {data} = await axios.put('/admin/disable/'+id_product,{disable},{validateStatus:false})
-          return data
+          const {data : {products}} = await axios.put('/admin/disable/'+id_product,{disable},{validateStatus:false})
+          return products
      },
      get_orders : async () => {
           const {data : {orders}} = await axios.get('/admin/order' ,{validateStatus:false})

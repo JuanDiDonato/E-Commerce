@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Orders.init({
-    id_user: {type : DataTypes.INTEGER, primaryKey: true},
+    id_order:  {type : DataTypes.INTEGER, primaryKey: true},
+    id_user:  DataTypes.INTEGER,
     fullname: DataTypes.STRING,
     address: DataTypes.STRING,
     id_product: DataTypes.INTEGER,

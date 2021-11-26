@@ -50,7 +50,6 @@ export default function Orders(props) {
                               <Tbody>
                                    {
                                         orders.map(order => {
-                                             console.log(orders);
                                              return (
                                                   <Tr key={order.id_order}>
                                                        <Td scope="col">{order.id_order}</Td>

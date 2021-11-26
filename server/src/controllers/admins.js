@@ -5,7 +5,7 @@ const { EncryptPassword } = require('../helpers/bcrypt')
 const {newUser} = require('../services/clients')  // Clientes
 const {getCategoriesByName, createCategories,
      editCategory, deleteCategory} = require('../services/categories')  // Categorias
-const {createProducts, disableProduct, editProduct, deleteProduct, editProductByEvent, } = require('../services/products')  // Productos
+const {createProducts, disableProduct, editProduct, deleteProduct, editProductByEvent, getProductAndEvents } = require('../services/products')  // Productos
 const {deleteOrder, getOrders} = require('../services/orders')  // Ordenes
 const {getStatistics} = require('../services/statistics')  // Estadisticas
 const {getEvents, getEvent, getEventById, 
@@ -86,8 +86,7 @@ ctrl.disable = (req, res, next) => {
     const {id_product} = req.params
     console.log(disable, id_product);
     disableProduct({disable},id_product).then(
-        res.status(200).send({message : 'Operacion completada', error : false}))
-        .catch(next)
+        res.status(200).end()).catch(next)
 }
 //Edit a product
 ctrl.edit = (req, res, next) => {

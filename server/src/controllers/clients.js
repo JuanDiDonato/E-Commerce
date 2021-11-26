@@ -28,12 +28,12 @@ ctrl.email = async (req, res) => {
         port: 465,
         secure: true,
         auth: {
-            user: 'juan_didonato@protonmail.com', //process.env.EMAIL,
+            user: process.env.EMAIL,
             pass: process.env.PASSWORD
         },
     });
     const mailOption = {
-        from: "remitente",
+        from: "didonatojuan7@gmail.com",
         to: req.body.email,
         subject: "Email reenviado de ECommerce",
         text: "¡Muchas gracias por comprar en ECommerce! Vas a recibir tu compra en los proximos dias, segun disponibilidad. Ante cualquier duda no dudes en consultarnos, podes escribirnos por: **REDES SOCIALES** "

@@ -7,13 +7,9 @@ require('../passport')
 // Modulos
 const clientsControllers = require('../controllers/clients')
 const {validateSchemaAndFail} = require('../middlewares/params_validator'); // middlewares
-const {registerSchema, 
-    registerAddressSchema,
-     loginSchmema, 
-     editStockSchema} = require('../schemas/clients')
+const {registerAddressSchema,editStockSchema} = require('../schemas/clients')
 const {addCartSchema} = require('../schemas/carts')
 const {registerOrderSchema} = require('../schemas/orders')
-const {historySchema} = require('../schemas/history')
 const {staticticsSchema} = require('../schemas/statistics')
 
 //POST REQUEST
@@ -28,7 +24,7 @@ router.post('/add/:id_product', validateSchemaAndFail(addCartSchema) ,passport.a
 //Add order
 router.post('/order', validateSchemaAndFail(registerOrderSchema),passport.authenticate('jwt',{session:false}), clientsControllers.order)
 //Append to history
-router.post('/history', validateSchemaAndFail(historySchema) ,passport.authenticate('jwt',{session:false}), clientsControllers.save_history)
+router.post('/history',passport.authenticate('jwt',{session:false}), clientsControllers.save_history)
 //Add statistics
 router.post('/statistics', validateSchemaAndFail(staticticsSchema),passport.authenticate('jwt', { session: false }), clientsControllers.statistics)
 
