@@ -24,3 +24,11 @@ exports.getOrders = () =>
     .catch(error => {
         throw new Error(error)
     })
+
+// Editar estado de una orden+
+exports.editStatus = (status,id_order) =>
+    Orders.update(status, {where: {id_order}})
+    .then(status => status)
+    .catch(error => {
+        throw new Error(error)
+    })

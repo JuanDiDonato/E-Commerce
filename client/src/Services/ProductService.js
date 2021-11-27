@@ -63,7 +63,7 @@ export default {
      },
      //stock
      stock : async (id_product,stock) => {
-          const {data} = await axios.put('/client/edit/stock/'+id_product, {stock},{validateStatus:false})
+          const {data} = await axios.put('/admin/edit/stock/'+id_product, {stock},{validateStatus:false})
           return data
      },
      get_all : async () => {

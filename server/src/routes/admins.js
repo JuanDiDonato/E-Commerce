@@ -4,15 +4,16 @@ const adminsControllers = require('../controllers/admins')
 const passport = require('passport')
 
 const {validateSchemaAndFail} = require('../middlewares/params_validator'); // middlewares
-const {registerSchema} = require('../schemas/clients')  // Esquema clientes
+const {registerSchema, editStockSchema} = require('../schemas/clients')  // Esquema clientes
 const {categorySchema} = require('../schemas/categories')  // Esquema de Categorias
 const {productSchema} = require('../schemas/products')  // Esquema de Productos
 const {eventSchema} = require('../schemas/events')  // Esquema de Eventos
+const {status} = require('../schemas/orders')
 
 //POST REQUEST
 //Register admin
 router.post('/admin', validateSchemaAndFail(registerSchema),passport.authenticate('jwt',{session:false}), adminsControllers.register_admin )
-//Create
+//Create product
 router.post('/create', validateSchemaAndFail(productSchema),passport.authenticate('jwt',{session:false}), adminsControllers.create)
 //Create category
 router.post('/category', validateSchemaAndFail(categorySchema),passport.authenticate('jwt',{session:false}), adminsControllers.category)
@@ -50,5 +51,8 @@ router.put('/edit/:id_product',validateSchemaAndFail(productSchema), passport.au
 router.put('/disable/:id_product',passport.authenticate('jwt',{session:false}), adminsControllers.disable )
 //Update event
 router.put('/event/:id_event', passport.authenticate('jwt',{session:false}), adminsControllers.update_event)
-
+//Stock
+router.put('/edit/stock/:id_product', validateSchemaAndFail(editStockSchema),passport.authenticate('jwt',{session:false}), adminsControllers.stock )
+//Edit status
+router.put('/edit/status/:id_order', validateSchemaAndFail(status),passport.authenticate('jwt',{session:false}), adminsControllers.edit_status )
 module.exports=router

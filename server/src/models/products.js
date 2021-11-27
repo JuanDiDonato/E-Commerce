@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       Products.belongsTo(models.Categories, {foreignKey : 'categories'}) // Un producto tiene una categoria
       Products.belongsTo(models.Events, {foreignKey : 'id_event'}) // Un producto pertenece a un  Evento
       Products.belongsTo(models.Carts, {foreignKey : 'id'})
+      Products.belongsTo(models.Waist, {foreignKey : 'id'})
       Products.hasOne(models.Orders, {foreignKey : 'id_product'})
     }
   };
@@ -16,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     categories: DataTypes.STRING,
     price: DataTypes.STRING,
     description: DataTypes.STRING,
-    stock: DataTypes.INTEGER,
     photo: DataTypes.STRING,
     disable: DataTypes.INTEGER,
     id_event: DataTypes.INTEGER

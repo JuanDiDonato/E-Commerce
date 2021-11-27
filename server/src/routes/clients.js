@@ -7,7 +7,7 @@ require('../passport')
 // Modulos
 const clientsControllers = require('../controllers/clients')
 const {validateSchemaAndFail} = require('../middlewares/params_validator'); // middlewares
-const {registerAddressSchema,editStockSchema} = require('../schemas/clients')
+const {registerAddressSchema} = require('../schemas/clients')
 const {addCartSchema} = require('../schemas/carts')
 const {registerOrderSchema} = require('../schemas/orders')
 const {staticticsSchema} = require('../schemas/statistics')
@@ -42,8 +42,6 @@ router.delete('/add/:id_product', passport.authenticate('jwt',{session:false}),c
 //Clear cart
 router.delete('/clear',  passport.authenticate('jwt',{session:false}),clientsControllers.clear)
 
-//PUT REQUEST
-//Stock
-router.put('/edit/stock/:id_product', validateSchemaAndFail(editStockSchema),passport.authenticate('jwt',{session:false}), clientsControllers.stock )
+
 
 module.exports=router

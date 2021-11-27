@@ -55,7 +55,6 @@ module.exports = {
         table: 'Events',
         field: 'id_event'
       },
-      onDelete: 'setNull',  
       onUpdate: 'cascade',
     }
     const shopping_users = {
@@ -91,6 +90,50 @@ module.exports = {
       onDelete: 'cascade',  
       onUpdate: 'cascade',
     }
+    const product_waist = {
+      fields : ['id_product'], 
+      type: 'FOREIGN KEY',
+      name: 'FK_9',  
+      references: {  
+        table: 'Products',
+        field: 'id'
+      },
+      onDelete: 'cascade',  
+      onUpdate: 'cascade',
+    }
+    const status_orders = {
+      fields : ['status'], 
+      type: 'FOREIGN KEY',
+      name: 'FK_10',  
+      references: {  
+        table: 'Statuses',
+        field: 'id'
+      },
+      onDelete: 'cascade',  
+      onUpdate: 'cascade',
+    }
+    const status_history = {
+      fields : ['status'], 
+      type: 'FOREIGN KEY',
+      name: 'FK_11',  
+      references: {  
+        table: 'Statuses',
+        field: 'id'
+      },
+      onDelete: 'cascade',  
+      onUpdate: 'cascade',
+    }
+    const orders_history = {
+      fields : ['status'], 
+      type: 'FOREIGN KEY',
+      name: 'FK_12',  
+      references: {  
+        table: 'Orders',
+        field: 'status'
+      },
+      onDelete: 'cascade',  
+      onUpdate: 'cascade',
+    }
 
     
 
@@ -102,8 +145,11 @@ module.exports = {
     await queryInterface.addConstraint('History_shoppings', shopping_users); // Establesco la relacion shopping-users
     await queryInterface.addConstraint('Carts', cart_users); // Establesco la relacion cart-users
     await queryInterface.addConstraint('Carts', cart_products); // Establesco la relacion cart-products
-
-  },
+    await queryInterface.addConstraint('Waists', product_waist); // Establesco la relacion product_waist
+    await queryInterface.addConstraint('Orders', status_orders); // Relacion de estados en orders y history
+    await queryInterface.addConstraint('History_shoppings', status_history); // Relacion de estados en orders y history
+    await queryInterface.addConstraint('History_shoppings', orders_history); // Relacion de estados en orders y history
+    },
 
   down: async (queryInterface, Sequelize) => {
       await queryInterface.removeConstraint('Orders', 'FK_1')
@@ -114,6 +160,10 @@ module.exports = {
       await queryInterface.removeConstraint('History_shoppings', 'FK_6')
       await queryInterface.removeConstraint('Carts', 'FK_7')
       await queryInterface.removeConstraint('Carts', 'FK_8')
+      await queryInterface.removeConstraint('Waists', 'FK_9')
+      await queryInterface.removeConstraint('Orders', 'FK_10')
+      await queryInterface.removeConstraint('History_shoppings', 'FK_11')
+      await queryInterface.removeConstraint('History_shoppings', 'FK_12')
 
   }
 };

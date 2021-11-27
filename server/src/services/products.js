@@ -1,5 +1,5 @@
 // Modelos
-const {Products, Events} = require('../models')
+const {Products, Events, Waist} = require('../models')
 
 // Obtener productos
 exports.getProducts = () =>
@@ -11,24 +11,31 @@ exports.getProducts = () =>
 // Obtener productos y eventos
 exports.getProductAndEvents = () =>
     Products.findAll({
-        include: {
+        include: [{
             model: Events,
             attributes:['event_name', 'discount', 'from_date', 'to_date']
-        }
+        },
+        {
+            model: Waist,
+            attributes:['S','M','L','XL','XXL','XXXL']
+        }]
     }).then(products => products)
     .catch(error => {
         throw new Error(error)
     })
 
-
 // Obtener un producto
 exports.getProduct = id =>
     Products.findOne({
         where : {id},
-        include: {
+        include: [{
             model: Events,
             attributes:['event_name', 'discount', 'from_date', 'to_date']
-        }
+        },
+        {
+            model: Waist,
+            attributes:['S','M','L','XL','XXL','XXXL']
+        }]
     }).then(product => product)
     .catch(error => {
         throw new Error(error)
@@ -38,21 +45,6 @@ exports.getProduct = id =>
 exports.createProducts = data =>
     Products.create(data)
     .then(product => product)
-    .catch(error => {
-        throw new Error(error)
-    })
-
-// Editar stock
-exports.editStock = (stock, id) =>
-    Products.update(stock, {where : {id}})
-    .then(stock => stock)
-    .catch(error => {
-        throw new Error(error)
-    })
-// Editar stock y deshabilitar
-exports.editStockAndDisable = (data, id) =>
-    Products.update(data, {where : {id}})
-    .then(stock => stock)
     .catch(error => {
         throw new Error(error)
     })

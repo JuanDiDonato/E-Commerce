@@ -26,8 +26,9 @@ passport.use(new LocalStrategy({
     if(!user) return done(null, false, message)
     else{
         MatchPassword(password,user.password).then(data => {
+            let message = '[-] User not found'
             if(data) return done(false,user,null)
-            else return done(error, false, null)
+            else return done(null, false, message)
         }).catch(error => console.log(error))
     }
 }))

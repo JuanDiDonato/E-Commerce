@@ -3,7 +3,6 @@ const nodemailer = require('nodemailer');
 
 // Modulos
 const {getUser, registerAddress} = require('../services/clients') // Servicios de Usuario
-const {editStock, editStockAndDisable} = require('../services/products') // Servicios de Productos
 const {getCart, getCartByProduct, addToCart, deleteOfCart, deleteAllOfCart} = require('../services/carts') // Servicios de Carro
 const {addOrder} = require('../services/orders')
 const {getHistory,addHistory} = require('../services/history')
@@ -80,19 +79,7 @@ ctrl.mercadopago = (req, res) => {
         res.status(401).json({error: true})
     })
 }
-//Edit stock
-ctrl.stock = (req, res, next) => {
-    const {id_product} = req.params
-    const {stock} = req.body
-    if(stock !== 0){
-        editStock({stock},id_product).then(stock => res.status(204).send())
-        .catch(next)
-    }
-    if(stock === 0){
-        editStockAndDisable({stock, disable:'1'}, id_product).then(stock => res.status(204).send())
-        .catch(next)
-    }
-}
+
 //Show cart
 ctrl.get_cart = (req, res, next) => {
     const {id} = req.user
@@ -135,11 +122,12 @@ ctrl.clear = (req, res,next) => {
 }
 //Add order
 ctrl.order = (req, res,next) => {
-    const {id, fullname} = req.user
-    const {id_product, address, quantity} = req.body
-    addOrder({'id_user' : id, fullname,address,id_product,quantity}).then(order => 
+    const {id, fullname, address} = req.user
+        const {id_product, quantity} = req.body
+        addOrder({'id_user' : id, fullname,address,id_product,quantity, 'status' : 1}).then( 
         res.status(201).send({message: 'Operacion completada', error : false}))
         .catch(next)
+    
 }
 //Get history
 ctrl.history = (req, res, next) => {
@@ -150,10 +138,9 @@ ctrl.history = (req, res, next) => {
 ctrl.save_history= (req, res, next) => {
     const {id} = req.user
     const {quantity,title,photo} = req.body
-    addHistory({'id_user':id,quantity,title,photo,'create_at': new Date()}).then(history => {
+    addHistory({'id_user':id,quantity,title,photo,'status':1,'create_at': new Date()}).then(
         res.status(201).send({message:'Operacion completada', error : false})
-        .catch(next)
-    })
+    ).catch(next)
     
 }
 //Save statistics

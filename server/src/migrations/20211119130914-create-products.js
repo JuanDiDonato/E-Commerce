@@ -20,9 +20,6 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      stock: {
-        type: Sequelize.INTEGER
-      },
       photo: {
         type: Sequelize.STRING
       },

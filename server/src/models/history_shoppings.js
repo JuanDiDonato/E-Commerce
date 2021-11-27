@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class History_shoppings extends Model {
     static associate(models) {
       History_shoppings.belongsTo(models.Users, {foreignKey : 'id_user'})
+      History_shoppings.belongsTo(models.Status, {foreignKey : 'status'})
     }
   };
   History_shoppings.init({

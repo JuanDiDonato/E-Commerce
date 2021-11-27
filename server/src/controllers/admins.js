@@ -5,12 +5,13 @@ const { EncryptPassword } = require('../helpers/bcrypt')
 const {newUser} = require('../services/clients')  // Clientes
 const {getCategoriesByName, createCategories,
      editCategory, deleteCategory} = require('../services/categories')  // Categorias
-const {createProducts, disableProduct, editProduct, deleteProduct, editProductByEvent, getProductAndEvents } = require('../services/products')  // Productos
-const {deleteOrder, getOrders} = require('../services/orders')  // Ordenes
+const {createProducts, disableProduct, editProduct, deleteProduct, editProductByEvent} = require('../services/products')  // Productos
+const {deleteOrder, getOrders, editStatus} = require('../services/orders')  // Ordenes
 const {getStatistics} = require('../services/statistics')  // Estadisticas
 const {getEvents, getEvent, getEventById, 
     createEvent, deleteEvent, editEvent} = require('../services/events') // Eventos
 const {getMonthlyStatistics} = require('../services/monthly_statistics')  // Estadisticas Mensuales
+const {editStock, addStock} = require('../services/waist') // Stock
 const ctrl = {}
 
 
@@ -71,35 +72,36 @@ ctrl.create = (req, res, next) => {
     const description = req.body.description
     const stock = req.body.stock
     const Photos = req.files
-    console.log(req.files);
     Photos.forEach(element => {
         photo.push(element.filename)
     });
     photo = JSON.stringify(photo)
-    createProducts({ title, categories, description, price, stock, photo, disable, event }).then(
-        res.status(201).send({message : 'Operacion completada', error : false})
+    createProducts({ title, categories, description, price, photo, disable, event }).then(
+        product => {
+            stock.id_product = product.id
+            addStock(stock).then(res.status(201).send({message : 'Operacion completada', error:false}))
+        }
     ).catch(next)
 }
 //Disable product
 ctrl.disable = (req, res, next) => {
     const {disable} = req.body
     const {id_product} = req.params
-    console.log(disable, id_product);
     disableProduct({disable},id_product).then(
         res.status(200).end()).catch(next)
 }
 //Edit a product
 ctrl.edit = (req, res, next) => {
     let photo = []
-    const { title, categories, description, price, stock } = req.body
+    const { title, categories, description, price, stock} = req.body
     const { id_product } = req.params
     const Photos = req.files
     Photos.forEach(element => {
         photo.push(element.filename)
     });
     photo = JSON.stringify(photo)
-    editProduct({ title, categories, description, price, stock, photo },id_product).then(
-        res.status(200).send({message : 'Operacion completada', error:false})
+    editProduct({ title, categories, description, price,photo:'test.jpg' },id_product).then(
+        editStock(stock, id_product).then(res.status(200).send({message : 'Operacion completada', error:false}))
     ).catch(next)    
 }
 //Delete a product
@@ -123,6 +125,16 @@ ctrl.statistics =  (req, res, next) => {
     getStatistics().then(statistics => res.status(200).send({statistics}))
     .catch(next)
 }
+// Edit status orders
+ctrl.edit_status = (req, res, next) => {
+    const {id_order} = req.params
+    const {status} = req.body
+    console.log(status, id_order);
+    editStatus({status}, id_order).then(
+        res.status(204).end()
+    ).catch(next)
+}
+
 //Get events
 ctrl.events = (req, res, next) => {
     getEvents().then(events => res.status(200).send({events}))
@@ -183,6 +195,20 @@ ctrl.update_event = (req, res, next) => {
 ctrl.Mstatistics = async (req, res, next) => {
     getMonthlyStatistics().then(MonthlyStatistics => res.status(200).json({MonthlyStatistics}))
     .catch(next)
+}
+//Edit stock
+ctrl.stock = (req, res, next) => {
+    const {id_product} = req.params
+    const {stock} = req.body
+    if(stock.S === 0 && stock.M === 0 && stock.L === 0 && stock.XL === 0 && stock.XXL === 0 && stock.XXXL === 0){
+        const disable = '1'
+        editStock(stock,id_product)
+        disableProduct({disable},id_product).then(
+            res.status(204).end()).catch(next)
+    }else{
+        editStock(stock,id_product).then(res.status(204).end())
+        .catch(next)
+    }
 }
 
 module.exports = ctrl
