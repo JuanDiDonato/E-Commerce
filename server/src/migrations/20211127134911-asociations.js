@@ -55,6 +55,7 @@ module.exports = {
         table: 'Events',
         field: 'id_event'
       },
+      onDelete: 'SET NULL',  
       onUpdate: 'cascade',
     }
     const shopping_users = {
@@ -120,7 +121,7 @@ module.exports = {
         table: 'Orders',
         field: 'status'
       },
-      onDelete: 'cascade',  
+      onDelete: 'SET NULL',  
       onUpdate: 'cascade',
     }
 
