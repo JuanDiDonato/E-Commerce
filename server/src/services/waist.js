@@ -11,8 +11,8 @@ exports.addStock = (stock) =>
     })
 
 // Editar stock
-exports.editStock = (stock, id) =>
-    Waist.update(stock, {where : {id}})
+exports.editStock = (stock, id_product) =>
+    Waist.update(stock, {where : {id_product}})
     .then(stock => stock)
     .catch(error => {
         throw new Error(error)

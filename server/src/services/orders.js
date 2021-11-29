@@ -1,5 +1,5 @@
 // Modelos
-const {Orders} = require('../models')
+const {Orders, Status} = require('../models')
 
 // Agregar Ordenes
 exports.addOrder = data => 
@@ -19,13 +19,14 @@ exports.deleteOrder = id =>
 
 // Obtener Ordenes
 exports.getOrders = () =>
-    Orders.findAll()
+    Orders.findAll({
+        include: ['Status']})
     .then(orders => orders)
     .catch(error => {
         throw new Error(error)
     })
 
-// Editar estado de una orden+
+// Editar estado de una orden
 exports.editStatus = (status,id_order) =>
     Orders.update(status, {where: {id_order}})
     .then(status => status)

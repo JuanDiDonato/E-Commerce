@@ -22,6 +22,7 @@ export default function Home() {
 
      useEffect(() => {
           ProductService.get_all().then(data => {
+               console.log(data);
                let i = 0
                data.forEach(element => {
                     if (element.id !== i) {
@@ -95,7 +96,6 @@ export default function Home() {
                     <div className="products_grid">
                          {/* eslint-disable-next-line */}
                          {results.map(obj => {
-                              console.log(results);
                               if (obj.disable === 0 && obj.stock !== 0) {
                                    let from_date, to_date, img, image_end, images = []
                                    from_date = moment(obj.Event.from_date).utc()

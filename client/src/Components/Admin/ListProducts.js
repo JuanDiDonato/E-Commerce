@@ -113,7 +113,12 @@ export default function ListProducts(props) {
                                         <Th scope="col" data-label='Categoria'>Categoria</Th>
                                         <Th scope="col" data-label='Precio'>Precio Original</Th>
                                         <Th scope="col" data-label='Precio con descuento'>Precio Descuento</Th>
-                                        <Th scope="col" data-label='Stock'>Stock</Th>
+                                        <Th scope="col" data-label='Stock'>S</Th>
+                                        <Th scope="col" data-label='Stock'>M</Th>
+                                        <Th scope="col" data-label='Stock'>L</Th>
+                                        <Th scope="col" data-label='Stock'>XL</Th>
+                                        <Th scope="col" data-label='Stock'>XXL</Th>
+                                        <Th scope="col" data-label='Stock'>XXXL</Th>
                                         <Th scope="col" data-label='Estado'>Estado</Th>
                                         <Th scope="col" data-label='Ver' className="text-warning">Ver</Th>
                                         <Th scope="col" data-label='Editar' className="text-primary">Editar</Th>
@@ -122,7 +127,7 @@ export default function ListProducts(props) {
                               </Thead>
                               <Tbody>
                                    {results.map(product => {
-                                        console.log(product.disable);
+                                        console.log(product);
                                         return (
                                              <Tr key={product.id} >
                                                   <Td >{product.id}</Td>
@@ -140,7 +145,12 @@ export default function ListProducts(props) {
                                                             }
                                                        </Td>
                                                   }
-                                                  {product.stock === 0 ? <Td>{product.stock}</Td> : <Td >{product.stock}</Td>}
+                                                  <Td>{product.Waist.S}</Td>
+                                                  <Td>{product.Waist.M}</Td>
+                                                  <Td>{product.Waist.L}</Td>
+                                                  <Td>{product.Waist.XL}</Td>
+                                                  <Td>{product.Waist.XXL}</Td>
+                                                  <Td>{product.Waist.XXXL}</Td>
                                                   
                                                   <Td>{product.disable === 0 ? 'Activo' : 'Oculto'}</Td>
                                                   

@@ -90,11 +90,11 @@ ctrl.get_cart = (req, res, next) => {
 ctrl.add_cart = (req, res,next) => {
     const {id_product} = req.params
     const {id} = req.user
-    const {quantity, stock, unit_price} = req.body
+    const {quantity, unit_price, waist} = req.body
     getCartByProduct(id,id_product).then(cart => {
         if(cart.length > 0) res.status(422).send({message : 'Este producto ya esta en el carrito', error : true})
         else{
-            addToCart({'id_user':id, id_product, quantity, stock, unit_price}).then(cart => 
+            addToCart({'id_user':id, id_product, quantity, waist, unit_price}).then(cart => 
                 res.status(201).send({message : 'Producto agregado al carrito', error : false}))
                 .catch(next)
         }
@@ -123,8 +123,8 @@ ctrl.clear = (req, res,next) => {
 //Add order
 ctrl.order = (req, res,next) => {
     const {id, fullname, address} = req.user
-        const {id_product, quantity} = req.body
-        addOrder({'id_user' : id, fullname,address,id_product,quantity, 'status' : 1}).then( 
+        const {id_product, quantity, unit_price,waist} = req.body
+        addOrder({'id_user' : id, fullname,address,id_product,quantity, 'status' : 1, unit_price,waist}).then( 
         res.status(201).send({message: 'Operacion completada', error : false}))
         .catch(next)
     
@@ -138,7 +138,8 @@ ctrl.history = (req, res, next) => {
 ctrl.save_history= (req, res, next) => {
     const {id} = req.user
     const {quantity,title,photo} = req.body
-    addHistory({'id_user':id,quantity,title,photo,'status':1,'create_at': new Date()}).then(
+    const status = '1'
+    addHistory({'id_user':id,quantity,title,photo,'status' : status,'create_at': new Date()}).then(
         res.status(201).send({message:'Operacion completada', error : false})
     ).catch(next)
     

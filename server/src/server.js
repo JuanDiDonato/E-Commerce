@@ -36,7 +36,7 @@ require('./helpers/cron')
 }*/
 
 // Port
-app.set('port', process.env.PORT)
+app.set('port', 5000)
 
 //Routes
 app.use('/client', require('./routes/clients'));

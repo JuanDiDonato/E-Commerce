@@ -51,6 +51,11 @@ export default {
           const {data : {orders}} = await axios.get('/admin/order' ,{validateStatus:false})
           return orders
      },
+     change_status : async (id_order, status) => {
+          console.log(status);
+          const {data} = await axios.put('admin/edit/status/'+id_order, {status} ,{validateStatus:false})
+          return data
+     },
      end_order : async (id_order) => {
           const {data} = await axios.delete('/admin/order/delete/'+id_order, {id_order},{validateStatus:false})
           return data

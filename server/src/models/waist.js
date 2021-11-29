@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Waist.init({
-    id_product : DataTypes.INTEGER,
+    id_product : {type :DataTypes.INTEGER, primaryKey: true},
     S: DataTypes.INTEGER,
     M: DataTypes.INTEGER,
     L: DataTypes.INTEGER,

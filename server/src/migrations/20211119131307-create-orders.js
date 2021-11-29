@@ -26,6 +26,9 @@ module.exports = {
       status: {
         type: Sequelize.INTEGER
       },
+      waist: {
+        type: Sequelize.STRING
+      }
     });
   },
   down: async (queryInterface, Sequelize) => {

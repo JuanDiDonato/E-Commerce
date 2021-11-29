@@ -17,10 +17,10 @@ module.exports = {
       quantity: {
         type: Sequelize.INTEGER
       },
-      stock: {
-        type: Sequelize.INTEGER
-      },
       unit_price: {
+        type: Sequelize.STRING
+      },
+      waist: {
         type: Sequelize.STRING
       }
     });

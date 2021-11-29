@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Status extends Model {
     static associate(models) {
-      Status.hasOne(models.Orders, {foreignKey : 'id'})
+      Status.hasOne(models.Orders, {foreignKey : 'status'})
       Status.hasOne(models.History_shoppings, {foreignKey : 'id'})
     }
   };

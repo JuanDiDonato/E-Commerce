@@ -1,5 +1,5 @@
 // Modelos
-const {Carts, Products, Events} = require('../models')
+const {Carts, Products, Events, Waist} = require('../models')
 
 // Obtener carro por usuario
 exports.getCart = id_user =>
@@ -8,9 +8,10 @@ exports.getCart = id_user =>
         include: [
             {   
                 model: Products,
-                include : Events,
-                attributes:['title', 'id_event', 'stock', 'photo'],
+                include : ['Event', 'Waist'],
+                attributes:['title', 'id_event', 'photo'],
             },
+
         ]
     }).then(cart => cart)
     .catch(error => {

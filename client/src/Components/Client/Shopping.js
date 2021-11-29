@@ -10,7 +10,6 @@ export default function Shoping() {
 
      useEffect(() => {
           ProductService.history().then(data => {
-               console.log(data);
                let images, images_array = [], image_end
                data.forEach(element => {
                     if(element.photo.includes('[') || element.photo.includes(']')){
@@ -49,11 +48,12 @@ export default function Shoping() {
                                    images.push(image_end)
                               })
                               return(
-                                   <div key={his.id_history} className="card">
+                                   <div key={his.id} className="card">
                                         <div className="grid">
                                              <div>
                                                   <h2>{his.title}</h2>
                                                   <h3>Unidades: {his.quantity}</h3>
+                                                  <h3>Estado de la compra: {his.status === 1 ? 'Encargado' : <div>{his.status === 2 ? 'En camino' : 'Entregado'}</div> }</h3>
                                              </div>
                                              
                                              {img ?

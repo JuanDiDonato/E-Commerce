@@ -72,14 +72,16 @@ ctrl.create = (req, res, next) => {
     const description = req.body.description
     const stock = req.body.stock
     const Photos = req.files
+    console.log(req.body);
     Photos.forEach(element => {
         photo.push(element.filename)
     });
     photo = JSON.stringify(photo)
     createProducts({ title, categories, description, price, photo, disable, event }).then(
         product => {
-            stock.id_product = product.id
-            addStock(stock).then(res.status(201).send({message : 'Operacion completada', error:false}))
+            let object = JSON.parse(stock)
+            object.id_product = product.id 
+            addStock(object).then(res.status(201).send({message : 'Operacion completada', error:false}))
         }
     ).catch(next)
 }
@@ -94,14 +96,15 @@ ctrl.disable = (req, res, next) => {
 ctrl.edit = (req, res, next) => {
     let photo = []
     const { title, categories, description, price, stock} = req.body
+    let object = JSON.parse(stock)
     const { id_product } = req.params
     const Photos = req.files
     Photos.forEach(element => {
         photo.push(element.filename)
     });
     photo = JSON.stringify(photo)
-    editProduct({ title, categories, description, price,photo:'test.jpg' },id_product).then(
-        editStock(stock, id_product).then(res.status(200).send({message : 'Operacion completada', error:false}))
+    editProduct({ title, categories, description, price,photo},id_product).then(
+        editStock(object, id_product).then(res.status(200).send({message : 'Operacion completada', error:false}))
     ).catch(next)    
 }
 //Delete a product
@@ -129,12 +132,10 @@ ctrl.statistics =  (req, res, next) => {
 ctrl.edit_status = (req, res, next) => {
     const {id_order} = req.params
     const {status} = req.body
-    console.log(status, id_order);
     editStatus({status}, id_order).then(
         res.status(204).end()
     ).catch(next)
 }
-
 //Get events
 ctrl.events = (req, res, next) => {
     getEvents().then(events => res.status(200).send({events}))
@@ -200,6 +201,7 @@ ctrl.Mstatistics = async (req, res, next) => {
 ctrl.stock = (req, res, next) => {
     const {id_product} = req.params
     const {stock} = req.body
+    console.log(stock);
     if(stock.S === 0 && stock.M === 0 && stock.L === 0 && stock.XL === 0 && stock.XXL === 0 && stock.XXXL === 0){
         const disable = '1'
         editStock(stock,id_product)

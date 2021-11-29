@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       Orders.belongsTo(models.Users, {foreignKey : 'id_user'})
       Orders.belongsTo(models.Products, {foreignKey : 'id_product'})
       Orders.belongsTo(models.Status, {foreignKey : 'status'})
+      Orders.belongsTo(models.History_shoppings, {foreignKey : 'status'})
     }
   };
   Orders.init({
@@ -16,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     fullname: DataTypes.STRING,
     address: DataTypes.STRING,
     id_product: DataTypes.INTEGER,
-    quantity: DataTypes.INTEGER
+    quantity: DataTypes.INTEGER,
+    waist : DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Orders',

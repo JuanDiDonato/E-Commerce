@@ -4,9 +4,9 @@ import AdminServices from '../../Services/AdminServices';
 export default function CreatePost(props) {
      const { match: { params } } = props;
      const id_product = params.id_product
-
      const [categories, setCategories] = useState([])
-     const [product, setProduct] = useState({title:'',categories:'',price:'', stock:'',description:'',images:[]})
+     const [product, setProduct] = useState({title:'',categories:'',price:'',description:'',images:[]})
+     const [stock, setStock] = useState({S:'', M : '', L: '', XL : '', XXL :'', XXXL : ''})
 
      useEffect(() => {
           AdminServices.product_id(id_product).then(data => {
@@ -16,6 +16,14 @@ export default function CreatePost(props) {
                     price : data.price,
                     stock : data.stock,
                     description : data.description,
+               })
+               setStock({...stock,
+                    S : data.Waist.S,
+                    M : data.Waist.M,
+                    L : data.Waist.L,
+                    XL : data.Waist.XL,
+                    XXL : data.Waist.XXL,
+                    XXXL : data.Waist.XXXL,
                })
           })
           AdminServices.categories().then(data => {
@@ -27,7 +35,9 @@ export default function CreatePost(props) {
      const onChange = e =>{
           setProduct({...product,[e.target.name] : e.target.value});
      }
-
+     const onChangeStock = e => {
+          setStock({...stock, [e.target.name] : e.target.value})
+     }
      const subirArchivo= e =>{
           setProduct({...product,images: e});
      }
@@ -44,7 +54,7 @@ export default function CreatePost(props) {
                formData.append('title', product.title) //en una costante body le envio el title
                formData.append('categories', product.categories)
                formData.append('price', product.price)
-               formData.append('stock', product.stock)
+               formData.append('stock', JSON.stringify(stock))
                formData.append('description', product.description)
                if (product.title === '' ||  product.price === '' ||  
                product.stock === '' ||  product.description === '' ) {
@@ -83,9 +93,19 @@ export default function CreatePost(props) {
                                              <input type="number" className="form-control" name="price" onChange={onChange} defaultValue={product.price} placeholder="Precio" />
                                         </div>
                                         <div className="form-group">
-                                             <label htmlFor="exampleFormControlInput1">Stock</label>
-                                             <input type="number" className="form-control" name="stock" onChange={onChange} defaultValue={product.stock} placeholder="Stock" />
-                                        </div>
+                                        <label htmlFor="exampleFormControlInput1">S</label>
+                                        <input type="number" className="form-control" name="S" onChange={onChangeStock} defaultValue={stock.S} placeholder="Stock" />
+                                        <label htmlFor="exampleFormControlInput1">M</label>
+                                        <input type="number" className="form-control" name="M" onChange={onChangeStock} defaultValue={stock.M} placeholder="Stock" />
+                                        <label htmlFor="exampleFormControlInput1">L</label>
+                                        <input type="number" className="form-control" name="L" onChange={onChangeStock} defaultValue={stock.L} placeholder="Stock" />
+                                        <label htmlFor="exampleFormControlInput1">XL</label>
+                                        <input type="number" className="form-control" name="XL" onChange={onChangeStock} defaultValue={stock.XL} placeholder="Stock" />
+                                        <label htmlFor="exampleFormControlInput1">XXL</label>
+                                        <input type="number" className="form-control" name="XXL" onChange={onChangeStock} defaultValue={stock.XXL} placeholder="Stock" />
+                                        <label htmlFor="exampleFormControlInput1">XXXL</label>
+                                        <input type="number" className="form-control" name="XXXL" onChange={onChangeStock} defaultValue={stock.XXXL} placeholder="Stock" />
+                                   </div>
                                    </div>
                                    <div className="form-group">
                                         <label htmlFor="exampleFormControlTextarea1">Descripcion</label>

@@ -68,7 +68,6 @@ export default function Cart() {
                          data.forEach(element => {
                               count = count + 1
                               a = a + element.unit_price * element.quantity
-
                               if (count === data.length) {
                                    setTotal(new Intl.NumberFormat().format(a))
                               }
@@ -89,12 +88,9 @@ export default function Cart() {
      const chekout = () => {
           const product_data = []
           cart.forEach(element => {
-               console.log(element);
                product_data.push({ 'title': element.Product.title, 'unit_price': Number(element.unit_price), 'quantity': element.quantity })
-               console.log(product_data);
                if (product_data.length === cart.length) {
                     ProductService.mercadopago(product_data).then(data => {
-                         console.log(data);
                          window.location.href = data.url;
                     })
                }
@@ -122,6 +118,7 @@ export default function Cart() {
                <div className="product_body">
                     <div>
                          {cart.map(product => {
+                              console.log(product);
                               let from_date, to_date, images, images_array = [], image_end
                               from_date = moment(product.Product.Event.from_date).utc()
                               to_date = moment(product.Product.Event.to_date).utc()
@@ -151,6 +148,7 @@ export default function Cart() {
                                                   <h4 > {product.Product.title}</h4>
 
                                                   <p> Cantidad: {product.quantity}</p>
+                                                  <p> Talle: {product.waist}</p>
                                                   {product.id_event === null ?
                                                        <h4>$ {product.unit_price}</h4>
                                                        :

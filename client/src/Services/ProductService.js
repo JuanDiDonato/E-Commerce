@@ -12,8 +12,8 @@ export default {
           return data
      },
      //Add product to cart
-     add : async (id_product,quantity,stock,unit_price) => {
-          const {data} = await axios.post('/client/add/'+id_product, {quantity,stock,unit_price}, {validateStatus:false})
+     add : async (id_product,quantity,unit_price, waist) => {
+          const {data} = await axios.post('/client/add/'+id_product, {quantity,waist,unit_price}, {validateStatus:false})
           return data
      },
      //Get cart

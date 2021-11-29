@@ -8,7 +8,6 @@ const {registerSchema, editStockSchema} = require('../schemas/clients')  // Esqu
 const {categorySchema} = require('../schemas/categories')  // Esquema de Categorias
 const {productSchema} = require('../schemas/products')  // Esquema de Productos
 const {eventSchema} = require('../schemas/events')  // Esquema de Eventos
-const {status} = require('../schemas/orders')
 
 //POST REQUEST
 //Register admin
@@ -54,5 +53,5 @@ router.put('/event/:id_event', passport.authenticate('jwt',{session:false}), adm
 //Stock
 router.put('/edit/stock/:id_product', validateSchemaAndFail(editStockSchema),passport.authenticate('jwt',{session:false}), adminsControllers.stock )
 //Edit status
-router.put('/edit/status/:id_order', validateSchemaAndFail(status),passport.authenticate('jwt',{session:false}), adminsControllers.edit_status )
+router.put('/edit/status/:id_order',passport.authenticate('jwt',{session:false}), adminsControllers.edit_status )
 module.exports=router

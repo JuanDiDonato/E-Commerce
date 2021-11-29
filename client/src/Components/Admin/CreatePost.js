@@ -8,7 +8,8 @@ import '../../assets/css/forms.css'
 export default function CreatePost(props) {
 
      const { categories, setCategories } = useContext(AdminContext)
-     const [product, setProduct] = useState({title:'',categories:'',price:0, stock:0,description:'',images:[]})
+     const [product, setProduct] = useState({title:'',categories:'',price:0,description:'',stock: {S:'', M : '', L: '', XL : '', XXL :'', XXXL : ''},images:[]})
+     const [stock, setStock] = useState({S:'', M : '', L: '', XL : '', XXL :'', XXXL : ''})
 
      useEffect(() => {
           AdminServices.categories().then(data => {
@@ -20,6 +21,10 @@ export default function CreatePost(props) {
 
      const onChange = e =>{
           setProduct({...product,[e.target.name] : e.target.value});
+     }
+
+     const onChangeStock = e => {
+          setStock({...stock, [e.target.name] : e.target.value})
      }
 
      const subirArchivo= e =>{
@@ -35,14 +40,13 @@ export default function CreatePost(props) {
           formData.append('title', product.title) //en una costante body le envio el title
           formData.append('categories', product.categories)
           formData.append('price', product.price)
-          formData.append('stock', product.stock)
+          formData.append('stock', JSON.stringify(stock))
           formData.append('description', product.description)
           if (product.title === '' ||  product.price === '' ||  
           product.stock === '' ||  product.description === '' ) {
                alert('Complete todos los campos')
           } else {
                AdminServices.create(formData).then(data => {
-                    console.log(data);
                     alert(data.message)
                     props.history.push('/')
                })
@@ -82,8 +86,18 @@ export default function CreatePost(props) {
                                         <input type="number" className="form-control" name="price" onChange={onChange} placeholder="Precio" />
                                    </div>
                                    <div className="form-group">
-                                        <label htmlFor="exampleFormControlInput1">Stock</label>
-                                        <input type="number" className="form-control" name="stock" onChange={onChange} placeholder="Stock" />
+                                        <label htmlFor="exampleFormControlInput1">S</label>
+                                        <input type="number" className="form-control" name="S" onChange={onChangeStock} placeholder="Stock" />
+                                        <label htmlFor="exampleFormControlInput1">M</label>
+                                        <input type="number" className="form-control" name="M" onChange={onChangeStock} placeholder="Stock" />
+                                        <label htmlFor="exampleFormControlInput1">L</label>
+                                        <input type="number" className="form-control" name="L" onChange={onChangeStock} placeholder="Stock" />
+                                        <label htmlFor="exampleFormControlInput1">XL</label>
+                                        <input type="number" className="form-control" name="XL" onChange={onChangeStock} placeholder="Stock" />
+                                        <label htmlFor="exampleFormControlInput1">XXL</label>
+                                        <input type="number" className="form-control" name="XXL" onChange={onChangeStock} placeholder="Stock" />
+                                        <label htmlFor="exampleFormControlInput1">XXXL</label>
+                                        <input type="number" className="form-control" name="XXXL" onChange={onChangeStock} placeholder="Stock" />
                                    </div>
                               </div>
                               <div className="form-group">
