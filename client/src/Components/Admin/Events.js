@@ -40,7 +40,6 @@ export default function Events() {
                <div className="grid-events">
                {/* eslint-disable-next-line */}
                     {events.map(event => {
-                         console.log(event.to_date > date);
                          if(event.id_event !== 1 && moment(event.to_date).utc() > date){
                               return(
                                    <div key={event.id_event}>
@@ -57,7 +56,7 @@ export default function Events() {
                                         </div>
                                    </div>
                               )
-                         }else if(event.id_event !== 1){
+                         }else if(moment(event.to_date).utc() < date){
                               delete_event(event.id_event)
                          }
                     })}

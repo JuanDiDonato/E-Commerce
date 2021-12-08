@@ -1,22 +1,21 @@
 var cron = require('node-cron');
-const pool = require('../database/connection')
+const {addMonthlyStatistics} =  require('../services/monthly_statistics')
+const {getStatistics, deleteStatistics} = require('../services/statistics')
 
-cron.schedule('0 0 1 1-12 *', async () => {
+cron.schedule('0 0 1 1-12 *', () => {
      let monthly_incomes = []
      let monthly_sales = []
-     const data = await pool.query('SELECT income,sales FROM statistics')
      let month = new Date().getMonth()
-     data.forEach(element => {
-          const incomes = JSON.parse((JSON.stringify(element.income)));
-          const sales = JSON.parse((JSON.stringify(element.sales)));
-          monthly_incomes.push(incomes)
-          monthly_sales.push(sales)
-     });
-     try {
-          await pool.query('INSERT INTO monthly_statistics VALUES("'+monthly_incomes+'","'+monthly_sales+'",'+month+')')
-     } catch (error) {
-          console.log(error);
-     }
-     await pool.query('DELETE FROM statistics')
-     res.status(200).json({ error: false })
+     getStatistics().then(statistics => {
+          statistics.forEach(element => {
+               const incomes = JSON.parse((JSON.stringify(element.income)));
+               const sales = JSON.parse((JSON.stringify(element.sales)));
+               monthly_incomes.push(incomes)
+               monthly_sales.push(sales)
+          })
+     }).catch(error => console.log(error))
+     const data = {monthly_sales, monthly_incomes, month}
+     addMonthlyStatistics(data).then(
+          deleteStatistics()
+     )
 });

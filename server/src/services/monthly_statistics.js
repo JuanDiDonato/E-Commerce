@@ -8,3 +8,11 @@ exports.getMonthlyStatistics = () =>
     .catch(error => {
         throw new Error(error)
     })
+
+// Agregar estadisticas mensuales
+exports.addMonthlyStatistics = (statistics) =>
+    Monthly_statistics.create(statistics)
+    .then(statistics => statistics)
+    .catch(error => {
+        throw new Error(error)
+    })

@@ -168,7 +168,7 @@ ctrl.delete_event = (req, res, next) => {
     getEventById(id_event).then(event => {
         if(event.length > 0) {
             deleteEvent(id_event).then(
-                editProductByEvent({id_event : '1'}, id_event).then(
+                editProductByEvent({id_event : '1'}, null).then(
                     res.status(204).send()
                 ).catch(next)
             ).catch(next)
@@ -186,10 +186,15 @@ ctrl.event = (req, res, next) => {
 }
 //Update event
 ctrl.update_event = (req, res, next) => {
-    const {event} = req.body
+    const {event, id_products} = req.body
+    console.log(id_products);
     const {id_event} = req.params
     const event_data = { event_name: event.event_name, 'discount': event.discount / 100, from_date: event.from_date, to_date: event.to_date }
-    editEvent(event_data, id_event).then(res.status(204).send())
+    editEvent(event_data, id_event).then(
+        editProductByEvent({id_event : 1}, id_event),
+        editProduct({id_event}, id_products),
+        res.status(204).send()
+        )
     .catch(next)
 }
 //Get monthly statistics

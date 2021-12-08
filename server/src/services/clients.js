@@ -6,9 +6,9 @@ const {Users} = require('../models')
 //Crear access token
 exports.signToken = id_user => {
     return jwt.sign({
-        iss: process.env.JWT,
+        iss: process.env.TOKENKEY,
         sub: id_user
-    },process.env.JWT, {expiresIn: '10h'})
+    },process.env.TOKENKEY, {expiresIn: '10h'})
 }
 // Registrar usuario
 exports.newUser = data => 

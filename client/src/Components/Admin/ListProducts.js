@@ -127,7 +127,6 @@ export default function ListProducts(props) {
                               </Thead>
                               <Tbody>
                                    {results.map(product => {
-                                        console.log(product);
                                         return (
                                              <Tr key={product.id} >
                                                   <Td >{product.id}</Td>

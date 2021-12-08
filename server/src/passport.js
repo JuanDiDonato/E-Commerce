@@ -35,7 +35,7 @@ passport.use(new LocalStrategy({
 
 passport.use(new JwtStrategy({
     jwtFromRequest: CookiExtractor,
-    secretOrKey: 'm1ch1'
+    secretOrKey: process.env.TOKENKEY
 },(payload, done) => {
     Users.findOne({where : {id : [payload.sub]}}).then(user => done(null,user))
     .catch(error => done(error,false))

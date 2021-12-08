@@ -16,3 +16,10 @@ exports.getStatistics = () =>
         throw new Error(error)
     }) 
 
+// Borrar estadiscticas
+exports.deleteStatistics = () =>
+    Statistics.destroy()
+    .then(statistics => statistics)
+    .catch(error => {
+        throw new Error(error)
+    }) 

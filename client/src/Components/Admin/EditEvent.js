@@ -27,8 +27,8 @@ export default function EditEvent(props) {
           AdminServices.products().then(data => {
                setProducts(data)
                data.forEach(product => {
-                    if (product.event === id_event) {
-                         ids.push(product.id_product)
+                    if (product.id_event === id_event) {
+                         ids.push(product.id)
                     }
                });
 
@@ -51,12 +51,12 @@ export default function EditEvent(props) {
                     props.history.push("/events")
           )
      }
-     const add_id = (status, id_product) => {
+     const add_id = (status, id) => {
           if (status === true) {
-               ids.push(id_product)
+               ids.push(id)
           }
           if (status === false) {
-               const index = ids.indexOf(id_product)
+               const index = ids.indexOf(id)
                ids.splice(index, 1)
           }
      }
@@ -115,16 +115,16 @@ export default function EditEvent(props) {
                                                                  {products.map(product => {
                                                                       return (
                                                                            <Tr key={product.id_product}>
-                                                                                <Td scope="row">{product.id_product}</Td>
+                                                                                <Td scope="row">{product.id}</Td>
                                                                                 <Td scope="row">{product.title}</Td>
                                                                                 <Td scope="row">{product.categories ? product.categories : 'Sin categoria'}</Td>
                                                                                 <Td scope="row">${product.price}</Td>
                                                                                 <Td scope="row">{product.stock}</Td>
-                                                                                <Td scope="row"><i style={{ cursor: 'pointer' }} onClick={() => view(product.id_product)} className="fa fa-plus"></i></Td>
-                                                                                {product.event === id_event ?
-                                                                                     <Td scope="row" ><input type="checkbox" defaultChecked={true}  onClick={(e) => add_id(e.target.checked, product.id_product)} /></Td>
+                                                                                <Td scope="row"><i style={{ cursor: 'pointer' }} onClick={() => view(product.id)} className="fa fa-plus"></i></Td>
+                                                                                {product.id_event === id_event ?
+                                                                                     <Td scope="row" ><input type="checkbox" defaultChecked={true}  onClick={(e) => add_id(e.target.checked, product.id)} /></Td>
                                                                                 :
-                                                                                <Td scope="row" ><input type="checkbox" onClick={(e) => add_id(e.target.checked, product.id_product)} /></Td>}
+                                                                                <Td scope="row" ><input type="checkbox" onClick={(e) => add_id(e.target.checked, product.id)} /></Td>}
                                                                            </Tr>
                                                                       )
                                                                  })}
